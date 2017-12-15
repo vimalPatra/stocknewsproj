@@ -1,0 +1,16 @@
+$font-stack:   sans-serif;
+$primary-color: desaturate(darken(orange,5%),50%);
+$font-color: violet;
+$warningFields:red;
+$green: lighten(green,30%);
+$blue: lighten(blue,70%);
+
+body {
+  background: blue;
+  font: 100% $font-stack;
+  color: white;
+  text-transform: uppercase;
+  transform: translate3d(0,0,0);
+}
+
+
