@@ -11,7 +11,7 @@
 	var rename = require('gulp-rename');
 	var sass = require('gulp-sass');
 	var cleanCss = require('gulp-clean-css');
-
+	var flatten = require('gulp-flatten');
 	var del = require('del');
 
 	var plumber = require('gulp-plumber');
@@ -43,6 +43,21 @@ var onError = function(err) {
 ************	individual tasks for development build
 *****************/
 
+	gulp.task('vendorJS', function() {
+			var sourceFile = gulp.src([ './source/js/vendor/**/*.js',
+										'!./source/js/vendor/lib.js']);
+	
+		    return sourceFile
+		    	.pipe(plumber({
+					errorHandler: onError
+				}))
+		        //Pass desired pretend filename to vinyl-source-stream
+		        .pipe(concat('vendor.js'))
+		        // .pipe(uglify())
+		        .pipe(gulp.dest('./dist/js/'));
+		});
+	
+
 
 	/* task for bundling JS libraries via ES6 modules*/
 
@@ -54,7 +69,7 @@ var onError = function(err) {
 					errorHandler: onError
 				}))
 		        //Pass desired pretend filename to vinyl-source-stream
-		        .pipe(source('bundle.js'))
+		        .pipe(source('libraries.js'))
 		        //Rename it to desired output filename
 			    .pipe(rename('lib.js'))
 		        // Start piping stream to tasks!
@@ -62,9 +77,28 @@ var onError = function(err) {
 		});
 
 
+
 	/* task for bundling JS files and write to single js file*/
-	gulp.task('js',['bundleJS'],function(){ 
-		        return gulp.src(['app/**/*.js','source/js/main.js'])
+	gulp.task('js',['bundleJS','vendorJS'],function(){ 
+		        return gulp.src(['app/**/*.module.js','app/**/*.route.js',
+		        				'app/**/*.js','source/js/main.js'])
+		        .pipe(plumber({
+					errorHandler: onError
+				}))			
+		        .pipe(concat('app.js'))
+		        .pipe(eslint())
+		        // eslint.format() outputs the lint results to the console. 
+		        // Alternatively use eslint.formatEach() (see Docs). 
+		        .pipe(eslint.formatEach())
+		        // To have the process exit with an error code (1) on 
+		        // lint error, return the stream and pipe to failAfterError last. 
+		        // .pipe(eslint.failAfterError())
+		        .pipe(gulp.dest('dist/js/'))
+		        .pipe( browserSync.reload({stream:true}) );
+	});
+	gulp.task('js:watch',function(){ 
+		        return gulp.src(['app/**/*.module.js','app/**/*.route.js',
+		        				'app/**/*.js','source/js/main.js'])
 		        .pipe(plumber({
 					errorHandler: onError
 				}))			
@@ -80,9 +114,27 @@ var onError = function(err) {
 		        .pipe( browserSync.reload({stream:true}) );
 	});
 	
+
+
+
+	/* task for getting compiled css files in the source folder*/
+		/* NOTE: task just for getting separate compiled css files in source folder*/
+	gulp.task('sass', function(){ 
+		        return gulp.src(['source/sass/**/*.scss'])
+		        .pipe(plumber({
+					errorHandler: onError
+				}))
+		        .pipe(sass())
+		        .pipe(gulp.dest('source/css/'));
+
+	});
+
+
 	/* task for css libs */
 	gulp.task('cssLibs', function(){ 
-				return gulp.src(['source/css/libs/*.css'])
+				return gulp.src(['source/css/libs/materialize.css',
+								'source/css/libs/normalize.css',
+								'source/css/libs/**/*.css'])
 				.pipe(plumber({
 					errorHandler: onError
 				}))
@@ -92,48 +144,52 @@ var onError = function(err) {
 	});
 
 	/* task for sass/css files*/
-	gulp.task('css',['cssLibs'], function(){ 
+	gulp.task('css',['cssLibs','sass','fonts'], function(){ 
 				var postcssPlugins = [
 			        cssnext({browsers: ['last 3 version']})
 			    ];				
 
-		        return gulp.src(['source/sass/main.scss'])
+		        return gulp.src(['source/css/main.css'])
 		        .pipe(plumber({
 					errorHandler: onError
 				}))
-		        .pipe(sass())
+		        .pipe(postcss(postcssPlugins))
+		        .pipe(csslint())
+    			.pipe(csslint.formatter())
+		        .pipe(gulp.dest('dist/css/'))
+		        .pipe(browserSync.stream());	
+	});
+
+	gulp.task('css:watch', function(){ 
+				var postcssPlugins = [
+			        cssnext({browsers: ['last 3 version']})
+			    ];				
+
+		        return gulp.src(['source/css/main.css'])
+		        .pipe(plumber({
+					errorHandler: onError
+				}))
 		        .pipe(postcss(postcssPlugins))
 		        .pipe(csslint())
     			.pipe(csslint.formatter())
 		        .pipe(gulp.dest('dist/css/'))
 		        .pipe(browserSync.stream());
-	
-
 	});
 
 
 
 
-	/* task for getting compiled css files in the source folder*/
-		/* NOTE: unnecessary task just for getting separate compiled css files */
-	gulp.task('sass', function(){ 
-				var postcssPlugins = [
-			        cssnext({browsers: ['last 3 version']})
-			    ];				
 
-		        return gulp.src(['source/sass/*.scss'])
-		        .pipe(plumber({
-					errorHandler: onError
-				}))
-		        .pipe(sass())
-		        .pipe(postcss(postcssPlugins))
-		        .pipe(gulp.dest('source/css/'));
 
-	});
+
 
 	
 	gulp.task('html',function(){
-		var sourceFile = ['./app/**/!(*-2).html','./!(*-2).html'];
+		var sourceFile = 
+		['./app/**/!(*.compiled).html',
+		'./!(*.compiled).html',
+		'./app/**/!(*.compiled).php',
+		'./!(*.compiled).php'];
 
 		var options = {
 		    "indent_size": 4,
@@ -169,16 +225,70 @@ var onError = function(err) {
         }))
 		.pipe(htmlbeautify(options))
 		.pipe(rename({
-			suffix: '-2'
+			suffix: '.compiled'
 		}))
 	    
         .pipe( gulp.dest(function (file) {
 	        return file.base;
 	    }))
-        .pipe( browserSync.reload({stream:true}) )
-        ;
+        .pipe( browserSync.reload({stream:true}) );
 	});
 
+
+
+
+
+
+	gulp.task('clean:views',function(cb){
+
+		return del([
+			'./dist/views'
+		], cb);
+	});
+
+	gulp.task('views',['clean:views'],function(){
+		var sourceFile = 
+		[
+		'./app/**/*.view.html',
+		'./app/**/*.view.php'
+		];
+
+		return gulp.src(sourceFile)
+        .pipe( flatten() )
+        .pipe( gulp.dest('./dist/views/'));
+	});
+
+	gulp.task('views:watch',function(){
+		var sourceFile = 
+		[
+		'./app/**/*.view.html',
+		'./app/**/*.view.php'
+		];
+
+		return gulp.src(sourceFile)
+        .pipe( flatten() )
+        .pipe( gulp.dest('./dist/views/'))
+        .pipe( browserSync.reload({stream:true}) );
+	});
+
+
+
+
+
+	gulp.task('clean:fonts',function(cb){
+
+		return del([
+			'./dist/fonts'
+		], cb);
+
+	});
+	gulp.task('fonts',['clean:fonts'],function(){
+		var sourceFile = ['./source/fonts/**/*'];
+
+		return gulp.src(sourceFile)
+        .pipe( gulp.dest('./dist/fonts/'));
+	
+	});
 
 
 
@@ -187,9 +297,8 @@ var onError = function(err) {
 ****		individual tasks for distribution build
 ********/
 
-
 	/* task for bundling JS libraries via ES6 modules for distribution build */ 
-	gulp.task('bundleJS:dist', function() {
+	gulp.task('bundleJS:dist',function() {
 			var bundleStream = browserify('./source/js/vendor/lib.js').bundle();
 	
 		    return bundleStream
@@ -208,8 +317,9 @@ var onError = function(err) {
 
 
 	/* task for bundling JS files and write to single js file for distribution build */ 
-	gulp.task('js:dist',['bundleJS:dist'], function(){ 
-		        return gulp.src(['app/**/*.js','source/js/main.js'])
+	gulp.task('js:dist',['bundleJS:dist','vendorJS'], function(){ 
+		        return gulp.src(['app/**/*.module.js','app/**/*.route.js',
+		        				'app/**/*.js','source/js/main.js'])
 		        .pipe(plumber({
 					errorHandler: onError
 				}))
@@ -222,7 +332,9 @@ var onError = function(err) {
 
 	/* task for css libs for distribution build */
 	gulp.task('cssLibs:dist', function(){ 
-			return gulp.src(['source/css/libs/*.css'])
+			return gulp.src(['source/css/libs/materialize.css',
+							 'source/css/libs/normalize.css',
+							 'source/css/libs/**/*.css'])
 				.pipe(plumber({
 					errorHandler: onError
 				}))
@@ -233,16 +345,15 @@ var onError = function(err) {
 
 
 	/* task for sass/css files for distribution build */
-	gulp.task('css:dist',['cssLibs:dist'], function(){ 
+	gulp.task('css:dist',['cssLibs:dist','sass'], function(){ 
 				var postcssPlugins = [
 			        cssnext({browsers: ['last 3 version']})
 			    ];
 		        
-		        return gulp.src(['source/css/main.scss'])
+		        return gulp.src(['source/css/main.css'])
 		        .pipe(plumber({
 					errorHandler: onError
 				}))
-		        .pipe(sass())
 		        .pipe(postcss(postcssPlugins))
 		        .pipe(cleanCss())
 		        .pipe(gulp.dest('dist/css/'));
@@ -260,9 +371,12 @@ var onError = function(err) {
 		browserSync.init({
 	        server: "./"
 	    });
-		gulp.watch(['./*.html','./**/*.html'],['html']);
-		gulp.watch(['./source/sass/*.scss','./source/css/libs/*.css'], ['css','sass']);
-		gulp.watch(['./app/**/*.js','./source/js/*.js'],['js']);
+
+		gulp.watch(['./*.html','./**/*.html','./*.php','./**/*.php'],['views:watch'/*,'html'*/]);
+		gulp.watch(['./source/sass/**/*.scss'], ['sass']);
+		gulp.watch(['./source/css/libs/**/*.scss'], ['cssLibs']);
+		gulp.watch(['./source/css/*.css'], ['css:watch']);
+		gulp.watch(['./app/**/*.js','./source/js/**/*.js'],['js:watch']);
 	    // gulp.watch("*.html").on('change', browserSync.reload);
 	});
 
@@ -276,26 +390,32 @@ var onError = function(err) {
 ******/
 
 	
+				//	DEV BUILDS
+	
 
 	/* =run task : run for development builds*/
-	gulp.task('default', ['html','js','css'],function(cb){
+	gulp.task('default', ['views','js','css'],function(cb){
 		cb();
 	});
 
 	/* =default task : run for development build and serving to the server*/
-	gulp.task('run', ['default','watchNserve']);
+	gulp.task('run', ['default','html'],function(){
+		gulp.start('watchNserve');
+	});
 
 
 
-	
+				//	DIST BUILDS
 
 	/* build task : run for distribution build only*/
-	gulp.task('build', ['html','js:dist','css:dist'],function(cb){
+	gulp.task('build', ['views','html','js:dist','css:dist'],function(cb){
 		cb();
 	});
 
 	/* build task : run for distribution build and serving to the browser*/
-	gulp.task('run:dist', ['build','watchNserve']);
+	gulp.task('run:dist', ['build'],function(){
+		gulp.start('watchNserve');
+	});
 
 
 

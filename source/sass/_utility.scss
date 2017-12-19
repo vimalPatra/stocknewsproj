@@ -1,0 +1,31 @@
+
+/* ==========================================================================
+   Utilites
+   ========================================================================== */
+
+.logo__text{
+	@include logo__text;
+}
+
+.paragraph__text{
+	@include paragraph__text;
+}
+.heading__text{
+	// @include heading__text;
+}
+
+
+
+/**************
+*******   =temp
+**************/
+.blue{
+    background: blue; 
+
+}
+.red{
+    background: red;
+}
+.green{
+    background: green;
+}
