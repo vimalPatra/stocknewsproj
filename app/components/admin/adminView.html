@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Admin View</title>
+</head>
+<body>
+	<h2>Admin View</h2>
+
+<div ng-app="formModule" ng-controller="formCtrl">
+	<form>
+		Stock Name
+		<input type="text" name="" id="" ng-model="stockName">
+		<br>
+
+		Date
+		<input type="date" name="" id="" ng-model="date">
+		<br>
+
+		Description
+		<input type="text" name="" id="" ng-model="desc">
+		<br>
+
+		Choose 
+		<br>
+		Event
+		<input type="radio" name="ena" value="event" ng-model="ena">		
+		<br>
+		News
+		<input type="radio" name="ena" value="news" ng-model="ena">
+		<br>
+		Announcement
+		<input type="radio" name="ena" value="announcement" ng-model="ena">
+		<br>
+
+		Reference Link
+		<input type="text" name="" id="" ng-model="rlink">
+		<br>
+
+		<!-- Captcha
+		<input type="text" name="" id=""> -->
+	</form>
+</div>
+	
+</body>
+</html>
