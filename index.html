@@ -12,10 +12,12 @@
         <!-- Place favicon.ico in the root directory -->
 
         <!-- stylesheets -->
+        <link href="https://fonts.googleapis.com/css?family=Libre+Barcode+39+Extended+Text|Spinnaker" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <link rel="stylesheet" href="dist/css/lib.css">
         <link rel="stylesheet" href="dist/css/main.css">
     </head>
-    <body ng-app='stocknews'>
+    <body >
         
         <!--[if lte IE 9]>
             <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>
@@ -25,7 +27,9 @@
 
         <div class="wrap">
             <!-- Add your site or application content here -->
-            <h1><div><p><span><h1>hi there <span>dirt </span></h1></span></p></div></h1>
+            <div class="app" ng-app='app'>
+                <div class="view" data-ui-view></div>
+            </div>
         </div>
         
 
@@ -34,8 +38,12 @@
 
         <!-- Script tags -->
 
-        <!-- all the vendor libraries we depend on  -->
+        <!-- all js frameworks bundled using node's require function that we depend upon  -->
         <script src="dist/js/lib.js"></script>
+
+        <!-- all js source files from different libraries concatenated into one file -->
+        <script src="dist/js/vendor.js"></script>
+
         <!-- app logic -->
         <script src="dist/js/app.js"></script>
 

@@ -1,15 +1,9 @@
 
-/******
-		start of main.js
-******/
+console.log('main.js loaded');
 
-console.log('from main.js');
+(function($){
+	console.log($);
+	$('.button-collapse').sideNav();
 
-
-
-
-/******
-		end of main.js
-******/
-
+})(jQuery);
 

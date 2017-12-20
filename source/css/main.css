@@ -1,7 +1,372 @@
+a {
+  padding: 0; }
+
+nav {
+  width: auto;
+  background: transparent;
+  box-shadow: none; }
+
+::-moz-selection {
+  background: #b3d4fc;
+  text-shadow: none; }
+
+::selection {
+  background: #b3d4fc;
+  text-shadow: none; }
+
+hr {
+  display: block;
+  height: 1px;
+  border: 0;
+  border-top: 1px solid #ccc;
+  margin: 1em 0;
+  padding: 0; }
+
+audio,
+canvas,
+iframe,
+img,
+svg,
+video {
+  vertical-align: middle; }
+
+fieldset {
+  border: 0;
+  margin: 0;
+  padding: 0; }
+
+textarea {
+  resize: vertical; }
+
+.browserupgrade {
+  margin: 0.2em 0;
+  background: #ccc;
+  color: #000;
+  padding: 0.2em 0; }
+
+/* ==========================================================================
+   Author's custom styles
+   ========================================================================== */
+/* ==========================================================================
+   Helper classes
+   ========================================================================== */
+.capitalize {
+  text-transform: capitalize !important; }
+
+.uppercase {
+  text-transform: uppercase !important; }
+
+.lowercase {
+  text-transform: lowercase !important; }
+
+.small__caps {
+  font-variant: small-caps !important; }
+
+.text__light {
+  font-weight: 100 !important; }
+
+.text__regular {
+  font-weight: 300 !important; }
+
+.text__bold {
+  font-weight: 500 !important; }
+
+.text__right {
+  text-align: right !important; }
+
+.text__center {
+  text-align: center !important; }
+
+.text__left {
+  text-align: left !important; }
+
+.hidden {
+  display: none !important; }
+
+.inline__block {
+  display: inline-block !important; }
+
+.block {
+  display: block !important; }
+
+.invisible {
+  opacity: 0 !important;
+  visibility: hidden; }
+
+/* [class^="ion-"]{
+    color: white;
+    display: inline-block;
+}
+ */
+.nonInteractivisible {
+  opacity: 0 !important;
+  pointer-events: none !important;
+  will-change: opacity;
+  transform: translateZ(0);
+  transition: opacity 0s; }
+
+.noSelect {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -webkit-tap-highlight-color: rgba(255, 255, 255, 0); }
+
+.hidden {
+  display: none !important; }
+
+.visually__hidden {
+  border: 0;
+  clip: rect(0 0 0 0);
+  -webkit-clip-path: inset(50%);
+  clip-path: inset(50%);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+  white-space: nowrap;
+  /* 1 */ }
+
+.visuallyhidden.focusable:active, .visuallyhidden.focusable:focus {
+  clip: auto;
+  -webkit-clip-path: none;
+  clip-path: none;
+  height: auto;
+  margin: 0;
+  overflow: visible;
+  position: static;
+  width: auto;
+  white-space: inherit; }
+
+.invisible {
+  opacity: 0 !important;
+  visibility: hidden; }
+
+/*
+ * Clearfix: contain floats
+ *
+ * For modern browsers
+ * 1. The space content is one way to avoid an Opera bug when the
+ *    `contenteditable` attribute is included anywhere else in the document.
+ *    Otherwise it causes space to appear at the top and bottom of elements
+ *    that receive the `clearfix` class.
+ * 2. The use of `table` rather than `block` is only necessary if using
+ *    `:before` to contain the top-margins of child elements.
+ */
+/***********
+                =clearfix
+***********/
+.clearfix:before,
+.clearfix:after {
+  content: " ";
+  /* 1 */
+  display: table;
+  /* 2 */ }
+
+.clearfix:after {
+  clear: both; }
+
+/***********************/
+/** =basicCodeShellCss **/
+/***********************/
+*,
+*:after,
+*:before {
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  /*scroll-behavior: smooth;*/ }
+
+/*****
+**           =html 
+** optimal minimum width
+****/
+html {
+  min-width: 300px;
+  font-size: 1rem;
+  /*font-size: 2vw; */ }
+
+/* @media all and (min-width: 768px){
+    html{
+        font-size: 16px;
+        font-size: 1em;
+    }
+}
+ */
+/* =body */
 body {
-  background: blue;
-  font: 100% sans-serif;
-  color: white;
-  text-transform: uppercase;
-  -webkit-transform: translate3d(0, 0, 0);
-          transform: translate3d(0, 0, 0); }
+  height: 100%; }
+
+img {
+  max-width: 100%; }
+
+a,
+a:link,
+a:visited {
+  outline: none;
+  color: inherit;
+  text-decoration: none; }
+
+a:hover,
+a:active {
+  text-decoration: none; }
+
+h1, h2, h3, h4, h5, h6 {
+  line-height: 1.313em; }
+
+h1 {
+  font-size: 2.25em;
+  margin: 0.563em 0; }
+
+h2 {
+  font-size: 2.25em;
+  margin: 0.625em 0; }
+
+h3 {
+  font-size: 1.5em;
+  margin: 1.313em 0; }
+
+h4 {
+  font-size: 1.313em;
+  margin: 1.313em 0; }
+
+h5 {
+  font-size: 1.125em;
+  margin: 1.313em; }
+
+h6 {
+  font-size: 1em;
+  margin: 0.75em 0; }
+
+/* basic code shell css ends*/
+/* ==========================================================================
+   EXAMPLE Media Queries for Responsive Design.
+   These examples override the primary ('mobile first') styles.
+   Modify as content requires.
+   ========================================================================== */
+@media only screen and (min-width: 35em) {
+  /* Style adjustments for viewports that meet the condition */ }
+
+@media print, (-webkit-min-device-pixel-ratio: 1.25), (min-resolution: 1.25dppx), (min-resolution: 120dpi) {
+  /* Style adjustments for high resolution devices */ }
+
+/* ==========================================================================
+   Print styles.
+   Inlined to avoid the additional HTTP request:
+   http://www.phpied.com/delay-loading-your-print-css/
+   ========================================================================== */
+@media print {
+  *,
+  *:before,
+  *:after {
+    background: transparent !important;
+    color: #000 !important;
+    /* Black prints faster:
+                                   http://www.sanbeiji.com/archives/953 */
+    box-shadow: none !important;
+    text-shadow: none !important; }
+  a,
+  a:visited {
+    text-decoration: underline; }
+  a[href]:after {
+    content: " (" attr(href) ")"; }
+  abbr[title]:after {
+    content: " (" attr(title) ")"; }
+  /*
+     * Don't show links that are fragment identifiers,
+     * or use the `javascript:` pseudo protocol
+     */
+  a[href^="#"]:after,
+  a[href^="javascript:"]:after {
+    content: ""; }
+  pre {
+    white-space: pre-wrap !important; }
+  pre,
+  blockquote {
+    border: 1px solid #999;
+    page-break-inside: avoid; }
+  /*
+     * Printing Tables:
+     * http://css-discuss.incutio.com/wiki/Printing_Tables
+     */
+  thead {
+    display: table-header-group; }
+  tr,
+  img {
+    page-break-inside: avoid; }
+  p,
+  h2,
+  h3 {
+    orphans: 3;
+    widows: 3; }
+  h2,
+  h3 {
+    page-break-after: avoid; } }
+
+/* ==========================================================================
+   Utilites
+   ========================================================================== */
+.logo__text {
+  font-family: "Libre Barcode 39 Extended Text", "Roboto";
+  color: #212121;
+  font-size: 2.5rem;
+  text-transform: uppercase; }
+
+.paragraph__text {
+  font-family: "Spinnaker", sans-serif;
+  font-weight: 400; }
+
+/**************
+*******   =temp
+**************/
+.blue {
+  background: blue; }
+
+.red {
+  background: red; }
+
+.green {
+  background: green; }
+
+/*===================================
+        =custom css
+====================================*/
+.app__header {
+  font-family: "Spinnaker", sans-serif;
+  font-weight: 400;
+  background: #fff;
+  padding: 0.5rem 2rem;
+  overflow: hidden; }
+
+/* =logo */
+.logo {
+  font-family: "Libre Barcode 39 Extended Text", "Roboto";
+  color: #212121;
+  font-size: 2.5rem;
+  text-transform: uppercase; }
+
+.app__header .wrapper--nav a {
+  color: #424242; }
+
+.header__nav {
+  height: 100%;
+  overflow: hidden; }
+  .header__nav a {
+    display: block;
+    line-height: 1.3em;
+    overflow: hidden;
+    padding: 1em 1.2em;
+    text-align: center; }
+    .header__nav a .name {
+      display: block;
+      font-size: 1rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      line-height: 1em; }
+    .header__nav a .desc {
+      display: inline;
+      text-transform: capitalize;
+      font-size: .8rem; }

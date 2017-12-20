@@ -1,16 +1,80 @@
-$font-stack:   sans-serif;
-$primary-color: desaturate(darken(orange,5%),50%);
-$font-color: violet;
-$warningFields:red;
-$green: lighten(green,30%);
-$blue: lighten(blue,70%);
+@import "vars";
+
+@import "mixins";
+
+@import "base";
+	
+
+/* ==========================================================================
+   Author's custom styles
+   ========================================================================== */
+@import "helper";
+
+@import "codeshell";
+
+@import "mediaqueries";
+
+@import "utility";
+
+
+/*===================================
+        =custom css
+====================================*/
+
+
+
+.app__header{
+	@include paragraph__text;
+	background: $headerBg;
+	padding: $headerPadding;
+	overflow:hidden;
+
+}
 
 body {
-  background: blue;
-  font: 100% $font-stack;
-  color: white;
-  text-transform: uppercase;
-  transform: translate3d(0,0,0);
+  // background: blue;
+  // font: 100% $font-stack;
+  // color: white;
+  // text-transform: uppercase;
+  // transform: translate3d(0,0,0);
 }
 
 
+/* =logo */
+.logo{
+	@include logo__text;
+}
+
+.app__header .wrapper--nav{
+	a{
+		color: $headerNavTextColor;
+	}
+}
+
+.header__nav{
+	height:100%;
+	overflow:hidden;
+	// background:red;
+
+	a {
+		
+		display: block;
+		line-height: 1.3em;
+		overflow:hidden;
+		padding: 1em 1.2em;
+		text-align: center;
+
+		.name{
+			display: block;
+			font-size: 1rem;
+			font-weight: 800;
+			text-transform: uppercase;
+			line-height: 1em;
+		}
+		.desc{
+			display: inline;
+			text-transform: capitalize;
+			font-size: .8rem;
+		}
+	}
+}
