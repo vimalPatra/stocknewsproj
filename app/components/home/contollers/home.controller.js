@@ -11,7 +11,7 @@ console.log('-- home.controller.js loaded');
 
 
 	angular
-	.module("homeModule",[])
+	.module("homeModule")
 		.controller('homeCtrl',['$stateParams',function($stateParams){
 			// alert('home controller');
 		}]);

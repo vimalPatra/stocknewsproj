@@ -12,7 +12,8 @@
     "i": "^0.3.6",
     "jquery": "^3.2.1",
     "materialize-css": "^0.100.2",
-    "normalize.css": "^7.0.0"
+    "normalize.css": "^7.0.0",
+    "swiper": "^4.0.7"
   },
   "devDependencies": {
     "browser-sync": "^2.18.13",
@@ -41,6 +42,7 @@
     "gulp-style-aliases": "^1.1.11",
     "gulp-uglify": "^3.0.0",
     "gulp-util": "^3.0.8",
+    "node-find-folder": "^0.1.32",
     "postcss-cssnext": "^3.0.2",
     "vinyl-source-stream": "^1.1.0"
   },

@@ -1,3 +1,5 @@
+@import "libs/materialize";
+
 @import "vars";
 
 @import "mixins";
@@ -23,13 +25,9 @@
 
 
 
-.app__header{
-	@include paragraph__text;
-	background: $headerBg;
-	padding: $headerPadding;
-	overflow:hidden;
 
-}
+		/* =body */
+
 
 body {
   // background: blue;
@@ -40,9 +38,20 @@ body {
 }
 
 
+
+		/* =header */
+
+.app__header{
+	// @extent paragraph__text;
+	background: $headerBg;
+	padding: $headerPadding;
+	overflow:hidden;
+
+}
+
 /* =logo */
 .logo{
-	@include logo__text;
+	@extend .text--logo;
 }
 
 .app__header .wrapper--nav{
@@ -51,6 +60,7 @@ body {
 	}
 }
 
+/* =headerNav  (applied on the ul inside nav tag in the app's header) */
 .header__nav{
 	height:100%;
 	overflow:hidden;
@@ -78,3 +88,114 @@ body {
 		}
 	}
 }
+
+
+
+/* =calendar */
+
+
+.container--year__selector{
+	// border:1px solid blue;
+	height: 8rem;
+
+	.year__selector{
+		height: 100% !important;
+		// @extend .z-depth-4;
+		// box-shadow:inset 0 4px 10px 20px black;
+		// background:red;
+		cursor: pointer;
+		
+
+		.year{
+			height: 100% !important;
+
+			// @extend .text__center;
+			
+
+		}
+	}
+
+}
+.container--month__selector{
+
+	position:relative;
+	height: 100% !important;
+	padding-bottom:4rem;
+	padding-left: 6rem !important;
+	padding-right: 6rem !important;
+
+
+	.month__selector{
+		// @extend .z-depth-2;
+		// width: 80% !important;
+		.month{
+			@extend .text__center;
+			background:linear-gradient(75deg, lighten(black,90%), lighten(black,97%) );
+			height: 4rem;
+			line-height: 4rem;
+			overflow:hidden;
+			// box-shadow:inset 0 0 20px 2px rgba(0,0,0,.1);
+			
+			// width: 20% !important;
+		}
+	}
+}
+
+.slide__text{
+	display:inline;
+	font-size: 1.5rem;
+}
+
+.next__month{
+	// right: auto;
+	// bottom: 0;
+	// left: 50%;
+
+	// transform: translateY(50%) translateX(-50%) rotate(90deg);
+
+}
+.prev__month{
+	// left: auto;
+	// top: 0;
+	// left: 50%;
+	// transform: translateY(50%) translateX(-50%) rotate(90deg);
+}
+
+
+.pagination__month{
+	/* @include absolute;
+	z-index: 10;
+	top: 150% !important;
+	left: 3rem;
+	
+	transform:translateY(-50%);
+	background:transparent; */
+
+	.swiper-pagination-bullet{
+		// @include pseudo;
+		/* position:relative;
+		top: 0 !important;
+		display: block !important;
+		margin: 0 !important;
+		height: 100%;
+		width: 100%;
+		z-index: 1000000;
+		 */
+		opacity: 1;
+		width: 3rem !important;
+		height: 3rem !important;
+		color: white;
+		font-size: 2em;
+		// transform:translateY(-50%);
+		.bullet__text{
+			@extend .text__center;
+			height: 100%;
+			font-size: 1em;
+			
+		}
+	}
+
+}
+
+
+

@@ -1,29 +1,29 @@
 	
 	   //	mixins
 
-////	utility mixins
-@mixin paragraph__text{
-	font-family: $primaryFont;
-	font-weight: 400;
-}
-@mixin logo__text{
-	font-family: $logoFont;
-    color: $logoTextColor;
-    font-size: 2.5rem;
-    text-transform: uppercase;
-}
-@mixin nav__link{
+//// utility mixins
+
+@mixin title{
+    text-transform: capitalize;
     font-family: $primaryFont;
-    // color: $logoTextColor;
-    // font-size: 2.5rem;
-    text-transform: uppercase;
+    font-size: 1.8rem;
+    margin: .5rem .1rem;
 }
-
-
-
-
-
-
+@mixin pseudo{
+    position: absolute;
+    content: "";
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom:0;
+}
+@mixin absolute{
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom:0;
+}
 
 //// helper mixins
 @mixin capitalize{

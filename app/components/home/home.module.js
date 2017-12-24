@@ -8,9 +8,8 @@
 	//code here
 (function(){
 
-
 	angular
-	.module("homeModule",[]);
+	.module("homeModule",['eventUpdatesModule']);
 
 })();
 

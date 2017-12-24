@@ -6,7 +6,7 @@ console.log('-- app.route.js loaded');
 
 
 (function(){
-
+    "use strict";
 // code here
 
     angular
@@ -19,13 +19,13 @@ console.log('-- app.route.js loaded');
             $stateProvider
                 .state('home', {//State demonstrating Nested views
                     url: "/",
-                    templateUrl: './dist/views/home.view.html',
-                    controller: 'homeCtrl'
+                    templateUrl: './dist/views/home.view.html'/*,
+                    controller: 'homeCtrl'*/
                 })
                 .state('admin', {//State demonstrating Nested views
                     url: "/admin",
-                    templateUrl: './dist/views/admin.view.html',
-                    controller: 'adminCtrl'
+                    templateUrl: './dist/views/admin.view.html'/*,
+                    controller: 'adminCtrl'*/
                 });
                 /*.when('admin', {
                     templateUrl: './dist/views/admin.view.html',
