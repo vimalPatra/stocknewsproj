@@ -1,0 +1,136 @@
+<div class="container--list">
+	<div class="list__toolbar">
+		<div class="wrapper--list__toolbar row">
+
+			<div class="search__list col s12 push-s12 l4 push-l8">
+				<label for="evUpListSearch"></label>
+				<input type="search" name="" id="evUpListSearch">
+			</div>
+
+			<div class="filter__list col s12 pull-s12 l4 pull-l4">
+				<button>all</button>
+				<button>announcements</button>
+				<button>events</button>
+				<label for="evUpListRankRange"></label>
+				<input type="range" name="" id="evUpListRankRange">
+			</div>
+
+			<div class="sort__list col s12 pull-s12 l4 pull-l4">
+				<button>
+					rank
+				</button>
+				<button>
+					trending
+				</button>
+				<button>
+					added
+				</button>
+			</div>
+
+		</div>
+	</div>
+	<div class="list">
+		<div class="container--list__header row">
+			<div class="list__header list__header--date col s2">
+				<h3>
+					date
+				</h3>
+			</div>
+			<div class="list__header list__header--rank col s2">
+				<h3>
+					rank
+				</h3>
+			</div>
+			<div class="list__header list__header--stock col s2">
+				<h3>
+					stock
+				</h3>
+			</div>
+			<div class="list__header list__header--title col s4">
+				<h3>
+					news / announcement
+				</h3>
+			</div>
+			<div class="list__header list__header--trending col s2">
+				<h3>
+					trending
+				</h3>
+			</div>
+		</div>
+		<div class="list__rows">
+			<div class="wrapper--list__rows row " data-ng-repeat="events in list.eventsArray">
+				<div class="date__for__events col s2">
+					{{events.date}}
+				</div>
+				<div class="events__for__date col s10" >
+					<ul class="list__of__events">
+						<li class="event" data-ng-repeat="event in events.list">
+							<div class="event__wrapper row">
+								<div class="event__rank col s2">
+									{{event.rank}}
+								</div>
+								<div class="event__stock col s2">
+									{{event.stock}}
+								</div>
+								<div class="event__title col s4">
+									{{event.eventTitle}}
+								</div>
+								<div class="event__trending col s2">
+									{{event.trending}}
+								</div>
+							</div>
+						</li>
+						<!-- <li class="event">
+							<div class="event__wrapper row">
+								<div class="event__rank col s2">
+									1212	
+								</div>
+								<div class="event__stock col s2">
+									airtel
+								</div>
+								<div class="event__title col s4">
+									company's flagship product launch event
+								</div>
+								<div class="event__trending col s2">
+									X
+								</div>
+							</div>
+						</li>
+						<li class="event">
+							<div class="event__wrapper row">
+								<div class="event__rank col s2">
+									1212	
+								</div>
+								<div class="event__stock col s2">
+									airtel
+								</div>
+								<div class="event__title col s4">
+									company's flagship product launch event
+								</div>
+								<div class="event__trending col s2">
+									X
+								</div>
+							</div>
+						</li>
+						<li class="event">
+							<div class="event__wrapper row">
+								<div class="event__rank col s2">
+									1212	
+								</div>
+								<div class="event__stock col s2">
+									airtel
+								</div>
+								<div class="event__title col s4">
+									company's flagship product launch event
+								</div>
+								<div class="event__trending col s2">
+									X
+								</div>
+							</div>
+						</li> -->
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

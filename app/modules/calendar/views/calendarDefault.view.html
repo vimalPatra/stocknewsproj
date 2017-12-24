@@ -1,0 +1,55 @@
+<div id="calendar" class="calendar">
+	<!-- {{calendar.years}} -->
+	<!-- {{calendar.value}} -->
+	<div class="row">
+		<div class="container--year__selector swiper-container">
+			
+			<div class="year__selector swiper-wrapper ">
+				<div class="year swiper-slide" data-ng-repeat="year in calendar.years">
+					<!-- year can get printed out in this scope -->
+
+					<div class="container--month__selector swiper-container row">
+
+						<div class="month__selector swiper-wrapper col s12">
+							<div class="month swiper-slide" data-ng-repeat="month in calendar.months" data-ng-click="evUpCtrl.selectMonthYear({year,month})">
+								<!-- month can get printed out in this scope -->
+								{{year}} - {{month}} 
+								<!-- <input type="text" value="isd" data-model="evUpCtrl.monthIndex"> -->
+							</div>
+						</div>
+						<!-- pagination for month slides-->
+						<div class="swiper-pagination month__pagination"></div>
+						<!-- navigation button prev  -->
+				    	<div class="swiper-button-prev prev__month"></div> 
+						<!-- navigation button next  -->
+						<div class="swiper-button-next next__month"></div>
+					</div>
+				</div>
+			</div>
+
+			<!-- navigation button prev for year  -->
+	    	<!-- <div class="swiper-button-prev prev__year"></div>  -->
+			<!-- navigation button next for year -->
+			<!-- <div class="swiper-button-next next__year"></div> -->
+
+		</div>
+		
+	</div>
+
+	<div class="container--date__selector swiper-container row">
+		<div class="date__selector swiper-wrapper col s12">
+			<div class="date swiper-slide" data-ng-repeat="date in calendar.datesInCurrentMonth" data-ng-click="evUpCtrl.selectDate(date)">
+				{{date}}
+			</div>
+		</div>
+
+		<!-- pagination for month slides-->
+		<div class="swiper-pagination date__pagination"></div>
+		<!-- navigation button prev  -->
+    	<div class="swiper-button-prev prev__date"></div> 
+		<!-- navigation button next  -->
+		<div class="swiper-button-next next__date"></div>
+	</div>
+	
+	
+</div>
