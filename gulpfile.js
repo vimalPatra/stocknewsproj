@@ -293,14 +293,10 @@ function swallowError (error) {
 		        .pipe(plumber({
 					errorHandler: onError
 				}))
-<<<<<<< HEAD
-		        .pipe(sass())
-=======
 				.pipe(sourcemaps.init())
 		        .pipe(sass())
 		        .on('error', swallowError)
 		        .pipe(sourcemaps.write())
->>>>>>> origin/master
 		        .pipe(gulp.dest('source/css/'));
 
 	});
@@ -314,13 +310,9 @@ function swallowError (error) {
 				.pipe(plumber({
 					errorHandler: onError
 				}))
-<<<<<<< HEAD
-				.pipe(concat('lib.css'))
-=======
 				.pipe(sourcemaps.init())
 				.pipe(concat('lib.css'))
 				.pipe(sourcemaps.write())
->>>>>>> origin/master
 				.pipe(gulp.dest('dist/css/'));
 
 	});
@@ -335,17 +327,12 @@ function swallowError (error) {
 		        .pipe(plumber({
 					errorHandler: onError
 				}))
-<<<<<<< HEAD
-		        .pipe(postcss(postcssPlugins))
-		        .pipe(csslint())
-    			.pipe(csslint.formatter())
-=======
+
 				.pipe(sourcemaps.init())
 		        .pipe(postcss(postcssPlugins))
 		        .pipe(sourcemaps.init())
 		        // .pipe(csslint())
     			// .pipe(csslint.formatter())
->>>>>>> origin/master
 		        .pipe(gulp.dest('dist/css/'))
 		        .pipe(browserSync.stream());	
 	});
@@ -359,17 +346,12 @@ function swallowError (error) {
 		        .pipe(plumber({
 					errorHandler: onError
 				}))
-<<<<<<< HEAD
-		        .pipe(postcss(postcssPlugins))
-		        .pipe(csslint())
-    			.pipe(csslint.formatter())
-=======
+
 				.pipe(sourcemaps.init())
 		        .pipe(postcss(postcssPlugins))
 		        .pipe(sourcemaps.init())
 		        // .pipe(csslint())
     			// .pipe(csslint.formatter())
->>>>>>> origin/master
 		        .pipe(gulp.dest('dist/css/'))
 		        .pipe(browserSync.stream());
 	});
