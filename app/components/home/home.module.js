@@ -9,7 +9,7 @@
 (function(){
 
 	angular
-	.module("homeModule",['eventUpdatesModule']);
+	.module("homeModule",['calendarEventsListModule','newsModule','pollModule']);
 
 })();
 

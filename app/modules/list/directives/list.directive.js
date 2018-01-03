@@ -8,7 +8,7 @@ console.log('-- list.directive.js loaded');
 	//code here
 	
 (function(){
-
+	'use strict';
 
 	angular
 	.module('listModule')

@@ -28,8 +28,29 @@ console.log('-- list.controller.js loaded');
 			var self = this;
 			self.ctrl = ctrl;
 
+			angular.element(document).ready(function(){
+				self.rankSlider();
+			});
 			
 			
+			
+		},
+		rankSlider: function(){
+			var self = this;
+			var slider = document.getElementById('ceListRankRange');
+			  noUiSlider.create(slider, {
+			   start: [1, 200],
+			   connect: true,
+			   step: 1,
+			   orientation: 'horizontal', // 'horizontal' or 'vertical'
+			   range: {
+			     'min': 1,
+			     'max': 200
+			   },
+			   format: wNumb({
+			     decimals: 1
+			   })
+			  });
 		},
 		events: function(){
 			var self = this;
@@ -44,13 +65,13 @@ console.log('-- list.controller.js loaded');
 		listCtrl.init(ctrl);
 
 		ctrl.eventsArray = [];
-		console.log(ctrl.eventsArray);
+		// console.log(ctrl.eventsArray);
 
 		for(var i=0; i < 13; i++){
 
 			var eventsArrayIndex = i;
 			ctrl.eventsArray.push({
-				date: 1 + (i * 2),
+				date: String(1 + (i * 2)) + ' / jun / 2017',
 				month: 'jan',
 				year: 2017,
 				list: []

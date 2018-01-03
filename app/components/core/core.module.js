@@ -7,7 +7,7 @@
 
 	// setup angular modules 
 	angular
-	.module('core',[]);
+	.module('coreModule',[]);
 
 
 })();

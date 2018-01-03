@@ -7,7 +7,7 @@
 	"use strict";
 	// setup angular modules 
 	angular
-	.module('app',['ui.router','core','homeModule','eventUpdatesModule']);
+	.module('app',['ui.router','coreModule','homeModule']);
 
 
 })();

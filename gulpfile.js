@@ -13,6 +13,7 @@
 	var cleanCss = require('gulp-clean-css');
 	var flatten = require('gulp-flatten');
 	var del = require('del');
+	var sourcemaps = require('gulp-sourcemaps');
 	// var ff = require('node-find-folder');
 
 	var plumber = require('gulp-plumber');
@@ -38,7 +39,13 @@ var onError = function(err) {
   console.log(err);
 }
  
+function swallowError (error) {
 
+  // If you want details of the error in the console
+  console.log(error.toString())
+
+  this.emit('end')
+}
 
 	/**********
 	********		=js 
@@ -85,8 +92,10 @@ var onError = function(err) {
 		        				'app/**/*.js','source/js/main.js'])
 		        .pipe(plumber({
 					errorHandler: onError
-				}))			
+				}))
+				.pipe(sourcemaps.init())
 		        .pipe(concat('app.js'))
+		        .pipe(sourcemaps.write())
 		        .pipe(eslint())
 		        // eslint.format() outputs the lint results to the console. 
 		        // Alternatively use eslint.formatEach() (see Docs). 
@@ -104,8 +113,10 @@ var onError = function(err) {
 		        				'app/**/*.js','source/js/main.js'])
 		        .pipe(plumber({
 					errorHandler: onError
-				}))			
+				}))
+				.pipe(sourcemaps.init())
 		        .pipe(concat('app.js'))
+		        .pipe(sourcemaps.write())
 		        .pipe(eslint())
 		        // eslint.format() outputs the lint results to the console. 
 		        // Alternatively use eslint.formatEach() (see Docs). 
@@ -283,7 +294,10 @@ var onError = function(err) {
 		        .pipe(plumber({
 					errorHandler: onError
 				}))
+				.pipe(sourcemaps.init())
 		        .pipe(sass())
+		        .on('error', swallowError)
+		        .pipe(sourcemaps.write())
 		        .pipe(gulp.dest('source/css/'));
 
 	});
@@ -297,7 +311,9 @@ var onError = function(err) {
 				.pipe(plumber({
 					errorHandler: onError
 				}))
+				.pipe(sourcemaps.init())
 				.pipe(concat('lib.css'))
+				.pipe(sourcemaps.write())
 				.pipe(gulp.dest('dist/css/'));
 
 	});
@@ -312,9 +328,11 @@ var onError = function(err) {
 		        .pipe(plumber({
 					errorHandler: onError
 				}))
+				.pipe(sourcemaps.init())
 		        .pipe(postcss(postcssPlugins))
-		        .pipe(csslint())
-    			.pipe(csslint.formatter())
+		        .pipe(sourcemaps.init())
+		        // .pipe(csslint())
+    			// .pipe(csslint.formatter())
 		        .pipe(gulp.dest('dist/css/'))
 		        .pipe(browserSync.stream());	
 	});
@@ -328,9 +346,11 @@ var onError = function(err) {
 		        .pipe(plumber({
 					errorHandler: onError
 				}))
+				.pipe(sourcemaps.init())
 		        .pipe(postcss(postcssPlugins))
-		        .pipe(csslint())
-    			.pipe(csslint.formatter())
+		        .pipe(sourcemaps.init())
+		        // .pipe(csslint())
+    			// .pipe(csslint.formatter())
 		        .pipe(gulp.dest('dist/css/'))
 		        .pipe(browserSync.stream());
 	});

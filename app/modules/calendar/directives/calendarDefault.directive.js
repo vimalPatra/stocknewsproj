@@ -2,13 +2,11 @@
 
 	//	start of header.directive.js
 console.log('-- calendarDefault.directive.js loaded');
-	
-
 
 	//code here
 	
 (function(){
-	"use strict";
+	'use strict';
 
 	angular
 	.module('calendarModule')
@@ -16,9 +14,13 @@ console.log('-- calendarDefault.directive.js loaded');
 		return	{
 			restrict: 'E',
 			replace: true,
+			/*scope:{
+				options: '='
+			},*/
 			templateUrl: './dist/views/calendarDefault.view.html',
 			controller: 'calendarCtrl',
-			controllerAs: 'calendar'
+			controllerAs: 'calendar'/*,
+			bindToController: true*/
 		}
 	});
 

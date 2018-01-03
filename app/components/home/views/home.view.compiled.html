@@ -1,7 +1,7 @@
 <!-- header -->
 <app-header></app-header>
 
-<div class="wrapper--app row">
+<main class="main row">
 
 	<!-- content -->
 	<aside class="left col s12 l4">
@@ -12,7 +12,7 @@
 					major news
 				</h2>
 				<div class="card__content">
-
+					<news></news>
 				</div>
 			</div>
 		</section>
@@ -23,10 +23,9 @@
 					poll
 				</h2>
 				<div class="card__content">
-
+					<poll></poll>
 				</div>
 			</div>
-
 		</section>
 
 		<section class="card card--footer">
@@ -41,20 +40,20 @@
 		</section>
 	</aside>
 
-	<main class="right col s12 l8">
-		<section class="card card--calendar container--calendar">
+	<section class="right col s12 l8">
+		<section class="card card--events container--events">
 			<div class="wrapper--card">
 				<h2 class="card__title">
 					Event Updates
 				</h2>
 				<div class="card__content">
-					<event-updates></event-updates>
+					<calendar-events-list></calendar-events-list>
 				</div>
 			</div>
 		</section>
-	</main>
+	</section>
 
-</div>
+</main>
 
 <!-- <div class="row center">
   <a href="http://materializecss.com/getting-started.html" id="download-button" 

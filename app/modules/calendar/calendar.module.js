@@ -7,7 +7,7 @@
 
 	//code here
 (function(){
-
+	'use strict';
 
 	angular
 	.module("calendarModule",[]);
