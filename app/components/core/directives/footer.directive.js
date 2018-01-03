@@ -10,7 +10,7 @@ console.log('-- footer.directive.js loaded');
 (function(){
 
 	angular
-	.module('core')
+	.module('coreModule')
 	.directive("appFooter",function(){
 		return	{
 			restrict: 'E',

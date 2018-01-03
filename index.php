@@ -24,13 +24,11 @@ session_start();
         <link rel="stylesheet" href="dist/css/lib.css">
         <link rel="stylesheet" href="dist/css/main.css">
     </head>
-    <body >
+    <body id="body">
         
         <!--[if lte IE 9]>
             <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>
         <![endif]-->
-
-        
 
         <div class="wrap">
             
@@ -38,6 +36,9 @@ session_start();
             <div class="app" ng-app='app'>
                 <div class="view" data-ui-view></div>
             </div>
+        </div>
+        <div class="overlay--big">
+            
         </div>
         
 

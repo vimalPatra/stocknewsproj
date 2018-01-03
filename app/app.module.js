@@ -4,10 +4,10 @@
 	console.log('-- app.module.js loaded');
 
 (function(){
-
+	"use strict";
 	// setup angular modules 
 	angular
-	.module('app',['ui.router','core','homeModule','adminModule']);
+	.module('app',['ui.router','coreModule','homeModule','adminModule']);
 
 
 })();

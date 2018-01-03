@@ -1,0 +1,33 @@
+<div class="card__module card__module--calendar__events__list">
+	
+	<div id="calendar" class="card__sub__module card__sub__module--calendar container--calendar">
+		<calendar></calendar>
+	</div>
+	<div>
+		<span>SELECTIONS:- </span>
+		<span>
+			<span>years: </span>
+			<span data-ng-repeat="year in ceCtrl.selectedYears">
+				{{year || 'nothing selected'}}, 
+			</span>
+		</span>
+
+		<span>
+			<span> ----  months: </span>
+			<span data-ng-repeat="month in ceCtrl.selectedMonths">
+				{{month || 'nothing selected'}}, 
+			</span>
+		</span>
+
+		<span>
+			<span> ---- dates: </span>
+			<span data-ng-repeat="date in ceCtrl.selectedDates">
+				{{date || 'nothing selected'}}, 
+			</span>
+		</span>
+	</div>
+	<div class="card__sub__module card__sub__module--list container--list">
+		<list></list>
+	</div>
+
+</div>

@@ -1,0 +1,193 @@
+* [33mcommit 4c548793d30e0a0a7e6695311207db36c3befafe[m[33m ([m[1;36mHEAD -> [m[1;32mhomeUi[m[33m, [m[1;32mmaster[m[33m, [m[1;32mcalendar[m[33m)[m
+[31m|[m Author: vimal patra <vimalpatra1@gmail.com>
+[31m|[m Date:   Sun Dec 24 15:42:20 2017 +0530
+[31m|[m 
+[31m|[m     forgot to add files and dependencies in the very last commit with the eventUpdatesModule integration
+[31m|[m 
+[31m|[m  app/components/home/index.php                |   0
+[31m|[m  app/components/home/php/services/soad.php    |   0
+[31m|[m  app/components/home/php/sodf.php             |   0
+[31m|[m  app/modules/calendar/calendar.module.js      |  18 [32m+[m
+[31m|[m  .../controllers/calendar.controller.js       | 293 [32m++++++++[m
+[31m|[m  .../directives/calendarDefault.directive.js  |  30 [32m+[m
+[31m|[m  .../views/calendarDefault.view.compiled.html |  56 [32m++[m
+[31m|[m  .../calendar/views/calendarDefault.view.html |  55 [32m++[m
+[31m|[m  .../controllers/eventUpdates.controller.js   | 109 [32m+++[m
+[31m|[m  .../directives/eventUpdates.directive.js     |  33 [32m+[m
+[31m|[m  .../eventUpdates/eventUpdates.module.js      |  17 [32m+[m
+[31m|[m  .../views/eventUpdates.view.compiled.html    |  11 [32m+[m
+[31m|[m  .../views/eventUpdates.view.html             |  11 [32m+[m
+[31m|[m  .../list/controllers/list.controller.js      |  90 [32m+++[m
+[31m|[m  .../list/directives/list.directive.js        |  33 [32m+[m
+[31m|[m  app/modules/list/list.module.js              |  18 [32m+[m
+[31m|[m  .../list/views/list.view.compiled.html       |   3 [32m+[m
+[31m|[m  app/modules/list/views/list.view.html        | 136 [32m++++[m
+[31m|[m  controller/home/index.php                    |   0
+[31m|[m  controller/home/php/services/soad.php        |   0
+[31m|[m  controller/home/php/sodf.php                 |   0
+[31m|[m  source/css/libs/swiper.css                   | 602 [32m+++++++++++++++++[m
+[31m|[m  source/js/vendor/swiper.min.js               |  13 [32m+[m
+[31m|[m  source/sass/libs/_materialize.scss           |  42 [32m++[m
+[31m|[m  24 files changed, 1570 insertions(+)
+[31m|[m 
+* [33mcommit 23f07b283425bcd613c2e5495838d22377ecf5db[m
+[31m|[m Author: vimal patra <vimalpatra1@gmail.com>
+[31m|[m Date:   Sun Dec 24 15:39:52 2017 +0530
+[31m|[m 
+[31m|[m     calendar sliders added in calendarModule and list added in listModule and collectively integrated to eventUpdatesModule Module
+[31m|[m 
+[31m|[m  app/app.module.js                            |    4 [32m+[m[31m-[m
+[31m|[m  app/app.route.js                             |   10 [32m+[m[31m-[m
+[31m|[m  .../admin/views/admin.view.compiled.html     |    3 [31m-[m
+[31m|[m  app/components/admin/views/admin.view.html   |    3 [31m-[m
+[31m|[m  .../core/views/footer.view.compiled.html     |   43 [32m+[m[31m-[m
+[31m|[m  app/components/core/views/footer.view.html   |   29 [32m+[m[31m-[m
+[31m|[m  .../core/views/header.view.compiled.html     |   39 [32m+[m[31m-[m
+[31m|[m  .../home/contollers/home.controller.js       |    2 [32m+[m[31m-[m
+[31m|[m  app/components/home/home.module.js           |    3 [32m+[m[31m-[m
+[31m|[m  .../home/views/home.view.compiled.html       |   86 [32m+[m[31m-[m
+[31m|[m  app/components/home/views/home.view.html     |   99 [32m+[m[31m-[m
+[31m|[m  gulpfile.js                                  |  269 [32m+[m[31m-[m
+[31m|[m  package.json                                 |    4 [32m+[m[31m-[m
+[31m|[m  source/css/libs/materialize.css              | 6557 [31m---------------[m
+[31m|[m  source/css/main.css                          | 6760 [32m+++++++++++++++[m[31m-[m
+[31m|[m  source/js/main.js                            |    6 [32m+[m[31m-[m
+[31m|[m  source/sass/_mixins.scss                     |   42 [32m+[m[31m-[m
+[31m|[m  source/sass/_utility.scss                    |   45 [32m+[m[31m-[m
+[31m|[m  source/sass/libs/materialize.scss            |   42 [31m-[m
+[31m|[m  source/sass/main.scss                        |  137 [32m+[m[31m-[m
+[31m|[m  20 files changed, 7229 insertions(+), 6954 deletions(-)
+[31m|[m 
+* [33mcommit 56b1b9ca877fc6f09eefdddf8dd43932c5a8e3d3[m[33m ([m[1;31morigin/master[m[33m, [m[1;32mhomeLayout[m[33m)[m
+[31m|[m Author: vimal patra <vimalpatra1@gmail.com>
+[31m|[m Date:   Tue Dec 19 19:36:38 2017 +0530
+[31m|[m 
+[31m|[m     routing, header and materialize implemented
+[31m|[m 
+[31m|[m  .gitignore                                   |    15 [32m+[m[31m-[m
+[31m|[m  app/app.module.js                            |    23 [32m+[m[31m-[m
+[31m|[m  app/app.route.js                             |    54 [32m+[m[31m-[m
+[31m|[m  .../admin/views/admin.view.compiled.html     |     3 [32m+[m
+[31m|[m  app/components/admin/views/admin.view.html   |     3 [32m+[m
+[31m|[m  app/components/core/core.module.js           |    19 [32m+[m
+[31m|[m  .../core/directives/footer.directive.js      |    30 [32m+[m
+[31m|[m  .../core/directives/header.directive.js      |    31 [32m+[m
+[31m|[m  .../core/views/footer.view.compiled.html     |    35 [32m+[m
+[31m|[m  app/components/core/views/footer.view.html   |    35 [32m+[m
+[31m|[m  .../core/views/header.view.compiled.html     |    54 [32m+[m
+[31m|[m  app/components/core/views/header.view.html   |    83 [32m+[m
+[31m|[m  .../home/contollers/home.controller.js       |    24 [32m+[m
+[31m|[m  .../home/directives/home.directive.js        |    31 [32m+[m
+[31m|[m  app/components/home/home.module.js           |    18 [32m+[m
+[31m|[m  app/components/home/homeService.js           |     0
+[31m|[m  app/components/home/homeView-2.html          |     1 [31m-[m
+[31m|[m  app/components/home/homeView.html            |     0
+[31m|[m  .../home.service.js}                         |     0
+[31m|[m  .../home/views/home.view.compiled.html       |    62 [32m+[m
+[31m|[m  app/components/home/views/home.view.html     |    64 [32m+[m
+[31m|[m  app/modules/anything.js                      |     1 [31m-[m
+[31m|[m  gulpfile.js                                  |   202 [32m+[m[31m-[m
+[31m|[m  index-2.html => index.compiled.html          |    18 [32m+[m[31m-[m
+[31m|[m  index.html                                   |    14 [32m+[m[31m-[m
+[31m|[m  package.json                                 |     4 [32m+[m
+[31m|[m  source/css/libs/materialize.css              |  6557 [32m++++++++++[m
+[31m|[m  source/css/main.css                          |   377 [32m+[m[31m-[m
+[31m|[m  source/fonts/roboto/Roboto-Bold.woff         |   Bin [31m0[m -> [32m90308[m bytes
+[31m|[m  source/fonts/roboto/Roboto-Bold.woff2        |   Bin [31m0[m -> [32m64800[m bytes
+[31m|[m  source/fonts/roboto/Roboto-Light.woff        |   Bin [31m0[m -> [32m89672[m bytes
+[31m|[m  source/fonts/roboto/Roboto-Light.woff2       |   Bin [31m0[m -> [32m64268[m bytes
+[31m|[m  source/fonts/roboto/Roboto-Medium.woff       |   Bin [31m0[m -> [32m90560[m bytes
+[31m|[m  source/fonts/roboto/Roboto-Medium.woff2      |   Bin [31m0[m -> [32m65412[m bytes
+[31m|[m  source/fonts/roboto/Roboto-Regular.woff      |   Bin [31m0[m -> [32m89828[m bytes
+[31m|[m  source/fonts/roboto/Roboto-Regular.woff2     |   Bin [31m0[m -> [32m64832[m bytes
+[31m|[m  source/fonts/roboto/Roboto-Thin.woff         |   Bin [31m0[m -> [32m88132[m bytes
+[31m|[m  source/fonts/roboto/Roboto-Thin.woff2        |   Bin [31m0[m -> [32m63056[m bytes
+[31m|[m  source/js/main.js                            |    16 [32m+[m[31m-[m
+[31m|[m  source/js/vendor/lib.js                      |     8 [32m+[m[31m-[m
+[31m|[m  source/js/vendor/materialize.js              | 10021 [32m+++++++++++++++[m
+[31m|[m  source/sass/_base.scss                       |    63 [32m+[m
+[31m|[m  source/sass/_codeshell.scss                  |    91 [32m+[m
+[31m|[m  source/sass/_helper.scss                     |   101 [32m+[m
+[31m|[m  source/sass/_mediaqueries.scss               |    94 [32m+[m
+[31m|[m  source/sass/_mixins.scss                     |   152 [32m+[m
+[31m|[m  source/sass/_utility.scss                    |    31 [32m+[m
+[31m|[m  source/sass/_vars.scss                       |    25 [32m+[m
+[31m|[m  source/sass/libs/components/_badges.scss     |    47 [32m+[m
+[31m|[m  source/sass/libs/components/_buttons.scss    |   291 [32m+[m
+[31m|[m  source/sass/libs/components/_cards.scss      |   196 [32m+[m
+[31m|[m  source/sass/libs/components/_carousel.scss   |    90 [32m+[m
+[31m|[m  source/sass/libs/components/_chips.scss      |    89 [32m+[m
+[31m|[m  .../sass/libs/components/_collapsible.scss   |    84 [32m+[m
+[31m|[m  source/sass/libs/components/_color.scss      |   412 [32m+[m
+[31m|[m  source/sass/libs/components/_dropdown.scss   |    68 [32m+[m
+[31m|[m  source/sass/libs/components/_global.scss     |   734 [32m++[m
+[31m|[m  source/sass/libs/components/_grid.scss       |   156 [32m+[m
+[31m|[m  .../components/_icons-material-design.scss   |     5 [32m+[m
+[31m|[m  .../sass/libs/components/_materialbox.scss   |    43 [32m+[m
+[31m|[m  source/sass/libs/components/_modal.scss      |    90 [32m+[m
+[31m|[m  source/sass/libs/components/_navbar.scss     |   208 [32m+[m
+[31m|[m  source/sass/libs/components/_normalize.scss  |   424 [32m+[m
+[31m|[m  source/sass/libs/components/_preloader.scss  |   334 [32m+[m
+[31m|[m  source/sass/libs/components/_pulse.scss      |    34 [32m+[m
+[31m|[m  source/sass/libs/components/_roboto.scss     |    39 [32m+[m
+[31m|[m  source/sass/libs/components/_sideNav.scss    |   214 [32m+[m
+[31m|[m  source/sass/libs/components/_slider.scss     |    92 [32m+[m
+[31m|[m  .../libs/components/_table_of_contents.scss  |    33 [32m+[m
+[31m|[m  source/sass/libs/components/_tabs.scss       |    93 [32m+[m
+[31m|[m  source/sass/libs/components/_tapTarget.scss  |   103 [32m+[m
+[31m|[m  source/sass/libs/components/_toast.scss      |    59 [32m+[m
+[31m|[m  source/sass/libs/components/_tooltip.scss    |    31 [32m+[m
+[31m|[m  .../sass/libs/components/_transitions.scss   |    13 [32m+[m
+[31m|[m  source/sass/libs/components/_typography.scss |    61 [32m+[m
+[31m|[m  source/sass/libs/components/_variables.scss  |   343 [32m+[m
+[31m|[m  source/sass/libs/components/_waves.scss      |   114 [32m+[m
+[31m|[m  .../date_picker/_default.date.scss           |   456 [32m+[m
+[31m|[m  .../components/date_picker/_default.scss     |   212 [32m+[m
+[31m|[m  .../date_picker/_default.time.scss           |   267 [32m+[m
+[31m|[m  .../libs/components/forms/_checkboxes.scss   |   210 [32m+[m
+[31m|[m  .../libs/components/forms/_file-input.scss   |    44 [32m+[m
+[31m|[m  .../sass/libs/components/forms/_forms.scss   |    22 [32m+[m
+[31m|[m  .../libs/components/forms/_input-fields.scss |   333 [32m+[m
+[31m|[m  .../components/forms/_radio-buttons.scss     |   115 [32m+[m
+[31m|[m  .../sass/libs/components/forms/_range.scss   |   160 [32m+[m
+[31m|[m  .../sass/libs/components/forms/_select.scss  |   182 [32m+[m
+[31m|[m  .../libs/components/forms/_switches.scss     |    89 [32m+[m
+[31m|[m  source/sass/libs/materialize.scss            |    42 [32m+[m
+[31m|[m  source/sass/main.scss                        |    86 [32m+[m[31m-[m
+[31m|[m  90 files changed, 24963 insertions(+), 115 deletions(-)
+[31m|[m 
+* [33mcommit 2c3580ef4fffde2248df6ea848ccbfa513926877[m[33m ([m[1;31morigin/packageJson[m[33m, [m[1;31morigin/calendar[m[33m)[m
+[31m|[m Author: vimal patra <vimalpatra1@gmail.com>
+[31m|[m Date:   Fri Dec 15 12:57:36 2017 +0530
+[31m|[m 
+[31m|[m     second commit
+[31m|[m 
+[31m|[m  app/components/home/homeView-2.html | 1 [32m+[m
+[31m|[m  1 file changed, 1 insertion(+)
+[31m|[m 
+* [33mcommit 5018a66d9c2bd3b1c2d77cf0e18dd6ca403f8f8a[m
+  Author: vimal patra <vimalpatra1@gmail.com>
+  Date:   Fri Dec 15 12:32:58 2017 +0530
+  
+      initial commit
+  
+   .eslintrc.json                        |  28 [32m++[m
+   .gitignore                            |  77 [32m++++++[m
+   app/app.module.js                     |  26 [32m++[m
+   app/app.route.js                      |  12 [32m+[m
+   app/components/home/homeController.js |   0
+   app/components/home/homeService.js    |   0
+   app/components/home/homeView.html     |   0
+   app/modules/anything.js               |   1 [32m+[m
+   gulpfile - Copy.js                    | 221 [32m++++++++++++++++[m
+   gulpfile.js                           | 303 [32m++++++++++++++++++++++[m
+   index-2.html                          |  64 [32m+++++[m
+   index.html                            |  49 [32m++++[m
+   package.json                          |  47 [32m++++[m
+   readme.md                             |  82 [32m++++++[m
+   source/css/libs/normalize.css         | 447 [32m++++++++++++++++++++++++++++++++[m
+   source/css/main.css                   |   7 [32m+[m
+   source/js/main.js                     |  15 [32m++[m
+   source/js/vendor/lib.js               |   4 [32m+[m
+   source/sass/main.scss                 |  16 [32m++[m
+   19 files changed, 1399 insertions(+)

@@ -99,3 +99,15 @@
 .clearfix:after {
     clear: both;
 }
+
+                /* =overlay */
+
+.overlay--big{
+    @include fixed;
+    height: 100%; 
+    width: 100%;
+    background: $bigOverlayBg;
+    z-index:2;
+    display: none;
+}
+

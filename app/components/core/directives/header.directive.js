@@ -11,7 +11,7 @@ console.log('-- header.directive.js loaded');
 
 
 	angular
-	.module('core')
+	.module('coreModule')
 	.directive("appHeader",function(){
 		return	{
 			restrict: 'E',
@@ -19,7 +19,9 @@ console.log('-- header.directive.js loaded');
 			scope: {
 				tagline: '='
 			},
-			templateUrl: './dist/views/header.view.html'
+			templateUrl: './dist/views/header.view.html',
+			controller: 'headerCtrl',
+			controllerAs: 'hCtrl'
 		}
 	});
 

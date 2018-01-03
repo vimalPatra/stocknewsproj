@@ -12,7 +12,8 @@
     "i": "^0.3.6",
     "jquery": "^3.2.1",
     "materialize-css": "^0.100.2",
-    "normalize.css": "^7.0.0"
+    "normalize.css": "^7.0.0",
+    "swiper": "^4.0.7"
   },
   "devDependencies": {
     "@fengyuanchen/datepicker": "^0.6.4",
@@ -38,10 +39,12 @@
     "gulp-postcss": "^7.0.0",
     "gulp-rename": "^1.2.2",
     "gulp-sass": "^3.1.0",
+    "gulp-sourcemaps": "^2.6.2",
     "gulp-streamify": "^1.0.2",
     "gulp-style-aliases": "^1.1.11",
     "gulp-uglify": "^3.0.0",
     "gulp-util": "^3.0.8",
+    "node-find-folder": "^0.1.32",
     "postcss-cssnext": "^3.0.2",
     "vinyl-source-stream": "^1.1.0"
   },
