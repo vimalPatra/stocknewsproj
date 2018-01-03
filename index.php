@@ -1,3 +1,10 @@
+<?php
+session_start();
+
+ if(isset($_SESSION['adminemail'])){
+        $adminSession = true;
+}
+?>
 <!doctype html>
 <html class="no-js" lang="">
     <head>
@@ -23,9 +30,10 @@
             <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>
         <![endif]-->
 
-
+        
 
         <div class="wrap">
+            
             <!-- Add your site or application content here -->
             <div class="app" ng-app='app'>
                 <div class="view" data-ui-view></div>

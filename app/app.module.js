@@ -7,7 +7,7 @@
 
 	// setup angular modules 
 	angular
-	.module('app',['ui.router','core','homeModule']);
+	.module('app',['ui.router','core','homeModule','adminModule']);
 
 
 })();

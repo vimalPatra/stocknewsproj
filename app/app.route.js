@@ -11,9 +11,11 @@ console.log('-- app.route.js loaded');
 
     angular
     .module('app')
-        .config(['$stateProvider', '$urlRouterProvider',
-            function($stateProvider, $urlRouterProvider) {
+        .config(['$locationProvider','$stateProvider', '$urlRouterProvider',
+            function($locationProvider,$stateProvider, $urlRouterProvider) {
             
+            $locationProvider.hashPrefix('');
+
             $urlRouterProvider.otherwise("/");
 
             $stateProvider
@@ -25,7 +27,8 @@ console.log('-- app.route.js loaded');
                 .state('admin', {//State demonstrating Nested views
                     url: "/admin",
                     templateUrl: './dist/views/admin.view.html',
-                    controller: 'adminCtrl'
+                    controller: 'adminCtrl',
+                    controllerAs : 'adc'
                 });
                 /*.when('admin', {
                     templateUrl: './dist/views/admin.view.html',
