@@ -473,12 +473,12 @@ function swallowError (error) {
 	});
 
 	/* =run task : run for development build and serving to the server*/
-	gulp.task('run', ['default','html'],function(){
+	gulp.task('run', ['default'],function(){
 		gulp.start('watchNserve');
 	});
 
 	/* =compile task : run for development build and watching the files (use your own server) */
-	gulp.task('compile', ['default','html'],function(){
+	gulp.task('compile', ['default'],function(){
 		gulp.start('watch');
 	});
 
