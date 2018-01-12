@@ -9,8 +9,8 @@ if($_SERVER['REQUEST_METHOD']=='POST')
 	$postdata =  file_get_contents("php://input");
 	$dataarray = json_decode($postdata);
 
-	$name = $dataarray->name;
-	$name = strtolower($name); // news name lower case
+	$title = $dataarray->title;
+	$description = $dataarray->description;
 	$link = $dataarray->link;
 	$link = strtolower($link); // news link lower case
 	$date = $dataarray->date;
@@ -18,8 +18,9 @@ if($_SERVER['REQUEST_METHOD']=='POST')
 	$year = $dataarray->year;
 	$verified = 1;
 
-	$inserted = insert("INSERT INTO news_box (name,link,date,month,year,verified) values(:name,:link,:date,:month,:year,:verified)",array(
-		'name'=>$name,
+	$inserted = insert("INSERT INTO news_box (title,description,link,date,month,year,verified) values(:title,:description,:link,:date,:month,:year,:verified)",array(
+		'title'=>$title,
+		'description'=>$description,
 		'link'=>$link,
 		'date'=>$date,
 		'month'=>$month,
@@ -28,7 +29,7 @@ if($_SERVER['REQUEST_METHOD']=='POST')
 	));
 
 	$nname = "Successfully uploaded news";
-	$ndescription = "$name";
+	$ndescription = "$title";
 	$ntype = "news box";
 	$nlinked = 0;
 	$nlink = "null";

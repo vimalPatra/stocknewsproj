@@ -11,23 +11,20 @@ if($_SERVER['REQUEST_METHOD']=='POST')
 
 	$name = $dataarray->name;
 	$name = strtolower($name); // stock name lower case
+	$title = $dataarray->title;
 	$description = $dataarray->desc;
-	$description = strtolower($description);
 	$date = $dataarray->date;
 	$month = $dataarray->month;
 	$year = $dataarray->year;
 	// $rank = $dataarray->rank;
 	// $thumb = $dataarray->thumb;
 	$ea = $dataarray->ear;
-	$trending = $dataarray->trending;
-	if(empty($trending))
-	{
-		$trending = 0;
-	}
-	else
+	$trending=0;
+	if(!empty($dataarray->trending))
 	{
 		$trending = 1;
 	}
+
 
 	//inserting stock data
 
@@ -67,9 +64,10 @@ if($_SERVER['REQUEST_METHOD']=='POST')
 	{
 
 		// insert events data
-	$inserted1=insert("INSERT INTO admin_events(name,description,stock_id,date,month,year,ea_type,trending) values(:name,:description,:stock_id,:date,:month,:year,:ea,:trending)",
+	$inserted1=insert("INSERT INTO admin_events(name,title,description,stock_id,date,month,year,ea_type,trending) values(:name,:title,:description,:stock_id,:date,:month,:year,:ea,:trending)",
 		array(
 			'name'=>$name,
+			'title'=>$title,
 			'description'=>$description,
 			'stock_id'=>$stock_id,
 			'date'=>$date,
@@ -86,7 +84,7 @@ if($_SERVER['REQUEST_METHOD']=='POST')
 				else
 				{
 					$nname = "Successfully uploaded an Event/Announcement about $name";
-					$ndescription = "$description";
+					$ndescription = "$title";
 					$ntype = "Event/Announcement box";
 					$nlinked = 0;
 					$nlink = "null";
@@ -124,6 +122,21 @@ if($_SERVER['REQUEST_METHOD']=='POST')
 					'linked'=>$nlinked,
 					'link'=>$nlink));
 
+					// add thumbnail to new stock
+
+					$nname = "Set the Thumbnail for";
+					$ndescription = "$name";
+					$ntype = "Stock Info";
+					$nlinked = 1;
+					$nlink = "some link";
+
+					insert("INSERT INTO notifications (name,description,type,linked,link) values(:name,:description,:type,:linked,:link)",
+						array('name'=>$nname,
+					'description'=>$ndescription,
+					'type'=>$ntype,
+					'linked'=>$nlinked,
+					'link'=>$nlink));
+
 
 			//fetching stock_id
 
@@ -135,9 +148,10 @@ if($_SERVER['REQUEST_METHOD']=='POST')
 				$stock_id=$row2['stock_id']; // stock_id fetched
 
 					// insert events data
-					$inserted=insert("INSERT INTO admin_events(name,description,stock_id,date,month,year,ea_type,trending) values(:name,:description,:stock_id,:date,:month,:year,:ea,:trending)",
+					$inserted=insert("INSERT INTO admin_events(name,title,description,stock_id,date,month,year,ea_type,trending) values(:name,:title,:description,:stock_id,:date,:month,:year,:ea,:trending)",
 						array(
 							'name'=>$name,
+							'title'=>$title,
 							'description'=>$description,
 							'stock_id'=>$stock_id,
 							'date'=>$date,
@@ -150,7 +164,7 @@ if($_SERVER['REQUEST_METHOD']=='POST')
 					//notification
 
 					$nname = "Successfully uploaded an Event/Announcement about $name";
-					$ndescription = "$description";
+					$ndescription = "$title";
 					$ntype = "Event/Announcement box";
 					$nlinked = 0;
 					$nlink = "null";

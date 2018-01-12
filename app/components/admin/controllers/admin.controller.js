@@ -16,9 +16,6 @@ console.log('-- admin.controller.js loaded');
 
 			var self = this; 
 
-			 // $(document).ready(function() {
-    			
-  		// 	});
 			 angular.element(document).ready(function () {
         		$('select').material_select();
 			});
@@ -27,19 +24,59 @@ console.log('-- admin.controller.js loaded');
 			 	$('#appendedInputs').html(" ");
 			 	var noOfOptionsSelectedVal = $(this).val();
 			 	var i;
-			 	for(i=1;i<=noOfOptionsSelectedVal;i++){
+			 	for(i=1;i<=noOfOptionsSelectedVal;i++)
+			 	{
 			 		$('#appendedInputs').append(
 			 			"<input type='text' id='optionsToSelect"+i+"' ng-model='adc.optionsToSelect"+i+"'><label for='optionsToSelect"+i+"'>Option "+i+"</label>"
 			 			);
 			 	}
 			 });
 
-			$('.ae_datepicker').datepicker();
-			var dateobj = $('.ae_datepicker').datepicker('getDate');
+
+			var adminAddEventDP = $('#ae_datepicker1');
+			var adminEditEventDP = $('#ae_datepicker2');
+			var adminAddNewsDP = $('#datepickerNewsAdd');
+			var adminEditNewsDP = $('#datepickerNewsEdit')	
+
+				adminAddEventDP.datepicker();
+				adminEditEventDP.datepicker();
+				adminAddNewsDP.datepicker();
+				adminEditNewsDP.datepicker();
+
+			
+			/* Main Tab management */
+
+			this.tab = 1;	// initial tab show
+			
+			self.setTab = function(val){ // func that sets the current Tab
+				self.tab= val;
+				self.postStatus = "Status";
+			};
+
+
+			/* inside Manage Events, Tab management */
+
+			this.tab = 1;	// initial tab show
+			
+			self.setTabInEvents = function(val){ // func that sets the current Tab
+				self.InEventsTab= val;
+			};
+
+			
+
+			console.log("outside");
+			var dbfilename;
+
+	
+
+			/*************  Events add function ************/
+
+		    self.adminEventForm = function(){
+
+		    var dateobj = adminAddEventDP.datepicker('getDate');
 			var ddate = dateobj.getDate();
 			var dmonth = dateobj.getMonth();
 			var dyear = dateobj.getFullYear();
-			
 			 
 			var monthNames = ['jan','feb','march','april','may','jun',
 			'jul','aug','sep','oct','nov','dec']; // hardcoded months
@@ -49,39 +86,23 @@ console.log('-- admin.controller.js loaded');
 					}
 				});
 
-			dmonth = dmonth;
-
-			console.log(ddate);
-			console.log(dmonth);
-			console.log(dyear);
-
-			
-			this.tab = 1;	// initial tab show
-			
-			self.setTab = function(val){ // func that sets the current Tab
-				self.tab= val;
-			};
-			console.log("outside");
-			var dbfilename;
-
-	/* Thumbnail uploading here */
-
-	/* Form Event data posting... */
-		    self.adminEventForm = function(){
 
 				console.log("inside");
 				var name = self.ename;
+				var title = self.etitle;
 				var desc = self.edesc;
 				var date =	ddate;
 				var month = dmonth;
 				var year = dyear;
-				// var rank = self.rank;
-				// var thumb = dbfilename;
+				console.log(ddate);
+				console.log(dmonth);
+				console.log(dyear);
 				var ear = self.ear;
 				var trending = self.trending;
 
 				var datad = {
 					name : name,
+					title : title,
 					desc : desc,
 					date : date,
 					month : month,
@@ -95,7 +116,7 @@ console.log('-- admin.controller.js loaded');
 				// posting form data 
 				$http({
                 method: "POST",
-                url: "controller/admin/php/services/adminFormPost.php",
+                url: "controller/admin/php/services/adminEventPost.php",
                 // dataType: 'json',
                 data: datad,
                 // headers: { "Content-Type": "application/json" }
@@ -117,47 +138,38 @@ console.log('-- admin.controller.js loaded');
 
 				console.log(date+" .. "+month+" .. "+year+" .. "+" .. " + name+" .. " + ear+" .. " + trending);
 
-
-				// checking thumb exists or not for stock
-				$http({
-                method: "POST",
-                url: "controller/admin/php/services/adminFormPost.php",
-                // dataType: 'json',
-                data: datad,
-                // headers: { "Content-Type": "application/json" }
-            }).then(function(response){
-       			var ar = response.data;
-       			if(ar==1)
-       			{
-       				self.postStatus = "Success !";
-       				console.log("ar");
-            		console.log(ar);
-       			}
-       			else
-       			{
-       				self.postStatus = ar;
-       				console.log("ar");
-       				console.log(ar);
-       			}
-            });
-            
 			}; // adminEventForm function end
 
 
 			/*************  News box add function ************/
 
 			self.adminNewsForm = function(){
+			
+			var dateobj = adminAddNewsDP.datepicker('getDate');
+			var ddate = dateobj.getDate();
+			var dmonth = dateobj.getMonth();
+			var dyear = dateobj.getFullYear();
+			 
+			var monthNames = ['jan','feb','march','april','may','jun',
+			'jul','aug','sep','oct','nov','dec']; // hardcoded months
+				monthNames.forEach(function(month,i){	
+					if(dmonth == i) {
+						dmonth = month;
+					}
+				});
+
+
 				console.log("News controller inside");
-				var name = self.newsName;
+				var title = self.newsTitle;
+				var desc = self.newsDesc;
 				var date =	ddate;
 				var month = dmonth;
 				var year = dyear;
-				// var rank = self.rank;
-				// var thumb = dbfilename;
 				var link = self.newsLink;
 		
 				var datad = {
-					name : name,
+					title : title,
+					description : desc,
 					date : date,
 					month : month,
 					year : year,
@@ -188,7 +200,10 @@ console.log('-- admin.controller.js loaded');
             });
 			};
 
+			/*************  Poll box add function ************/
+
 			self.adminPollForm = function(){
+
 				console.log("********** inside poll **********");
 
 				var question = self.question;
@@ -251,6 +266,360 @@ console.log('-- admin.controller.js loaded');
 
 			};
 
+			var rows;
+
+			/*************  Events View function ************/
+
+			self.showEventsInView = function(){
+				console.log("inside view");
+
+				$http({
+                method: "GET",
+                url: "controller/admin/php/services/EventsView.php",
+                // dataType: 'json',
+                // headers: { "Content-Type": "application/json" }
+            }).then(function(response){
+       			rows = response.data;
+       			self.eventRows = rows;
+            });
+			};
+
+			self.popupShowHide = 0;
+			var edit_event_id;
+			
+			/*************  Events edit function (set the prev values) ************/
+
+			self.editEvents = function(event_id)
+			{
+				edit_event_id = event_id;
+				_.forEach(rows, function(o){ 
+					if(o.event_id == event_id){
+						self.particularRow = o;
+					} 
+				});
+
+
+				var setMonth = self.particularRow.month;
+				console.log("?????????????????  ????????????");
+				console.log(setMonth);
+				console.log("?????????????????  ????????????");
+
+				var setMonthIndexed;
+
+				var monthNames2 = ['jan','feb','march','april','may','jun',
+			'jul','aug','sep','oct','nov','dec']; // hardcoded months
+				monthNames2.forEach(function(month,i){
+					console.log("month in iteration: " + month + " " + i + " setMonth is: " + setMonth);
+
+					if(setMonth == month) {
+						setMonthIndexed = i + 1;
+						
+					}else{
+						// console.log('else ' + setMonth + " " + month);
+					}
+				});
+				console.log("!!!!!!!!!!!?  ????????????");
+				console.log(setMonthIndexed);
+				console.log("?????????????????  ????????????");
+
+				self.uear=self.particularRow.ea_type;
+				self.uename=self.particularRow.name;
+				self.uetitle = self.particularRow.title;
+				self.uedesc=self.particularRow.description;
+				self.uedate = setMonth+"/"+self.particularRow.date+"/"+self.particularRow.year;
+
+				if(self.particularRow.trending==1){
+					console.log("checked");
+					self.utrending=true;
+				}
+
+				self.uear = 'eve';
+				// self.uear = 'ann';
+				console.log("==============");
+				console.log('ear');
+				// self.utrending=self.particularRow.trending;
+
+			self.popupShowHide=1;
+		};
+
+			/*************  Events edit function (get the new values) ************/
+
+		self.editEventsSubmit = function()
+		{
+			console.log("inside edit and save ");
+			
+			var dateobj = adminEditEventDP.datepicker('getDate');
+			var ddate = dateobj.getDate();
+			var dmonth = dateobj.getMonth();
+			var dyear = dateobj.getFullYear();
+			 
+			var monthNames = ['jan','feb','march','april','may','jun',
+			'jul','aug','sep','oct','nov','dec']; // hardcoded months
+				monthNames.forEach(function(month,i){	
+					if(dmonth == i) {
+						dmonth = month;
+					}
+				});
+
+				var title = self.uetitle;
+				var desc = self.uedesc;
+				var date =	ddate;
+				var month = dmonth;
+				var year = dyear;
+				var ear = self.uear;
+				var trending = self.utrending;
+
+				
+				var datad = {
+					event_id : edit_event_id,
+					title:title,
+					desc : desc,
+					date : date,
+					month : month,
+					year : year,
+					ear : ear, 
+					trending : trending
+				};
+
+				
+				// posting form data 
+				$http({
+                method: "POST",
+                url: "controller/admin/php/services/adminEventEdit.php",
+                // dataType: 'json',
+                data: datad,
+                // headers: { "Content-Type": "application/json" }
+            }).then(function(response){
+       			var ar = response.data;
+       			if(ar==1)
+       			{
+       				self.postStatus = "Successfully Modified and Saved !";
+       				console.log("ar");
+            		console.log(ar);
+       			}
+       			else
+       			{
+       				self.postStatus = ar;
+       				console.log("ar");
+       				console.log(ar);
+       			}
+            });
+
+				console.log(date+" .. "+month+" .. "+year+" .. "+" .. " + name+" .. " + ear+" .. " + trending);			
+			};
+
+			/*************  Events delete function ************/
+
+			self.deleteEvents = function(event_id)
+			{	
+				if(confirm(" Press OK to confirm deletion !")){
+					var datad = {
+						event_id : event_id,
+					};
+
+					
+					// posting form data 
+					$http({
+	                method: "POST",
+	                url: "controller/admin/php/services/adminEventDelete.php",
+	                // dataType: 'json',
+	                data: datad,
+	                // headers: { "Content-Type": "application/json" }
+	            }).then(function(response){
+	       			var ar = response.data;
+	       			if(ar==1)
+	       			{
+	       				self.postStatus = "Successfully Deleted !";
+	       				alert("Successfully Deleted !");
+	       				console.log("ar");
+	            		console.log(ar);
+	       			}
+	       			else
+	       			{
+	       				self.postStatus = ar;
+	       				console.log("ar");
+	       				console.log(ar);
+	       			}
+	            });
+				}
+				else{
+					alert("Nothing deleted !");
+				}
+
+					
+			};
+
+			/*************  News View function ************/
+
+			self.showNewsInView = function()
+			{
+				console.log("inside news view");
+
+				$http({
+                method: "GET",
+                url: "controller/admin/php/services/NewsView.php",
+                // dataType: 'json',
+                // headers: { "Content-Type": "application/json" }
+            }).then(function(response){
+       			rows = response.data;
+       			self.newsRows = rows;
+            });
+			};
+
+			self.popupShowHide = 0;
+			var edit_news_id;
+			
+			/*************  News edit function (set the prev values) ************/
+
+			self.editNews = function(news_id)
+			{
+				edit_news_id = news_id;
+
+				_.forEach(rows, function(o){ 
+					if(o.news_id == news_id){
+						self.particularRow = o;
+					} 
+				});
+
+
+				var setMonth = self.particularRow.month;
+				console.log("?????????????????  ????????????");
+				console.log(setMonth);
+				console.log("?????????????????  ????????????");
+
+				var setMonthIndexed;
+
+				var monthNames2 = ['jan','feb','march','april','may','jun',
+			'jul','aug','sep','oct','nov','dec']; // hardcoded months
+				monthNames2.forEach(function(month,i){
+					console.log("month in iteration: " + month + " " + i + " setMonth is: " + setMonth);
+
+					if(setMonth == month) {
+						setMonthIndexed = i + 1;
+						
+					}else{
+						// console.log('else ' + setMonth + " " + month);
+					}
+				});
+				console.log("!!!!!!!!!!!?  ????????????");
+				console.log(setMonthIndexed);
+				console.log("?????????????????  ????????????");
+
+				
+				self.eTitle=self.particularRow.title;
+				self.eDesc = self.particularRow.description;
+				self.eNewsLink=self.particularRow.link;
+				self.eNewsDate = setMonth+"/"+self.particularRow.date+"/"+self.particularRow.year;
+
+			
+			self.popupShowHide=1;
+		};
+
+			/*************  News edit function (get the new values) ************/
+
+		self.editNewsSubmit = function()
+		{
+			console.log("inside news edit and save ");
+			
+			var dateobj = adminEditNewsDP.datepicker('getDate');
+			var ddate = dateobj.getDate();
+			var dmonth = dateobj.getMonth();
+			var dyear = dateobj.getFullYear();
+			 
+			var monthNames = ['jan','feb','march','april','may','jun',
+			'jul','aug','sep','oct','nov','dec']; // hardcoded months
+				monthNames.forEach(function(month,i){	
+					if(dmonth == i) {
+						dmonth = month;
+					}
+				});
+
+				var name = self.eTitle;
+				var description = self.eDesc;
+				var link = self.eNewsLink;
+				var date =	ddate;
+				var month = dmonth;
+				var year = dyear;
+
+				
+				var datad = {
+					news_id : edit_news_id,
+					title : title,
+					description : description,
+					link : link,
+					date : date,
+					month : month,
+					year : year,
+				};
+
+				
+				// posting form data 
+				$http({
+                method: "POST",
+                url: "controller/admin/php/services/adminNewsEdit.php",
+                // dataType: 'json',
+                data: datad,
+                // headers: { "Content-Type": "application/json" }
+            }).then(function(response){
+       			var ar = response.data;
+       			if(ar==1)
+       			{
+       				self.postStatus = "Successfully Modified and Saved News !";
+       				console.log("ar");
+            		console.log(ar);
+       			}
+       			else
+       			{
+       				self.postStatus = ar;
+       				console.log("ar");
+       				console.log(ar);
+       			}
+            });
+
+				console.log(date+" .. "+month+" .. "+year+" .. "+" .. " + name+" .. " + ear+" .. " + trending);			
+			};
+
+			/*************  News delete function ************/
+
+			self.deleteNews = function(news_id)
+			{	
+				if(confirm(" Press OK to confirm deletion !")){
+					var datad = {
+						news_id : news_id,
+					};
+					
+					// posting form data 
+					$http({
+	                method: "POST",
+	                url: "controller/admin/php/services/adminNewsDelete.php",
+	                // dataType: 'json',
+	                data: datad,
+	                // headers: { "Content-Type": "application/json" }
+	            }).then(function(response){
+	       			var ar = response.data;
+	       			if(ar==1)
+	       			{
+	       				self.postStatus = "Successfully Deleted !";
+	       				alert("Successfully Deleted !");
+	       				console.log("ar");
+	            		console.log(ar);
+	       			}
+	       			else
+	       			{
+	       				self.postStatus = ar;
+	       				console.log("ar");
+	       				console.log(ar);
+	       			}
+	            });
+				}
+				else{
+					alert("Nothing deleted !");
+				}
+
+					
+			};
+
+//add functions above this
 		}]);
 })();
 

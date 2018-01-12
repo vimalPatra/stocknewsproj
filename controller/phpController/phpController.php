@@ -46,6 +46,17 @@ function update($query,$bindings){
 		return false;
 	}
 }
+
+function delete($query,$bindings){
+	try{
+		global $conn;
+		$stmt=$conn->prepare($query);
+		return $stmt->execute($bindings);            //returns bool value
+	}
+	catch(Exception $e){
+		return false;
+	}
+}
 function select($query,$bindings){
 	try{
 		global $conn;
