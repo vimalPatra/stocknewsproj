@@ -1,0 +1,404 @@
+
+
+				/* =calendar */
+
+
+#calendar{
+	background: $calendarBg;
+	background-repeat:no-repeat;
+	color: $calendarTextColor;
+
+	.wrapper--calendar{
+		// border: 1.5px solid rgba(0,0,0,.2);
+		border-top: none;
+	}
+
+}
+
+
+
+				/* =year__selector */
+
+.container--year__selector.swiper-container{
+	height: $containerYearSelectorHeight;
+
+	.year__selector.swiper-wrapper{
+		height: 100% !important;
+		cursor: pointer;
+
+		.year{
+			height: 100% !important;
+		}
+	}
+
+}
+
+.prev__year,
+.next__year{
+	@include absolute;
+	background: linear-gradient(to right, 
+	              hsla(161, 59%, 54%,1), 
+	              hsla(236, 100%, 60%,1)
+	             );
+
+	margin: 0;
+	width: calc(100% - #{$monthControlBtnWidth * 2});
+	top: 0;
+	bottom: auto;
+	left: $monthControlBtnWidth;
+	height: $yearControlBtnHeight;
+	font-size: 1rem;
+
+	[class^='wrapper']{
+		position:relative;
+		height: 100%;
+		
+	}
+	.icon{
+		@extend .text__center;
+		display: block;
+		height: 100%;
+
+		i{
+			font-size: $calendarCtrlBtnIconFontSize;
+			line-height: $calendarCtrlBtnIconFontSize * 1.2;
+		}
+
+	}
+	.text{
+		@include absolute;
+		@extend .capitalize;
+		@extend .text__shadow--subtle;
+
+		width: 100%;
+		height: 100%;
+		color: hsl(236,98%,100%);
+		// text-shadow: 0 0 5px rgba(255,255,255,.5);
+		font-size: $calendarCtrlBtnTextFontSize;
+		line-height: 2rem;
+		padding: 0 2rem;
+
+	}
+
+	&.swiper-button-disabled{
+		cursor: not-allowed !important;
+		pointer-events:auto !important;
+		opacity: 1 !important;
+
+		.icon{
+			opacity: .5;
+		}
+	}
+}
+
+.next__year{
+	top:auto;
+	bottom:0;
+
+	.text{
+		@extend .text__right;
+	}
+}
+
+.year{
+	.text--year{
+		@extend .uppercase;
+		font-size: $yearTextFontSize;
+		&:before{
+			content: '/';
+		}
+	}
+}
+
+
+
+				/* =month__selector */
+
+.container--month__selector.swiper-container{
+	@include calendarUtils;
+	position:relative;
+	height: 100% !important;
+	padding: $yearControlBtnHeight 0;
+	line-height: 3rem;
+	// background: red;
+	padding-left: $monthControlBtnWidth !important;
+	padding-right: $monthControlBtnWidth !important;
+
+	.month__selector.swiper-wrapper{
+		// @extend .z-depth-2;
+		// width: 80% !important;
+		.month{
+			@extend .text__center;
+
+			&:nth-child(2n){
+				background: rgba(255,255,255,.1);
+			}
+			
+		}
+	}
+
+}
+
+
+
+.prev__month,
+.next__month{
+	margin: 0;
+	@include absolute;		
+	bottom: auto;
+	left: 0;
+	height: 100%;
+	width: $monthControlBtnWidth ;
+	z-index: 30;
+
+	[class^='wrapper']{
+		position:relative;
+		height: 100%;
+		width: 100%;
+	}
+
+	.icon{
+		@extend .text__center;
+		display: block;
+		height: 100%;
+		
+		i{
+			font-size: $calendarCtrlBtnIconFontSize;
+			line-height: $containerYearSelectorHeight;
+		}
+		
+	}
+
+	&.swiper-button-disabled{
+		cursor: not-allowed !important;
+		pointer-events:auto !important;
+		opacity: 1 !important;
+
+		.icon{
+			opacity: .5;
+		}
+	}
+
+}
+
+.prev__month{
+	background: hsla(161, 59%, 54%,1);
+}
+
+.next__month{
+	left:auto;
+	right:0;
+	background: hsla(236, 100%, 60%,1) ;
+
+}
+
+
+.month{
+	@include calendarUtils;
+
+	.text--month{
+		@extend .uppercase;
+		font-size: $monthTextFontSize;
+
+		/* &:after{
+			content: '/';
+		} */
+	}
+}
+
+.pagination__month{
+	/* 
+	@include absolute;
+	z-index: 10;
+	top: 150% !important;
+	left: 3rem;
+	
+	transform:translateY(-50%);
+	background:transparent; 
+	*/
+
+	.swiper-pagination-bullet{
+		// @include pseudo;
+		/* position:relative;
+		top: 0 !important;
+		display: block !important;
+		margin: 0 !important;
+		height: 100%;
+		width: 100%;
+		z-index: 1000000;
+		 */
+		opacity: 1;
+		width: 3rem !important;
+		height: 3rem !important;
+		color: white;
+		font-size: 2em;
+		// transform:translateY(-50%);
+		.bullet__text{
+			@extend .text__center;
+			height: 100%;
+			font-size: 1em;
+			
+		}
+	}
+
+}
+
+
+
+				/* =date__selector */
+
+
+.container--date__selector.swiper-container{
+	@include calendarUtils;
+
+	position:relative;
+	height: 100% !important;
+	margin: 0;
+	height: $containerDateSelectorHeight;
+	line-height: $containerDateSelectorHeight;
+	// background: red;
+	padding-left: $monthControlBtnWidth !important;
+	padding-right: $monthControlBtnWidth !important;
+
+
+	.date__selector.swiper-wrapper{
+		// @extend .z-depth-2;
+		// width: 80% !important;
+
+	}
+
+}
+
+.date{
+	@include calendarUtils;
+	@extend .text__center;
+
+	&:nth-child(2n){
+		background: rgba(255,255,255,.1);
+	}
+	
+}
+
+
+.prev__date,
+.next__date{
+	margin: 0;
+	@include absolute;
+
+	background: rgba( 255, 255, 255, .8);
+	bottom: auto;
+	left: 0;
+	height: 100%;
+	width: $monthControlBtnWidth;
+	
+	cursor: pointer !important;
+	z-index: 30;
+	[class^='wrapper']{
+		position:relative;
+		height: 100%;
+		width: 100%;
+			
+	}
+	.icon{
+		@extend .text__center;
+		display: block;
+		height: 100%;
+
+		i{
+			font-size: $calendarCtrlBtnIconFontSize;
+			line-height: $containerDateSelectorHeight;
+		}
+	}
+
+	&.swiper-button-disabled{
+		cursor: not-allowed !important;
+		pointer-events:auto !important;
+		opacity: 1 !important;
+
+		.icon{
+			opacity: .5;
+		}
+	}
+
+}
+
+.prev__date{
+	background: hsla(161, 59%, 54%,1);
+	// background:red;
+}
+
+.next__date{
+	left:auto;
+	right:0;
+	background: hsla(236, 100%, 60%,1) ;
+	// background:red;
+}
+
+
+
+
+
+				/* =selections */
+
+.container--calendar__selections{
+	  background: $calendarSelectionsBg;
+	  padding: .5rem 1rem;
+}
+
+.container--title__calendar__selections{
+	@extend .capitalize;
+
+	font-size: $calendarSelectionTitleFontSize;
+	// font-weight:600;
+	padding: .2em .5em;
+	color: rgb(255,255,255);
+	display:inline-block;
+	text-shadow: none;
+}
+
+.calendar__selections{
+	display:inline-block;
+
+	.openCalendarSelectionsBtn{
+		height: auto;
+		font-size: $calendarSelectionBtnFontSize;
+		padding: 0 1em;
+		line-height: $calendarSelectionBtnFontSize * 2;
+		color: rgb(45,45,45);
+		background: $calendarSelectionBtnBgColor;
+		border-radius: $btnSubtlestRadius;
+
+		& + .dd__content{
+			@include absolute;
+			background: rgb(255,255,255);
+			max-height: 12rem;
+			overflow: auto;
+
+			min-width: auto;
+
+			li{	
+				@extend .text__center;
+				@extend .uppercase;
+
+				font-size: $calendarSelectionBtnFontSize;
+				padding: 0 1em;
+				line-height: $calendarSelectionBtnFontSize * 2;
+				background: white;
+				min-height: auto;
+				border-bottom: 2px solid rgb(240,240,240);
+
+				&:last-child{
+					border-bottom:none;
+				}
+				&:hover{
+					// background: white;
+					
+				}
+			}
+			// width: 100% !important;
+
+		}
+	}
+}
+
+

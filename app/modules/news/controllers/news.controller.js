@@ -10,7 +10,7 @@ console.log('-- news.controller.js loaded');
 
 	angular
 	.module('newsModule')
-	.controller('newsCtrl',[newsController]);
+	.controller('newsCtrl',['_Pagination',newsController]);
 
 
 					// extra required code below
@@ -31,17 +31,20 @@ console.log('-- news.controller.js loaded');
 
 
 		// listController func
-	function newsController(){
+	function newsController(_Pagination){
 		var ctrl = this;
-		newsCtrl.init(ctrl);
+		newsCtrl.init(ctrl,_Pagination);
 
-		ctrl.newsArray = [];
+		ctrl.pageNumber = 1;
+		ctrl.dividePagesBy = 2;
+
+		var responseNewsArray = [];
 		// console.log(ctrl.eventsArray);
 
 		for(var i=0; i < 13; i++){
 
 			if (i % 2) {
-				ctrl.newsArray.push({
+				responseNewsArray.push({
 
 					date: String(1 + (i * 2)),
 					month: 'jan',
@@ -52,7 +55,7 @@ console.log('-- news.controller.js loaded');
 				});
 
 			}else if(i % 3){
-				ctrl.newsArray.push({
+				responseNewsArray.push({
 
 					date: String(1 + (i * 3)),
 					month: 'jan',
@@ -63,7 +66,7 @@ console.log('-- news.controller.js loaded');
 				});
 
 			}else{
-				ctrl.newsArray.push({
+				responseNewsArray.push({
 
 					date: String(1 + (i * 5)),
 					month: 'jan',
@@ -75,13 +78,18 @@ console.log('-- news.controller.js loaded');
 
 			}
 
-			ctrl.newsArray[i].getFullDate = function(){
+			responseNewsArray[i].getFullDate = function(){
 				return this.date + ' / ' + this.month + ' / ' + this.year;
 			};
-			
-
 
 		}
+
+		// use as: param 1 = full array, param 2 = items per page, param 3 = page number you want to display
+		ctrl.newsArray = _Pagination.paginate(responseNewsArray,ctrl.dividePagesBy,ctrl.pageNumber);
+		ctrl.pageCount = _Pagination.countPages(responseNewsArray,ctrl.dividePagesBy);
+
+		// alert(ctrl.pageCount);
+
 
 	}
 	

@@ -5,7 +5,7 @@
 
 							/* =padding */
 .pad--main__content{
-	padding: 1.25rem 1.25rem;
+	padding: $mainPadding;
 }
 
 							/* =text */
@@ -33,9 +33,9 @@
 .text--card__title{
     text-transform: capitalize;
     font-family: $primaryFont;
-    font-size: 1.8rem;
+    font-size: $cardTitleFontSize;
+    line-height: 1.5em;
     letter-spacing: .03em;
-    margin: .5rem .1rem;
 }
 .text--card__content{
     text-transform: lowercase;
@@ -113,21 +113,21 @@
 	overflow:hidden;
 	font-variant:small-caps;
 	// margin: .3em .1em;
-	padding: .3em .1em;
+	padding: 0em .1em;
 	margin:0;
 	position:relative;
 	text-align:center;
 	text-transform:lowercase;
 	z-index:1;
-	background:white;
+	background: $cardTitleBg;
 	color: #fff;
 
-	&:after{
+	/* &:after{
 		@include pseudo;
-		border-bottom: 2px solid hsla(236, 100%, 70%,1);
+		border-bottom: 2px solid hsla(236, 100%, 35%,1);
 		z-index: -1;
 		background: $cardTitleBg;
-	}
+	} */
 }
 
 

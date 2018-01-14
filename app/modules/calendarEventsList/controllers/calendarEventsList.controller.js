@@ -14,7 +14,7 @@ console.log('-- calendarEventsList.controller.js loaded');
 
 	angular
 	.module('calendarEventsListModule')
-	.controller('calendarEventsListCtrl',['$scope','_DateSelection',calendarEventsListController]);
+	.controller('calendarEventsListCtrl',['$scope','_DateSelection','$http',calendarEventsListController]);
 
 
 
@@ -25,10 +25,11 @@ console.log('-- calendarEventsList.controller.js loaded');
 		// evUpCtrl obj
 	var ceCtrl = {
 
-		init: function(ctrl,$scope,_DateSelection){
+		init: function(ctrl,$scope,_DateSelection,$http){
 			var self = this;
 			self.ctrl = ctrl;
 			self.$scope = $scope;
+			self.$http = $http;
 			self._DateSelection = _DateSelection;
 
 				// set all the object props
@@ -39,17 +40,16 @@ console.log('-- calendarEventsList.controller.js loaded');
 			self.currentMonth = self.defaultDates.month;
 			self.currentDate = self.defaultDates.date;
 
-			self.months = ['jan','feb','march','april','may','jun',
-			'jul','aug','sep','oct','nov','dec']; // hardcoded months
+			self.allSelectedDates = {
+				year: [],
+				month: [],
+				date: []
+			};
 			
-				// trigger all methods needed to run before controller methods
-			self.events();
-
-			var o = self.options;
-
-
+			// data recieved is null not undefined
+			ctrl.dataReceived = {};
 					// setting options object which we pass to sliderOptions inside the calendarCtrl controller
-
+			var o = self.options;
 			//  stating the first decisives (primary)
 			o.allMonthsSelected = false;
 			o.defaultMonthSelected = !o.allMonthsSelected; // current month is selected by default
@@ -62,29 +62,56 @@ console.log('-- calendarEventsList.controller.js loaded');
 			// ctrl.selectMonthYear = self.selectMonthYear;
 			// ctrl.populateEvents = self.populateEvents;
 
+			angular.element(document).ready(function(){
+				self.DOM();
+			});
 
-			self.getCalendarSelection();
+			var selectedDatesToBeSent = self.getCalendarSelection();
+
+			// console.log(' ----- initial selected dates');
+			// console.log(selectedDatesToBeSent);
+
+			if (selectedDatesToBeSent.year.length) {
+				if (o.allMonthsSelected) {
+					// self.getData();
+				}else if (selectedDatesToBeSent.month.length) {
+					if (o.defaultMonthSelected) {
+						// self.getData();
+					}
+				}
+
+			}
 			
+			
+			self.updateSelectionAndGetData();
+
+			
+		},
+		DOM:function(){
+			var self = this;
+			var ctrl = self.ctrl;
+
+			if (!window.$body) {
+				window.$body = $('#body');
+			}
+			
+			var openCalendarSelectionsBtn = $body.find('.openCalendarSelectionsBtn');
+			
+
+			openCalendarSelectionsBtn.dropdown({
+				  inDuration: 300,
+				  outDuration: 225,
+				  constrainWidth: true, // Does not change width of dropdown to that of the activator
+				  hover: true, // Activate on hover
+				  gutter: 0, // Spacing from edge
+				  belowOrigin: false, // Displays dropdown below the button
+				  alignment: 'left', // Displays dropdown with edge aligned to the left of button
+				  stopPropagation: false // Stops event propagation
+				}
+			);
+		
 		},
 		options: {
-
-		},
-		
-		selectMonthYear: function(obj){
-			var self = this;
-			var ctrl = self.ctrl;
-
-			var year = obj.year;
-			var month = obj.month;
-
-			alert(""+year+" "+ month);
-			
-		},
-		selectDate: function(){
-			var self = this;
-			var ctrl = self.ctrl;
-			
-			alert('date');
 
 		},
 		defaultDate: function(){
@@ -99,49 +126,113 @@ console.log('-- calendarEventsList.controller.js loaded');
 				date : self.currentDate
 			}
 		},
-		events: function(){
-			var self = this;
-			var ctrl = self.ctrl;
-		},
-
-		populateEvents: function(){
-
-		},
+		
 		getCalendarSelection: function(){
 			var self = this;
 			var ctrl = self.ctrl;
 			var $scope = self.$scope;
 			var _DateSelection = self._DateSelection;
 
-			
+	
 			// console.log('_DateSelection.get() manually');
 			ctrl.selectedYears = _DateSelection.get().years;
-			ctrl.selectedMonths = _DateSelection.get().months;
-			ctrl.selectedDates = _DateSelection.get().years;
+			ctrl.selectedMonths = self.getAlphaMonths(_DateSelection.get().months);
+			ctrl.selectedDates = _DateSelection.get().dates;
 
-			getDataOnUpdate();
+			return self.allSelectedDates = {
+				year: ctrl.selectedYears,
+				month: ctrl.selectedMonths,
+				date: ctrl.selectedDates
+			}
 
-			function getDataOnUpdate(){
+		},
+		getData: function(){
+			var self = this;
+			var ctrl = self.ctrl;
+			var $scope = self.$scope;
+			var $http = self.$http;
+			var _DateSelection = self._DateSelection;
+	
+			var dataSend = JSON.stringify(self.allSelectedDates);
+			
+			// console.log('self.allSelectedDates=====================');
+			// console.log(self.allSelectedDates);
+			// console.log('dataSend');
+			// console.log(dataSend);
 
-				$scope.$watch(function () {
+			// posting form data 
+			$http({
+                method: "POST",
+                url: "controller/admin/php/services/EventsGet.php",
+                // dataType: 'json',
+                data: dataSend,
+                // headers: { "Content-Type": "application/json" }
+            }).then(function(response){
+       			var dataReceived = response.data;
+       			console.log('============response.data');
+       			console.log(dataReceived);
+       			ctrl.dataReceived = dataReceived;
 
-					return _DateSelection.get(); 
+       			console.log('$scope from ceCtrl');
+       			console.log($scope);
+            });
+            // /milan
 
-				}, function (newValue, oldValue) {
-					// alert();
-			        if (newValue != null) {
-			        	ctrl.selectedYears = newValue.years;
-						ctrl.selectedMonths = newValue.months;
-						ctrl.selectedDates = newValue.dates;
-			            //update Controller2's xxx value
-			           	
-			        }
+		},
+		updateSelectionAndGetData: function(){
+			var self = this;
+			var ctrl = self.ctrl;
+			var $scope = self.$scope;
+			var o = self.options;
 
-			    }, true);
+			var debounceTime = 300;
+			var maxWait = 3000;
+
+
+			$(window).on('dateSelected', _.debounce(update,debounceTime,{'maxWait': maxWait }));
+
+		    function update(){
+		    	$scope.$apply(function(){
+
+        			var selectedDatesToBeSent = self.getCalendarSelection();
+        			// console.log('calendar selections after update');
+        			// console.log(selectedDatesToBeSent);
+	        	
+	        		if (selectedDatesToBeSent.year.length) {
+						if (o.allMonthsSelected) {
+							self.getData();
+						}else if (selectedDatesToBeSent.month.length) {
+							self.getData();
+						}
+
+					}
+				});
+		    } // end of `update` function
+
+		},
+		getAlphaMonths: function(monthsArr){
+			var _alphaMonthsArr = [];
+
+			var _hardcodedMonths = ['jan','feb','mar',
+								   'apr','may','jun',
+								   'jul','aug','sep',
+								   'oct','nov','dec']; // hardcoded months
+
+			if (monthsArr && monthsArr.length) {
+	            _.forEach(monthsArr,function(element,i){
+	            	var indexedMonth = element;
+	            	_.forEach(_hardcodedMonths,function(element,i){
+	            		var alphaMonth = element;
+		            	if (indexedMonth == i) {
+		            		_alphaMonthsArr.push(alphaMonth);
+		            	}
+					}); // second loop over the hardcoded alphaMonths
+				});// first loop over the monthsArr provided 
 
 			}
 
-			
+	        return _alphaMonthsArr;
+
 
 
 		}
@@ -149,10 +240,10 @@ console.log('-- calendarEventsList.controller.js loaded');
 
 
 		// eventUpdatesController func
-	function calendarEventsListController($scope,_DateSelection){
+	function calendarEventsListController($scope,_DateSelection,$http){
 		var ctrl = this;
 
-		ceCtrl.init(ctrl,$scope,_DateSelection);
+		ceCtrl.init(ctrl,$scope,_DateSelection,$http);
 
 	}
 	

@@ -68,6 +68,7 @@
 				foreach ($eventsInDate as $event) {
 						$eventRow = array();
 						$eventRow['name'] = $event['name'];
+						$eventRow['description'] = $event['description'];
 						$eventRow['date'] = $event['date'];
 						$eventRow['month'] = $event['month'];
 						$eventRow['year'] = $event['year'];
@@ -103,11 +104,12 @@
 		$yearData[(string)$year] = $monthData;
 	}
 
-	echo "<pre>";
-	print_r($yearData);
-	echo "</pre>";
+	// echo "<pre>";
+	// print_r($yearData);
+	// echo "</pre>";
 	$dataSend = json_encode($yearData);
 
 
-	// print_r(json_encode($dataSend));
-	?>
+	print_r($dataSend);
+
+?>

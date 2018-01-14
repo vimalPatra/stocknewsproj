@@ -2,92 +2,108 @@
 	<div class="list__toolbar">
 		<div class="wrapper--list__toolbar row">
 
-			
-
-			<div class="filter__list tools--list__toolbar col s12">
+			<div class="filter__sort__list">
 				<div class="wrapper--filter__list row ">
+					<div class=" input-field col s6 m3 l2 container--filter__sort__selects">
+						<select data-ng-change="list.manageData()" data-ng-model="list.filterBy" class="select--filter filter__sort__selects">
+						  <!-- <option value="" disabled selected>select</option> -->
+						  <option value="">all</option>
+						  <option value="ann">announcements</option>
+						  <option value="eve">events</option>
+						  <option value="trending">trending</option>
+						</select>
+						<label for="">filter</label>
+					</div>
 
-					<h5 class="title--filter__list">
-						filter
-					</h5>
-					<button class="tool--btn selected waves-effect waves-light">all</button>
-				
-					<button class="tool--btn waves-effect ">announcements</button>
-		
-					<button class="tool--btn waves-effect ">events</button>
+					<!-- 
+					<div data-ng-class="{reverse: list.reverseSortBy}" class="input-field col s6 m3 l2 container--filter__sort__selects">
+						<select data-ng-change="list.resetReverseSortBy()" data-ng-model="list.outerSortBy" class="select--sort filter__sort__selects">
+						  <option value="date">date</option>
+						  <option value="rank">rank</option>
+						  <option value="name">stock</option>
+						  <option value="trending">trending</option>
+						</select>
+						<label for="" data-ng-click="list.toggleReverseSortBy()">
+							<span>
+								sort 
+								<i class="up material-icons">arrow_drop_up</i>
+								<i class="down material-icons">arrow_drop_down</i>
+							</span>
+						</label>
+					</div> 
+					-->
+
 					
-					<div class="container--tool--range form__fields__container right col s5">
-						<label for="ceListRankRange">Stock Rank</label>
+					<div class="container--tool--range form__fields__container col s6 m3 l3 offset-l1">
+						<label for="ceListRankRange">
+							<span class="rankStart">{{list.rankStart}}</span>
+							Stock Rank
+							<span class="rankEnd">{{list.rankEnd}}</span>
+						</label>
 						<div class="tool--range" id="ceListRankRange"></div>
+						
+						
 					</div>
 					
-					
+					<div class="container--tool__search col s6 m3 l3 offset-l1">
+						<div class="tool--search">
+							<div class="input-field">
+			        			<input data-ng-change="list.manageData()" data-ng-model="list.searchBy" id="ceListSearch" type="search" class="tool--search validate">
+				        		<label for="ceListSearch">Search</label>
+							</div>
+							<div class="container--search__btn ">
+								<i id="ceListSearchBtn" class="material-icons prefix">search</i>
+							</div>
+						</div>
+					</div>
+
 				</div>
 			</div>
-
-
-
-			<div class="sort__list tools--list__toolbar col s7 ">
-				<h5 class="title--filter__list">
-						sort
-				</h5>
-				<button class="tool--btn">
-					rank
-				</button>
-				<button class="tool--btn">
-					trending
-				</button >
-				<button class="tool--btn">
-					added
-				</button>
-			</div>
-
-			<div class=" search__list tools--list__toolbar col s4 offset-s1">
-				<div class="wrapper--search__list">
-					<div class="input-field">
-	        			<input id="ceListSearch" type="search" class="tool--search" class="validate">
-		        		<label for="ceListSearch">Search</label>
-					</div>
-					<div class="container--search__btn ">
-						<i id="ceListSearchBtn" class="material-icons prefix">search</i>
-					</div>
-				</div>
-			</div>
-
 		</div>
 	</div>
+
+	<!-- {{filteredEvents.length || '01'}} -->
+
 	<table class="list">
+		<!-- <div data-ng-repeat="eventsObj in list.events">
+			{{eventsObj.date + ' / ' + eventsObj.month + ' / ' + eventsObj.year}} <br>
+			<div data-ng-repeat="event in eventsObj.events">
+				{{$index + " "}}{{event}}
+				<br> ------------------------------- <br>
+			</div>
+			<br> _______________NEXT DATE_____________ <br>
+		</div> -->
 		<caption class="caption">
 			<span class="message">
-				event updates for
-			</span> : 
-			<div class="dates">
-				{{}}
-			</div>
+				 {{list.eventsCount ? ('showing ' + list.eventsCount) : 'no'}} events / announcements
+			</span>
 		</caption>
+
+
 		<thead class="container--list__headers">
 			<tr class="list__headers row">
-				<td class="container--list__header col s2">
-					<h3 class="list__header list__header--date ">
+				<td data-ng-click="list.toggleOuterSortByReverse()" class="container--list__header col s2">
+					<h3  class="list__header list__header--date ">
 						date
 					</h3>
 				</td>
-				<td class="container--list__header col s2">
+
+				<td data-ng-click="list.setInnerListSort('rank')" class="container--list__header col s2">
 					<h3 class="list__header list__header--rank ">
 						rank
 					</h3>
 				</td>
-				<td class="container--list__header col s2">
+				<td data-ng-click="list.setInnerListSort('name')" class="container--list__header col s2">
 					<h3 class="list__header list__header--stock ">
 						stock
 					</h3>
 				</td>
-				<td class="container--list__header col s4">
+				<td data-ng-click="list.setInnerListSort('description')" class="container--list__header col s4">
 					<h3 class="list__header list__header--title ">
 						news / announcement
 					</h3>
 				</td>
-				<td class="container--list__header col s2">
+				<td data-ng-click="list.setInnerListSort('trending')" class="container--list__header col s2">
 					<h3 class="list__header list__header--trending ">
 						trending
 					</h3>
@@ -95,22 +111,38 @@
 			</tr>
 		</thead>
 		<tbody class="list__rows">
-			<tr class="list__row row" data-ng-repeat="events in list.eventsArray">
+			<tr class="list__row row" data-ng-repeat="dateEvents in list.datewiseArrangedEvents | outerListSort : list.outerSortBy : list.outerSortByReverse  as outerEventsList ">
+
 				<td class="date__for__events col s2">
-					{{events.date}}
+					<!-- |  outerListFilter : list.filterBy : list.searchBy --> <!-- this thing doesnt work -->
+					<span >
+							<!-- {{list.filterBy}}--{{list.searchBy}} -->
+						{{dateEvents.date + ' / ' + dateEvents.month + ' / ' + dateEvents.year}}
+					</span>
 				</td>
-				<td class="events__for__date col s10" >
+				<td class="events__for__date col s10">
 					<ul class="list__of__events">
-						<li class="event" data-ng-repeat="event in events.list">
+						<li class="event" data-ng-repeat="event in dateEvents.pagedEvents as innerEventsList">
+							<!-- {{$first ? emptyEventsRendered() : ''}} -->
+							<!-- execute a function for each rendered list (filtered and sorted) to update the pagination and count -->
+							<!-- {{$last ? updateEvForADate(filteredEvents,filteredEvents.length,$index) : ''}} -->
+
 							<div class="wrapper--event row">
 								<div class="event__detail event__rank col s2">
-									{{event.rank}}
+									<!-- {{event.rank}} -->
+							<!-- {{filteredEvents.length}} -->
+									<!-- {{$parent.$index}} -->
+									<!-- {{event.ea_type}} -->
+									<!-- {{$index}} -->
+									
 								</div>
+
 								<div class="event__detail event__stock col s2">
-									{{event.stock}}
+									{{event.name}}
 								</div>
 								<div class="event__detail event__title col s4">
-									{{event.eventTitle}}
+									{{event.description | limitTo:30}} {{event.description.length>30 ? ".." : ""}}
+									<!-- <input data-ng-model="filteredEvents.length" type="text"> -->
 								</div>
 								<div class="event__detail event__trending col s2">
 									{{event.trending}}
@@ -119,19 +151,29 @@
 						</li>
 						
 					</ul>
-
+					<!-- {{dateEvents.pagedEvents.length}} -->
 					<ul class="pagination">
-					    <li class="button disabled"><a href="#!"><i class="material-icons">chevron_left</i></a></li>
-					    <li class="button active"><a href="#!">1</a></li>
-					    <li class="button waves-effect"><a href="#!">2</a></li>
-					    <li class="button waves-effect"><a href="#!">3</a></li>
-					    <li class="button waves-effect"><a href="#!">4</a></li>
-					    <li class="button waves-effect"><a href="#!">5</a></li>
-					    <li class="button waves-effect"><a href="#!"><i class="material-icons">chevron_right</i></a></li>
+					    <li >
+					    	<a class="button" data-ng-class="dateEvents.activePage - 1 <= 0 ? 'disabled': 'waves-effect' " data-ng-click="list.setActivePage(dateEvents,dateEvents.activePage - 1,$event)" href="#"><i class="material-icons">chevron_left</i></a>
+					    </li>
+
+						<li data-ng-repeat="n in list.createPagination(dateEvents.pageCount,dateEvents.activePage) " >
+					   		<a data-ng-class="dateEvents.activePage == n+1 ? 'active': '' " class="button" data-ng-click="list.setActivePage(dateEvents,n+1,$event)"  href="#">{{n + 1}}</a>
+					   	</li>
+					    <li >
+					    	<a class="button" data-ng-class="(dateEvents.activePage + 1 > dateEvents.pageCount) ? 'disabled': 'waves-effect' " data-ng-click="list.setActivePage(dateEvents,dateEvents.activePage + 1,$event)" href="#">
+					    		<i class="material-icons">chevron_right</i>
+					    	</a>
+					    </li>
 				  	</ul>
+
 				</td>
 			</tr>
 				
 		</tbody>
 	</table>
+
+	<blockquote class="list__footer">
+		no more events, select different dates or filter through to view more
+	</blockquote>
 </div>

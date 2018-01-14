@@ -427,7 +427,8 @@ function swallowError (error) {
 
 	gulp.task('watchNserve', function(){
 		browserSync.init({
-	        server: "./"
+	        // server: "./"
+	        proxy: "localhost:1234/stocknewsproj"
 	    });
 
 		gulp.watch(['./app/**/*.view.html', './app/**/*.view.php'],['views:watch'/*,'html'*/]);

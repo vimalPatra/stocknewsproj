@@ -1,16 +1,21 @@
 
 
-	/*	start of DateSelection.service.js  */
-	console.log('-- DateSelection.service.js loaded');
+	/*	start of dateSelection.service.js  */
+	console.log('-- dateSelection.service.js loaded');
 
 (function(){
 
 	// setup angular service to the module coreModule 
 
 	angular.
-	  module('coreModule').
+	  module('calendarModule').
 		factory('_DateSelection', [function() {
-			var _selection = {};
+			var _selection = {
+				years: [],
+				months: [],
+				dates: []
+			};
+			
 			return {
 				get: function () {
 					return _selection;
@@ -27,6 +32,6 @@
 
 
 
-	/* end of DateSelection.service.js */
+	/* end of dateSelection.service.js */
 
 

@@ -20,6 +20,9 @@ session_start();
 
         <!-- stylesheets -->
         <link href="https://fonts.googleapis.com/css?family=Libre+Barcode+39+Extended+Text|Spinnaker" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Ubuntu:700" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Nunito:800,800i,900" rel="stylesheet">
+
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <link rel="stylesheet" href="dist/css/lib.css">
         <link rel="stylesheet" href="dist/css/main.css">
@@ -31,7 +34,6 @@ session_start();
         <![endif]-->
 
         <div class="wrap">
-            
             <!-- Add your site or application content here -->
             <div class="app" ng-app='app'>
                 <div class="view" data-ui-view></div>

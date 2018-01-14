@@ -1,14 +1,28 @@
 <div class="container--news__list">
 	<ul class="news__list">
-		<li data-ng-repeat="newz in news.newsArray">
+		<li class="news__list__item" data-ng-repeat="newz in news.newsArray">
 			<a href="#">
-				<h4>
+				<h4 class="title title--news">
 					{{newz.title}}
 				</h4>
-				<blockquote>
-					{{newz.getFullDate() || 'nothing'}}
-				</blockquote>
 			</a>
+			<p class="desc desc--news">
+				{{newz.desc | limitTo:50}}{{newz.desc.length>50 ? "..." : ""}}
+			</p>
+			<blockquote class="date__added">
+				{{newz.getFullDate() || 'nothing'}}
+			</blockquote>
+			
+		</li>
+
+		<li>
+			<ul class="pagination">
+			    <li class="button disabled"><a href="#!"><i class="material-icons">chevron_left</i></a></li>
+			    <li class="button active"><a href="#!">1</a></li>
+			    <li class="button waves-effect"><a href="#!">2</a></li>
+			    <li class="button waves-effect"><a href="#!">3</a></li>
+			    <li class="button waves-effect"><a href="#!"><i class="material-icons">chevron_right</i></a></li>
+		  	</ul>
 		</li>
 	</ul>
 	<div class="pagination"></div>

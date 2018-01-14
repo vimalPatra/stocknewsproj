@@ -93,28 +93,28 @@ $yearAr = array();
 
 
 	if($yeariAr && $monthiAr && $dateiAr){	
-		echo " year month date ";
-		echo "<br>";
+		/*echo " year month date ";
+		echo "<br>";*/
 		$selected1 = getEventsYa($yeariAr);
 	}
 	else if($yeariAr && $monthiAr){
-		echo " year month ";
+		/*echo " year month ";
 		echo "<br>";
 		print_r($monthiAr);
 		echo "<br>";
-		print_r($yeariAr);
+		print_r($yeariAr);*/
 		$selected1 = getEventsYa($yeariAr);
-		print_r($selected1);
+		/*print_r($selected1);*/
 	}
 	else if($yeariAr){
-		echo " year ";
-		echo "<br>";
+		/*echo " year ";
+		echo "<br>";*/
 		$selected1 = getEventsYa($yeariAr);
 	}
 	// add data 
 	else{
-		echo "all ";
-		echo "<br>";
+		/*echo "all ";
+		echo "<br>";*/
 		$selected1 = getEvents();
 	}
 
@@ -123,8 +123,8 @@ $yearAr = array();
 	foreach ($selected1 as $value) {
 			$yearAr[]=$value['year'];
 		}
-		print_r("********************** yearAr ***************");
-		print_r($yearAr);
+		/*print_r("********************** yearAr ***************");
+		print_r($yearAr);*/
 
 		require "makejson.php";
 }
@@ -133,10 +133,32 @@ $yearAr = array();
 
 // provided year, month and date
 
+if($_SERVER['REQUEST_METHOD']=='POST')
+{
+	$postdata =  file_get_contents("php://input");
+	$dataarray = json_decode($postdata);
 
-$yearProvided  = [2018];
-$monthProvided = ['jan'];
-$dateProvided  = [24,12];
+	// echo "*********** json data ***********";
+	// var_dump($dataarray);
+	// echo "+=====================";
+	// 	print_r($dataarray);
+	// echo "****************json data ";
+	// echo "<br><br>";
+	$yearPrar = $dataarray->year;
+	$datePrar = $dataarray->date;
+	$monthPrar = $dataarray->month;
+
+	// echo "<br>";
+	// echo "************* backend data ************";
+	// // print_r($year);
+	// // print_r($date);
+	// // print_r($month);
+	// echo "<br>";
+	// echo "************* backend data ************";
+}
+$yearProvided  = $yearPrar;
+$monthProvided = $monthPrar;
+$dateProvided  = $datePrar;
 
 getEventsData($yearProvided,$monthProvided,$dateProvided);
 

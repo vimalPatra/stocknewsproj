@@ -3,28 +3,38 @@
 	<div id="calendar" class="card__sub__module card__sub__module--calendar container--calendar">
 		<calendar></calendar>
 	</div>
-	<div>
-		<span>SELECTIONS:- </span>
-		<span>
-			<span>years: </span>
-			<span data-ng-repeat="year in ceCtrl.selectedYears">
-				{{year || 'nothing selected'}}, 
-			</span>
-		</span>
+	<div class="container--calendar__selections">
+		<div class="container--title__calendar__selections">
+			<span class="title title--calendar__selections">current selections: </span>	
+		</div>
+		<div class="calendar__selections">
+			<a id="openSelectedYearsDD" class='openCalendarSelectionsBtn dropdown-button btn' href='#' data-activates='selectedYearsDD'>years</a>
+			<!-- Dropdown Structure -->
+			<ul id='selectedYearsDD' class='dropdown-content dd__content'>
+				<li data-ng-repeat="year in ceCtrl.selectedYears">
+					{{year || ''}}
+				</li>
+			</ul>
 
-		<span>
-			<span> ----  months: </span>
-			<span data-ng-repeat="month in ceCtrl.selectedMonths">
-				{{month || 'nothing selected'}}, 
-			</span>
-		</span>
+	
+			<a id="openSelectedMonthsDD" class='openCalendarSelectionsBtn dropdown-button btn' href='#' data-activates='selectedMonthsDD'>months</a>
+			<!-- Dropdown Structure -->
+			<ul id='selectedMonthsDD' class='dropdown-content dd__content'>
+				<li data-ng-repeat="month in ceCtrl.selectedMonths">
+					{{month || ''}}
+				</li>
+			</ul>	
 
-		<span>
-			<span> ---- dates: </span>
-			<span data-ng-repeat="date in ceCtrl.selectedDates">
-				{{date || 'nothing selected'}}, 
-			</span>
-		</span>
+
+			<a id="openSelectedDatesDD" class='openCalendarSelectionsBtn dropdown-button btn' href='#' data-activates='selectedDatesDD'>dates</a>
+			<!-- Dropdown Structure -->
+			<ul id='selectedDatesDD' class='dropdown-content dd__content'>
+				<li data-ng-repeat="date in ceCtrl.selectedDates">
+					{{date || ''}}
+				</li>
+			</ul>			
+			
+		</div>
 	</div>
 	<div class="card__sub__module card__sub__module--list container--list">
 		<list></list>

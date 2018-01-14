@@ -2,8 +2,8 @@
 	<h4 class="poll__question">{{poll.data.question}}</h4>
 
 	<form action="">
-		<div class="poll__options">
-			<div data-ng-repeat="option in poll.data.options">	
+		<div class="container--poll__options">
+			<div class="poll__option" data-ng-repeat="option in poll.data.options">	
 
 				<input class="with-gap" type="radio" name="pollOption" id="pollOption{{$index}}">
 				
@@ -13,13 +13,17 @@
 			</div>
 		</div>
 	</form>
-	<blockquote>
+	<blockquote class="poll__message col s6 offset-s6">
 		{{poll.data.message || 'give your opinions to help the masses'}}
 	</blockquote>
-	<a class="btn waves-effect submit__poll__answer btn--submit__poll__answer">
-		submit answer
-	</a>
-	<a class="btn waves-effect see__poll__results btn--see__poll__results">
-		see results
-	</a>
+
+	<div class="container--poll__buttons">
+		<a class="btn waves-effect submit__poll__answer btn--submit__poll__answer">
+		vote
+		</a>
+
+		<a class="btn waves-effect see__poll__results btn--see__poll__results">
+			see results
+		</a>
+	</div>
 </div>
