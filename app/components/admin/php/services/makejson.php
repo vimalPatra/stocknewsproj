@@ -68,6 +68,7 @@
 				foreach ($eventsInDate as $event) {
 						$eventRow = array();
 						$eventRow['name'] = $event['name'];
+						$eventRow['title']=$event['title'];
 						$eventRow['description'] = $event['description'];
 						$eventRow['date'] = $event['date'];
 						$eventRow['month'] = $event['month'];
