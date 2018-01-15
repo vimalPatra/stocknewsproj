@@ -270,6 +270,53 @@
 
       <div ng-show="adc.tab===5">
         Stock Manage
+        <div>
+            <a class="waves-effect waves-light btn" ng-click="adc.setTabInEvents(1)">Add Stock</a>
+            <a class="waves-effect waves-light btn" ng-click="adc.setTabInEvents(2); adc.showStockInView();">View Stock</a>  
+          </div>
+
+          <!-- View News Div that allows edit and delete -->
+          <div id='viewStock' class="row" ng-show="adc.InEventsTab===1">
+            Add stock form 
+          </div>
+
+          <!-- View News Div that allows edit and delete -->
+          <div id='viewStock' class="row" ng-show="adc.InEventsTab===2">          
+                <div class="col s12">
+                      <table class="highlight">
+                        <tr>
+                          <th>Stock Name</th>
+                          <th>Thumbnail Uploaded</th>
+                          <th>Change Thumbnail</th>
+                          <th>Stock Delete</th>
+                        </tr>
+                        <tr ng-repeat="x in adc.stockRows">
+                          <td>{{x.name}}</td>
+                          <td>{{adc.thumbSet}}</td>
+                          <td>
+                            <input type="file">
+                          </td>
+                          <td>
+                            <a class="btn-floating waves-effect waves-light cyan" ng-click="adc.editStock(x.stock_id)"><i class="material-icons">edit</i></a>
+                          </td>
+                          <td>
+                            <a class="btn-floating waves-effect waves-light cyan" ng-click="adc.deleteStock(x.stock_id)"><i class="material-icons">delete</i></a>
+                          </td>
+                        </tr>
+                      </table>
+                </div>
+          </div>
+
+          <div class='manage-popup' ng-show="adc.popupShowHide===1">
+            <form ng-submit="adc.editStockSubmit()">
+                    Name : <input type="text" name="" id="" ng-model="adc.eStockName">
+                    <p>
+                      <input type="submit" value="Save Changes">
+                    </p>
+                    {{adc.postStatus || "Status"}}
+            </form>
+          </div>
+
       </div>
 
   </div>

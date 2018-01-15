@@ -534,7 +534,7 @@ console.log('-- admin.controller.js loaded');
 					}
 				});
 
-				var name = self.eTitle;
+				var title = self.eTitle;
 				var description = self.eDesc;
 				var link = self.eNewsLink;
 				var date =	ddate;
@@ -614,9 +614,135 @@ console.log('-- admin.controller.js loaded');
 				}
 				else{
 					alert("Nothing deleted !");
-				}
+				}		
+			};
 
+			/*************  Stock View function ************/
+			var stockrows;
+
+			self.showStockInView = function()
+			{
+				console.log("inside stock view");
+
+				$http({
+                method: "GET",
+                url: "controller/admin/php/services/StocksGet.php",
+                // dataType: 'json',
+                // headers: { "Content-Type": "application/json" }
+            }).then(function(response){
+       			stockrows = response.data;
+       			console.log(stockrows);
+       			self.stockRows = stockrows;
+       			self.thumbSet = "--";
+
+       			if(stockrows.thumb){
+       				self.thumbSet = "Yes";
+       			}
+       			else{
+       				self.thumbSet = "No";
+       			}
+            });
+			};
+
+
+			/*************  Stock edit function (set the prev values) ************/
+			var edit_stock_id ;
+
+			self.editStock = function(stock_id)
+			{
+				edit_stock_id = stock_id;
+				
+				_.forEach(stockrows, function(o)
+				{ 
+					if(o.stock_id == stock_id)
+					{
+						self.particularRow = o;
+					} 
+				});
+
+				self.eStockName=self.particularRow.name;
+				console.log("************* "+self.eStockName+"***********");
+				self.popupShowHide=1;
+			};
+
+			/*************  Stock edit function (get the new values) ************/
+
+		self.editStockSubmit = function()
+		{
+			console.log("inside news edit and save ");
+			
+			
+				var name = self.eStockName;
+				
+				var datad = 
+				{
+					stock_id : edit_stock_id,
+					name : name
+				};
+
+				
+				// posting form data 
+				$http({
+                method: "POST",
+                url: "controller/admin/php/services/adminStockEdit.php",
+                // dataType: 'json',
+                data: datad,
+                // headers: { "Content-Type": "application/json" }
+            }).then(function(response){
+       			var ar = response.data;
+       			if(ar==1)
+       			{
+       				self.postStatus = "Successfully Modified and Saved News !";
+       				console.log("ar");
+            		console.log(ar);
+       			}
+       			else
+       			{
+       				self.postStatus = ar;
+       				console.log("ar");
+       				console.log(ar);
+       			}
+            });
+
+			};
+
+
+			/*************  Stock delete function ************/
+
+			self.deleteStock = function(stock_id)
+			{	
+				if(confirm("Deleting Stock will delete Events related to that Stock also. Press OK to confirm deletion !")){
+					var datad = {
+						stock_id : stock_id
+					};
 					
+					// posting form data 
+					$http({
+	                method: "POST",
+	                url: "controller/admin/php/services/adminStockDelete.php",
+	                // dataType: 'json',
+	                data: datad,
+	                // headers: { "Content-Type": "application/json" }
+	            }).then(function(response){
+	       			var ar = response.data;
+	       			if(ar==1)
+	       			{
+	       				self.postStatus = "Successfully Deleted !";
+	       				alert("Successfully Deleted !");
+	       				console.log("ar");
+	            		console.log(ar);
+	       			}
+	       			else
+	       			{
+	       				self.postStatus = ar;
+	       				console.log("ar");
+	       				console.log(ar);
+	       			}
+	            });
+				}
+				else{
+					alert("Nothing deleted !");
+				}		
 			};
 
 //add functions above this

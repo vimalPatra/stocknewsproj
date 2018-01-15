@@ -50,7 +50,7 @@ else if(empty($pageno) || $pageno==0){
 	}
 }
 else{
-	$selected = selectAll("SELECT * FROM admin_events LIMIT $limit OFFSET $offset");
+	$selected = selectAll("SELECT * FROM news_box LIMIT $limit OFFSET $offset");
 
 	if($selected->rowCount())
 	{	
