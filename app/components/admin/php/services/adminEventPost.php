@@ -13,6 +13,7 @@ if($_SERVER['REQUEST_METHOD']=='POST')
 	$name = strtolower($name); // stock name lower case
 	$title = $dataarray->title;
 	$description = $dataarray->desc;
+	$sources = $dataarray->sources;
 	$date = $dataarray->date;
 	$month = $dataarray->month;
 	$year = $dataarray->year;
@@ -64,11 +65,12 @@ if($_SERVER['REQUEST_METHOD']=='POST')
 	{
 
 		// insert events data
-	$inserted1=insert("INSERT INTO admin_events(name,title,description,stock_id,date,month,year,ea_type,trending) values(:name,:title,:description,:stock_id,:date,:month,:year,:ea,:trending)",
+	$inserted1=insert("INSERT INTO admin_events(name,title,description,sources,stock_id,date,month,year,ea_type,trending) values(:name,:title,:description,:sources,:stock_id,:date,:month,:year,:ea,:trending)",
 		array(
 			'name'=>$name,
 			'title'=>$title,
 			'description'=>$description,
+			'sources'=>$sources,
 			'stock_id'=>$stock_id,
 			'date'=>$date,
 			'month'=>$month,
@@ -148,11 +150,12 @@ if($_SERVER['REQUEST_METHOD']=='POST')
 				$stock_id=$row2['stock_id']; // stock_id fetched
 
 					// insert events data
-					$inserted=insert("INSERT INTO admin_events(name,title,description,stock_id,date,month,year,ea_type,trending) values(:name,:title,:description,:stock_id,:date,:month,:year,:ea,:trending)",
+					$inserted=insert("INSERT INTO admin_events(name,title,description,sources,stock_id,date,month,year,ea_type,trending) values(:name,:title,:description,:sources,:stock_id,:date,:month,:year,:ea,:trending)",
 						array(
 							'name'=>$name,
 							'title'=>$title,
 							'description'=>$description,
+							'sources'=>$sources,
 							'stock_id'=>$stock_id,
 							'date'=>$date,
 							'month'=>$month,

@@ -115,5 +115,11 @@ function sendMail($to,$subject,$message){
 	mail($to,$subject,$message,$header);
 }
 
+    function merge($file,$language){
+        $ext = pathinfo($file, PATHINFO_EXTENSION);
+        $filename = str_replace(".".$ext, "", $file).$language.".".$ext;
+        return ($filename);
+    }
+
 
 ?>

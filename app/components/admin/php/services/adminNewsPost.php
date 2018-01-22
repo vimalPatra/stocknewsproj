@@ -11,17 +11,18 @@ if($_SERVER['REQUEST_METHOD']=='POST')
 
 	$title = $dataarray->title;
 	$description = $dataarray->description;
+	$sourceType = $dataarray->newsSourceType;
 	$link = $dataarray->link;
-	$link = strtolower($link); // news link lower case
 	$date = $dataarray->date;
 	$month = $dataarray->month;
 	$year = $dataarray->year;
 	$verified = 1;
 
-	$inserted = insert("INSERT INTO news_box (title,description,link,date,month,year,verified) values(:title,:description,:link,:date,:month,:year,:verified)",array(
+	$inserted = insert("INSERT INTO news_box (title,description,srctype,sources,date,month,year,verified) values(:title,:description,:srctype,:sources,:date,:month,:year,:verified)",array(
 		'title'=>$title,
 		'description'=>$description,
-		'link'=>$link,
+		'srctype'=>$sourceType,
+		'sources'=>$link,
 		'date'=>$date,
 		'month'=>$month,
 		'year'=>$year,

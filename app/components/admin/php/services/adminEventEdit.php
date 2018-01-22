@@ -10,6 +10,7 @@ if($_SERVER['REQUEST_METHOD']=='POST')
 	$event_id = $dataarray->event_id;
 	$title = $dataarray->title;
 	$description = $dataarray->desc;
+	$sources=$dataarray->sources;
 	$date = $dataarray->date;
 	$month = $dataarray->month;
 	$year = $dataarray->year;
@@ -20,9 +21,10 @@ if($_SERVER['REQUEST_METHOD']=='POST')
 		$trending = 1;
 	}
 
-	$updated=update("UPDATE admin_events set title=:title,description=:description,date=:date,month=:month,year=:year,ea_type=:ea_type,trending=:trending where event_id=:event_id",array(
+	$updated=update("UPDATE admin_events set title=:title,description=:description,sources=:sources,date=:date,month=:month,year=:year,ea_type=:ea_type,trending=:trending where event_id=:event_id",array(
 		'title'=>$title,
 		'description'=>$description,
+		'sources'=>$sources,
 		'date'=>$date,
 		'month'=>$month,
 		'year'=>$year,
@@ -31,7 +33,8 @@ if($_SERVER['REQUEST_METHOD']=='POST')
 		'event_id'=>$event_id
 	));
 
-	if($updated){
+	if($updated)
+	{
 		echo 1;
 	}
 }

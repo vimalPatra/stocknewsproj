@@ -12,7 +12,7 @@ console.log('-- admin.controller.js loaded');
 
 	angular
 	.module("adminModule")
-		.controller('adminCtrl',["$http",function($http){
+		.controller('adminCtrl',["$http",'fileUpload',function($http,fileUpload){
 
 			var self = this; 
 
@@ -36,12 +36,14 @@ console.log('-- admin.controller.js loaded');
 			var adminAddEventDP = $('#ae_datepicker1');
 			var adminEditEventDP = $('#ae_datepicker2');
 			var adminAddNewsDP = $('#datepickerNewsAdd');
-			var adminEditNewsDP = $('#datepickerNewsEdit')	
+			var adminEditNewsDP = $('#datepickerNewsEdit');
+			var adminAddShoutDP = $('#datepickerShoutAdd');	
 
 				adminAddEventDP.datepicker();
 				adminEditEventDP.datepicker();
 				adminAddNewsDP.datepicker();
 				adminEditNewsDP.datepicker();
+				adminAddShoutDP.datepicker();
 
 			
 			/* Main Tab management */
@@ -91,6 +93,7 @@ console.log('-- admin.controller.js loaded');
 				var name = self.ename;
 				var title = self.etitle;
 				var desc = self.edesc;
+				var sources = self.eventSources;
 				var date =	ddate;
 				var month = dmonth;
 				var year = dyear;
@@ -104,11 +107,10 @@ console.log('-- admin.controller.js loaded');
 					name : name,
 					title : title,
 					desc : desc,
+					sources : sources,
 					date : date,
 					month : month,
 					year : year,
-					// rank : rank,
-					// thumb : thumb,
 					ear : ear, 
 					trending : trending
 				};
@@ -162,6 +164,7 @@ console.log('-- admin.controller.js loaded');
 				console.log("News controller inside");
 				var title = self.newsTitle;
 				var desc = self.newsDesc;
+				var newsSourceType = self.newssource;
 				var date =	ddate;
 				var month = dmonth;
 				var year = dyear;
@@ -170,6 +173,7 @@ console.log('-- admin.controller.js loaded');
 				var datad = {
 					title : title,
 					description : desc,
+					newsSourceType : newsSourceType,
 					date : date,
 					month : month,
 					year : year,
@@ -327,6 +331,7 @@ console.log('-- admin.controller.js loaded');
 				self.uetitle = self.particularRow.title;
 				self.uedesc=self.particularRow.description;
 				self.uedate = setMonth+"/"+self.particularRow.date+"/"+self.particularRow.year;
+				self.ueventSources = self.particularRow.sources;
 
 				if(self.particularRow.trending==1){
 					console.log("checked");
@@ -368,12 +373,14 @@ console.log('-- admin.controller.js loaded');
 				var year = dyear;
 				var ear = self.uear;
 				var trending = self.utrending;
+				var sources = self.ueventSources;
 
 				
 				var datad = {
 					event_id : edit_event_id,
 					title:title,
 					desc : desc,
+					sources : sources,
 					date : date,
 					month : month,
 					year : year,
@@ -508,7 +515,9 @@ console.log('-- admin.controller.js loaded');
 				
 				self.eTitle=self.particularRow.title;
 				self.eDesc = self.particularRow.description;
-				self.eNewsLink=self.particularRow.link;
+				self.enewsLink = self.particularRow.sources;
+				self.enewssource=self.particularRow.srctype;
+				self.eNewsLink=self.particularRow.sources;
 				self.eNewsDate = setMonth+"/"+self.particularRow.date+"/"+self.particularRow.year;
 
 			
@@ -536,7 +545,8 @@ console.log('-- admin.controller.js loaded');
 
 				var title = self.eTitle;
 				var description = self.eDesc;
-				var link = self.eNewsLink;
+				var newsSourceType = self.enewssource;
+				var link = self.enewsLink;
 				var date =	ddate;
 				var month = dmonth;
 				var year = dyear;
@@ -546,6 +556,7 @@ console.log('-- admin.controller.js loaded');
 					news_id : edit_news_id,
 					title : title,
 					description : description,
+					sourceType : newsSourceType,
 					link : link,
 					date : date,
 					month : month,
@@ -633,14 +644,7 @@ console.log('-- admin.controller.js loaded');
        			stockrows = response.data;
        			console.log(stockrows);
        			self.stockRows = stockrows;
-       			self.thumbSet = "--";
 
-       			if(stockrows.thumb){
-       				self.thumbSet = "Yes";
-       			}
-       			else{
-       				self.thumbSet = "No";
-       			}
             });
 			};
 
@@ -743,6 +747,99 @@ console.log('-- admin.controller.js loaded');
 				else{
 					alert("Nothing deleted !");
 				}		
+			};
+
+						/*************  Shout add function ************/
+
+			self.adminShoutForm = function()
+			{
+
+			var dateobj = adminAddNewsDP.datepicker('getDate');
+			var ddate = dateobj.getDate();
+			var dmonth = dateobj.getMonth();
+			var dyear = dateobj.getFullYear();
+			 
+			var monthNames = ['jan','feb','march','april','may','jun',
+			'jul','aug','sep','oct','nov','dec']; // hardcoded months
+				monthNames.forEach(function(month,i){	
+					if(dmonth == i) {
+						dmonth = month;
+					}
+				});
+
+
+				console.log("Shout controller inside");
+				var title = self.shoutTitle;
+				var desc = self.shoutDesc;
+				var date =	ddate;
+				var month = dmonth;
+				var year = dyear;
+				var link = self.shoutLink;
+		
+				var datad = {
+					title : title,
+					description : desc,
+					date : date,
+					month : month,
+					year : year,
+					link : link
+				};
+
+				// posting form data 
+				$http({
+                method: "POST",
+                url: "controller/admin/php/services/adminShoutPost.php",
+                // dataType: 'json',
+                data: datad,
+                // headers: { "Content-Type": "application/json" }
+            }).then(function(response)
+            {
+       			var ar = response.data;
+       			if(ar==1)
+       			{
+       				self.postStatus = "Success !";
+       				console.log("ar");
+            		console.log(ar);
+       			}
+       			else
+       			{
+       				self.postStatus = ar;
+       				console.log("ar");
+       				console.log(ar);
+       			}
+            });
+			};
+
+			/*************  Thumb Upload function in Stock Manage ************/
+
+			self.uploadFile = function(stock_id)
+			{
+		 		var file = self.myFile;
+		 		var text= stock_id;
+		 		console.log("******** stock id : *********");
+		 		console.log(text);
+		        console.log('file is : ');
+		        console.log(file);
+		        console.log("********** dir ************");
+		        console.dir(file);
+
+		        var uploadUrl = "controller/admin/php/services/thumbUpload.php";
+		        fileUpload.uploadFileToUrl(file, uploadUrl, text);
+			};
+
+
+			/*************  Stock add function ************/
+
+			self.AddStockSubmit = function()
+			{
+				var stockName = self.addStockName;
+
+				var file = self.myAddFile;
+				console.log('Add stock file is : ');
+		        console.log(file);
+		        console.log("Stock name : "+stockName);
+				var uploadUrl = "controller/admin/php/services/adminStockPost.php";
+				fileUpload.uploadFileToUrl(file, uploadUrl, stockName);
 			};
 
 //add functions above this

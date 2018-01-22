@@ -9,6 +9,7 @@
       <a class="waves-effect waves-light btn" ng-click="adc.setTab(3)">Manage Polls</a>
       <a class="waves-effect waves-light btn" ng-click="adc.setTab(4)">Manage News</a>  
       <a class="waves-effect waves-light btn" ng-click="adc.setTab(5)">Manage Stock</a> 
+      <a class="waves-effect waves-light btn" ng-click="adc.setTab(6)">Shout Box</a> 
     </div>
   </div>
 
@@ -52,6 +53,10 @@
                     <label for="trendingid">Trending ?</label>
                     <br>
                     <p>
+                      <label for="eventsource">Sources.... seperate link(s) with comma(,) </label>
+                  <textarea name="" id="eventsource" cols="30" rows="10" ng-model="adc.eventSources"></textarea>
+                    </p>
+                    <p>
                       <input type="submit" >
                     </p>
                     {{adc.postStatus || "Status"}}
@@ -73,6 +78,7 @@
                   <th>Year</th>
                   <th>Event/Announcement</th>
                   <th>Trending</th>
+                  <th>Sources</th>
                 </tr>
                 <tr ng-repeat="x in adc.eventRows">
                   <td>{{x.event_id}}</td>
@@ -84,6 +90,7 @@
                   <td>{{x.year}}</td>
                   <td>{{x.ea_type}}</td>
                   <td>{{x.trending}}</td>
+                  <td>{{x.sources}}</td>
                   <td>
                     <a class="btn-floating waves-effect waves-light cyan" ng-click="adc.editEvents(x.event_id)"><i class="material-icons">edit</i></a>
                   </td>
@@ -123,6 +130,10 @@
                     <input type="checkbox" id="utrendingid" ng-model="adc.utrending">
                     <label for="utrendingid">Trending ?</label>
                     <br>
+                    <p>
+                      <label for="eventsource">Sources.... seperate link(s) with comma(,) </label>
+                      <textarea name="" id="eventsource" cols="30" rows="10" ng-model="adc.ueventSources"></textarea>
+                    </p>
                     <p>
                       <input type="submit" value="Save Changes">
                     </p>
@@ -201,9 +212,18 @@
                   <input name="" id="datepickerNewsAdd" value="Date Picker">
                 </p>
                 <p>
+                    <p>
+                        <input name="newssource" type="radio" id="inNewsSrc" ng-model="adc.newssource" value="in"/>
+                        <label for="inNewsSrc">Internal Sources(multiple) </label>
+                    </p>
+                    <p>
+                        <input name="newssource" type="radio" id="exNewsSrc" ng-model="adc.newssource" value="ex"/>
+                        <label for="exNewsSrc">External Source(single) </label>
+                    </p>
                   Link : 
                   <br>
-                  <input type="text" name="" id="" ng-model="adc.newsLink">
+                  Seperate link(s) with comma (,) 
+                  <textarea name="" id="" cols="30" rows="10" ng-model="adc.newsLink"></textarea>
                 </p>
       
                 <p>
@@ -231,7 +251,7 @@
                   <td>{{x.news_id}}</td>
                   <td>{{x.title}}</td>
                   <td>{{x.description}}</td>
-                  <td>{{x.link}}</td>
+                  <td>{{x.sources}}</td>
                   <td>{{x.date}}</td>
                   <td>{{x.month}}</td>
                   <td>{{x.year}}</td>
@@ -252,9 +272,21 @@
                     <br>
                     Description : <input type="text" name="" id="" ng-model="adc.eDesc">
                     <br>
-                    Link : <input type="text" name="" id="" ng-model="adc.eNewsLink">
-                    <br>
-                    <br>
+                    <p>
+                        <p>
+                            <input name="enewssource" type="radio" id="einNewsSrc" ng-model="adc.enewssource" value="in"/>
+                            <label for="einNewsSrc">Internal Sources(multiple) </label>
+                        </p>
+                        <p>
+                            <input name="enewssource" type="radio" id="eexNewsSrc" ng-model="adc.enewssource" value="ex"/>
+                            <label for="eexNewsSrc">External Source(single) </label>
+                        </p>
+                        Link : 
+                        <br>
+                        Seperate link(s) with comma (,) 
+                        <textarea name="" id="" cols="30" rows="10" ng-model="adc.enewsLink"></textarea>
+                    </p>
+                    
                     Date : 
                     <p>
                       <input name="" id="datepickerNewsEdit" ng-model="adc.eNewsDate">
@@ -270,31 +302,49 @@
 
       <div ng-show="adc.tab===5">
         Stock Manage
-        <div>
+          <div>
             <a class="waves-effect waves-light btn" ng-click="adc.setTabInEvents(1)">Add Stock</a>
             <a class="waves-effect waves-light btn" ng-click="adc.setTabInEvents(2); adc.showStockInView();">View Stock</a>  
           </div>
 
-          <!-- View News Div that allows edit and delete -->
+          <!-- View Stock Div that allows to add new Stock -->
           <div id='viewStock' class="row" ng-show="adc.InEventsTab===1">
-            Add stock form 
+            <form ng-submit="adc.AddStockSubmit()">
+                    <p>
+                    Name : <input type="text" name="" id="" ng-model="adc.addStockName">  
+                    </p>
+                    <p>
+                      Choose Thumbnail : 
+                      <p>
+                        <input type="file" file-model="adc.myAddFile"/>
+                      </p>
+                    </p>
+                    <br>
+                    <br>
+                    <p>
+                      <input type="submit" value="Save Changes">
+                    </p>
+                    {{adc.postStatus || "Status"}}
+            </form>
           </div>
 
-          <!-- View News Div that allows edit and delete -->
+          <!-- View Stock Div that allows edit and delete -->
           <div id='viewStock' class="row" ng-show="adc.InEventsTab===2">          
                 <div class="col s12">
                       <table class="highlight">
                         <tr>
+                          <th>Stock ID</th>
                           <th>Stock Name</th>
                           <th>Thumbnail Uploaded</th>
-                          <th>Change Thumbnail</th>
-                          <th>Stock Delete</th>
+                          <th>Add/Update Thumbnail</th>
                         </tr>
                         <tr ng-repeat="x in adc.stockRows">
+                          <td>{{x.stock_id}}</td>
                           <td>{{x.name}}</td>
-                          <td>{{adc.thumbSet}}</td>
+                          <td> <span ng-if="(x.thumb).length==0">--</span>{{x.thumb}}</td>
                           <td>
-                            <input type="file">
+                            <input type="file" file-model="adc.myFile"/>
+                            <button ng-click="adc.uploadFile(x.stock_id)">upload</button>
                           </td>
                           <td>
                             <a class="btn-floating waves-effect waves-light cyan" ng-click="adc.editStock(x.stock_id)"><i class="material-icons">edit</i></a>
@@ -317,6 +367,43 @@
             </form>
           </div>
 
+      </div>
+      
+      <div ng-show="adc.tab===6">
+        Add Shout 
+
+          <div class="col 5">
+            <form ng-submit="adc.adminShoutForm()">
+            Shout Title : 
+            <input type="text" name="" id="" ng-model="adc.shoutTitle">
+            <br>
+            Shout Description : 
+            <input type="text" name="" id="" ng-model="adc.shoutDesc">
+            <p>
+              <input name="" id="datepickerShoutAdd" value="Date Picker">
+            </p>
+            <p>
+              Link : 
+              <br>
+              <input type="text" name="" id="" ng-model="adc.shoutLink">
+            </p>
+  
+            <p>
+              <input type="submit" >
+            </p>
+            {{adc.postStatus || 25}}
+            </form>
+          </div>
+
+          <!-- <div class="col 5">
+            <div class="file-upload">
+                <input type="text" ng-model="adc.name">
+                {{5+4}}
+                <br>
+                <input type="file" file-model="adc.myFile"/>
+                <button ng-click="adc.uploadFile()">upload me</button>
+            </div>  
+          </div>   -->
       </div>
 
   </div>

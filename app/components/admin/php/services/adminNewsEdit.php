@@ -10,20 +10,21 @@ if($_SERVER['REQUEST_METHOD']=='POST')
 	$news_id = $dataarray->news_id;
 	$title = $dataarray->title;
 	$description = $dataarray->description;
+	$srctype=$dataarray->sourceType;
 	$link = $dataarray->link;
-	$link = strtolower($link);
 	$date = $dataarray->date;
 	$month = $dataarray->month;
 	$year = $dataarray->year;
 	
 
-	$updated=update("UPDATE news_box set title=:title,description=:description,link=:link,date=:date,month=:month,year=:year where news_id=:news_id",array(
+	$updated=update("UPDATE news_box set title=:title,description=:description,srctype=:srctype,sources=:sources,date=:date,month=:month,year=:year where news_id=:news_id",array(
 		'title'=>$title,
 		'description'=>$description,
+		'srctype'=>$srctype,
 		'date'=>$date,
 		'month'=>$month,
 		'year'=>$year,
-		'link'=>$link,
+		'sources'=>$link,
 		'news_id'=>$news_id
 	));
 
