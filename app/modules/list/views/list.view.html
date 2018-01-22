@@ -45,7 +45,7 @@
 						
 					</div>
 					
-					<div class="container--tool__search col s6 m3 l3 offset-l1">
+					<div class="container--tool__search col s6 m3 l3 offset-l3">
 						<div class="tool--search">
 							<div class="input-field">
 			        			<input data-ng-change="list.manageData()" data-ng-model="list.searchBy" id="ceListSearch" type="search" class="tool--search validate">
@@ -83,29 +83,50 @@
 		<thead class="container--list__headers">
 			<tr class="list__headers row">
 				<td data-ng-click="list.toggleOuterSortByReverse()" class="container--list__header col s2">
-					<h3  class="list__header list__header--date ">
-						date
+					<h3 data-ng-class="{active : list.outerSortBy =='date', reverse : list.outerSortByReverse }"  class="list__header list__header--date ">
+						<span>
+							date 
+							<i class="up material-icons">arrow_drop_up</i>
+							<i class="down material-icons">arrow_drop_down</i>
+						</span>
 					</h3>
+					
 				</td>
 
 				<td data-ng-click="list.setInnerListSort('rank')" class="container--list__header col s2">
-					<h3 class="list__header list__header--rank ">
-						rank
+					<h3 data-ng-class="{active : list.innerSortBy =='rank', reverse : list.innerSortByReverse }" class="list__header list__header--rank ">
+						<span>
+							rank 
+							<i class="up material-icons">arrow_drop_up</i>
+							<i class="down material-icons">arrow_drop_down</i>
+						</span>
 					</h3>
 				</td>
 				<td data-ng-click="list.setInnerListSort('name')" class="container--list__header col s2">
-					<h3 class="list__header list__header--stock ">
-						stock
+					<h3 data-ng-class="{active : list.innerSortBy =='name', reverse : list.innerSortByReverse }" class="list__header list__header--stock ">
+						<span>
+							stock 
+							<i class="up material-icons">arrow_drop_up</i>
+							<i class="down material-icons">arrow_drop_down</i>
+						</span>
 					</h3>
 				</td>
 				<td data-ng-click="list.setInnerListSort('description')" class="container--list__header col s4">
-					<h3 class="list__header list__header--title ">
-						news / announcement
+					<h3 data-ng-class="{active : list.innerSortBy =='description', reverse : list.innerSortByReverse }" class="list__header list__header--title ">
+						<span>
+							news / announcement 
+							<i class="up material-icons">arrow_drop_up</i>
+							<i class="down material-icons">arrow_drop_down</i>
+						</span>
 					</h3>
 				</td>
 				<td data-ng-click="list.setInnerListSort('trending')" class="container--list__header col s2">
-					<h3 class="list__header list__header--trending ">
-						trending
+					<h3 data-ng-class="{active : list.innerSortBy =='trending', reverse : list.innerSortByReverse }" class="list__header list__header--trending ">
+						<span>
+							trending 
+							<i class="up material-icons">arrow_drop_up</i>
+							<i class="down material-icons">arrow_drop_down</i>
+						</span>
 					</h3>
 				</td>
 			</tr>
@@ -115,9 +136,19 @@
 
 				<td class="date__for__events col s2">
 					<!-- |  outerListFilter : list.filterBy : list.searchBy --> <!-- this thing doesnt work -->
-					<span >
+					<span class="dateBadge">
 							<!-- {{list.filterBy}}--{{list.searchBy}} -->
-						{{dateEvents.date + ' / ' + dateEvents.month + ' / ' + dateEvents.year}}
+						<span class="date">
+							{{dateEvents.date + ' / '}}
+						</span>
+						<span class="month">
+							{{dateEvents.month}}
+						</span>
+						<span class="year">
+							{{' / ' + dateEvents.year}}
+						</span>
+						  
+						
 					</span>
 				</td>
 				<td class="events__for__date col s10">

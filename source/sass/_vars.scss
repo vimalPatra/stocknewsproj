@@ -1,69 +1,199 @@
 	// vars
 
-// paddings
+// -------------------------------  paddings ------------------------------- 
 $headerPadding: .0rem 2rem;
 $mainPadding: 1rem 1.25rem;
 
-// fonts
+
+
+
+
+//--------------------------------- fonts--------------------------------------
 $logoFont: 'Libre Barcode 39 Extended Text','Roboto';
-$primaryFont:   'Spinnaker',sans-serif;
+
+// -------- primaryFont ---------
+$primaryFont: 'Josefin Sans', sans-serif; // chosen
+
+// $primaryFont: 'Rokkitt', serif; // good
+// $primaryFont: 'Vollkorn', serif;
+// $primaryFont: 'Cinzel', serif;
+
+// $primaryFont: 'Josefin Slab', serif; // good
+
+// $primaryFont: 'Cardo', serif;
+// $primaryFont: 'Economica', sans-serif;
+// $primaryFont: 'Jura', sans-serif;
+// $primaryFont: 'Cantarell', sans-serif;
+// $primaryFont: 'Sorts Mill Goudy', serif;
+// $primaryFont: 'Spectral SC', serif;
+// $primaryFont: 'Nunito', sans-serif;
+
+// -------- newsBoxFont ---------
+
+$newsBoxFont:'PT Sans Caption', sans-serif; // 1
+// $newsBoxFont:'Jura', sans-serif; // 2
+// $newsBoxFont:'Cantarell', sans-serif; // 3
+// $newsBoxFont:'Julius Sans One', sans-serif; // 4
+// $newsBoxFont:'Rokkitt', serif; // 5
+
+
+// -------- font weights ----------
+
+$calendarFontWeight: 600;
 
 
 
 
 
 
+//--------------------------   background + colors   ------------------------------
 
-		// background + colors
+$bodyBg: rgb(250,250,250);
 
-// $headerBg: linear-gradient( to right,hsla(236, 100%, 95%, 1) 10%, hsla(236, 100%, 58%, 1));
-// $headerBg: linear-gradient(to right, #4b6cb7, #182848);
-// $headerBg: linear-gradient(to right, #360033, #0b8793);
-// $headerBg: linear-gradient(to right, #000fff, #0b8793);
-// $headerBg: linear-gradient(to right, #360033, #000fff);
-// $headerBg: linear-gradient(to right, #607d8b , #eceff1);
-$headerBg: transparent;
+// --------color palletes-----------
 
-// $cardTitleBg: linear-gradient(to right, #360033, #0b8793);
-// $cardTitleBg: linear-gradient(to bottom, #00c6ff, #0072ff);
-$cardTitleBg: linear-gradient( to bottom,
-		          hsla(236, 100%, 70%,1), 
-		          hsla(236, 100%, 40%,1) 
-	          );
+//----- 6 -------
+
+//dark 
+$color6DarkS: hsl(187, 100%, 34%);
+$color6DarkE: hsl(212, 82%, 38%) ;
+
+//light 
+$color6LightS: hsl(188, 70%, 55%) ;
+$color6LightE: hsl(219, 72%, 62%) ;
+
+//lighter
+$color6LighterS: hsl(182, 100%, 74%) ;
+$color6LighterE: hsl(218, 100%, 78%) ;
+
+//  headers ---------------
+
+// $headerBg: linear-gradient( 0deg , hsl(303, 100%, 11%), hsl(185, 86%, 31%)); // 1--alt (white text) --not good
+// $headerBg: linear-gradient( 180deg , hsl(303, 100%, 11%), hsl(185, 86%, 31%)); // 1 (white text) --not good
+// $headerBg: linear-gradient( 45deg, hsl(165,51%,43%), hsl(204,67%,32%) ); // 2 (white text)   -- good
+// $headerBg: linear-gradient( 180deg,hsl(177, 30%, 52%) 10%, hsl(188, 55%, 39%) ); // 3 ( white text) -- third best
+// $headerBg: linear-gradient( 45deg, hsl(189,63%,44%) 10%, hsl(231,57%,23%) ); // 4 ( white  text) --half bad
+$headerBg: linear-gradient( 45deg, hsl(195, 100%, 37%), hsl(220, 100%, 35%) ); // 5 (white text) --second best
+
+$headerBg: linear-gradient( 45deg, hsl(187, 100%, 34%) 10%, hsl(212, 82%, 38%) ); // 6 ( white text) --best
+
+// $headerBg: linear-gradient(to bottom, #0095cc, #0048cb); // 7 ( white text) --okay
+
+
+// card title-------------
+
+// $cardTitleBg: linear-gradient( 0deg , hsl(303, 100%, 11%), hsl(185, 86%, 31%)); // 1--alt (white text) --not good
+// $cardTitleBg: linear-gradient( 180deg , hsl(303, 100%, 11%), hsl(185, 86%, 31%)); // 1 (white text) --not good
+// $cardTitleBg: linear-gradient( 45deg, hsl(163, 58%, 64%), hsl(207, 42%, 52%) ); // 2 (white text)  -- good  
+// $cardTitleBg: linear-gradient(180deg, hsl(165,51%,43%), hsl(204,67%,32%) ); // 2--alt (white text)  
+// $cardTitleBg:linear-gradient( 180deg,hsl(177, 30%, 52%) 10%, hsl(188, 55%, 39%)  ); // 3--alt ( white text)
+// $cardTitleBg:linear-gradient( 180deg,hsl(176,50%,71%) 10%, hsl(189,51%,60%) ); // 3 ( white text) -- third best
+// $cardTitleBg:linear-gradient( 45deg, hsl(190, 75%, 66%) 10%, hsl(239, 31%, 41%)  ); // 4 ( white  text) --half bad
+$cardTitleBg:linear-gradient( 45deg, hsl(194, 88%, 52%), hsl(232, 73%, 61%)  ); // 5 (white text) --second best
+
+// $cardTitleBg:linear-gradient( 45deg, $color6LightS , $color6LightE ); // 6 ( white text) --best
+$cardTitleBg:linear-gradient(45deg, $color6LightS,  $color6DarkE ); // 6--alt ( white text) --best
+
+// $cardTitleBg: linear-gradient(to bottom, #00c6ff, #0072ff);  // 7 ( white text ) --okay
+
+
 
 $bigOverlayBg: rgba(0,0,0,.5);
 
-$calendarBg: linear-gradient(to right, 
-		          hsl(161, 59%, 44%), 
-		          hsl(236, 100%, 50%)
-		     );
-$calendarBgStart: hsl(161, 59%, 44%);
-$calendarBgStart: hsl(236, 100%, 50%);
+// ---------- calendar -------------
 
-$calendarSelectionsBg: linear-gradient(to right, 
-		          hsl(161,59%,53%), 
-		          hsl(235, 100%, 60%)
-		     );
+$calendarBg: linear-gradient(to right, 
+	              $color6DarkS, 
+		          $color6DarkE
+	             );
+
+
+
+// $yearControlBg: linear-gradient(to right, 
+// 	              $color6DarkS, 
+// 		          $color6DarkE
+// 	             );
+$yearControlBg: linear-gradient(45deg, 
+	              $color6LightS, 
+		          $color6DarkE
+	             );
+
+$monthControlPrevBg: $color6DarkS;
+$monthControlPrevBg: $color6LightS;
+
+$monthControlNextBg: $color6DarkE;
+$monthControlNextBg: $color6DarkE;
+
+$calendarSelectionsBg: $yearControlBg;
+
 $calendarSelectionBtnBgColor: rgb(255,255,255) ;
 
 
 
+// ---------- list  -----------
+$listInfoBg: linear-gradient(45deg,
+			          $color6DarkE,
+			          $color6DarkS
+			        );
+
+$listBg: rgb(245,245,245); // background color of the whole table data
+
+// $listToolbarBg: $cardTitleBg;
+$listToolbarBg: rgb(230,230,230);
+$listHeaderBg: $listToolbarBg;
+
+$listToolBg: rgb(250,250,250);
+$listToolActiveBg: rgb(255,255,255);
+
+// ------------ news --------------
+
+$newsListContBg: rgba(240,240,240,1);
+$newsTitleBg: rgb(220,220,220);
 
 
 
 
 
-		// text colors
-$textColor: #424242;
+
+
+
+
+
+
+
+
+//--------------------    text colors   --------------------
+
+// -------- headerNav ----------
+
 // $headerNavTextColor: hsla(0, 0%, 97%,1);
-$headerNavTextColor: hsla(0, 0%, 30%,1) ;
+$headerNavTextColor: hsla(0, 0%, 100%,1) ;
 $rightSideNavTextColor: hsla(0, 0%, 50%,1) ;
-// $logoTextColor: hsla(236, 100%, 100%, 1)  !important;
-// $logoTextColor: hsla(236, 100%, 100%, 1)  !important;
-// $logoTextColor: hsla(236, 100%, 40%, 1)  !important;
-$logoTextColor: hsla(0, 0%, 30%,1)  !important;
-$calendarTextColor: rgba(255,255,255,1);
+
+// -------- logo ---------
+$logoTextColor: $headerNavTextColor  !important;
+
+// ------- calendar -------
+$calendarTextColor: rgb(60,60,60);
+$calendarControlTextColor: rgb(255,255,255);
+
+
+// -------- list ----------
 $toolbarTextColor: rgb(130,130,130);
+$listHeaderTextColor: rgb(115,115,115);
+$listInfoTextColor: rgb(255,255,255); // for showing dates and number of events
+$listToolTextColor: rgb(30,30,30);
+
+// -------- news ----------
+
+$newsTitleTextColor: rgb(80,80,80);
+$newsDescTextColor: rgb(100,100,100);
+$newsDateTextColor: rgb(120,120,120);
+
+// -------- poll ----------
+
+$pollBoxTextColor: rgb(110,110,110);
+
 
 // $headingTextColor: ;
 // $warningTextColor: red;
@@ -72,7 +202,31 @@ $toolbarTextColor: rgb(130,130,130);
 
 
 
-		// heights
+
+
+
+
+
+
+
+//--------------------------    icon colors   --------------------------
+
+$listSortIconColor: rgb(80,80,80);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//---------------------------    heights    ---------------------------
 
 $listHeaderHeight: 2.7rem;
 $heightOfListOfEvents: 6rem;
@@ -80,31 +234,74 @@ $containerYearSelectorHeight: 7rem;
 $yearControlBtnHeight: 2rem;
 $containerDateSelectorHeight: 3rem;
 
-		// widths
+
+
+
+
+
+//-----------------------------   widths  -----------------------------
 $monthControlBtnWidth: 2rem;
 
 
 
 
-		// font-sizes
-$cardTitleFontSize: 1.5rem;
-$monthTextFontSize: .8rem;
-$yearTextFontSize: .65rem;
+
+
+
+
+
+
+
+
+//------------------------      font-sizes     ------------------------
+
+$cardTitleFontSize: 1.6rem;
+$monthTextFontSize: 1rem;
+$yearTextFontSize: .8rem;
 
 $calendarCtrlBtnIconFontSize: 1.3em;
 $calendarCtrlBtnTextFontSize: .75em;
 
 $calendarSelectionTitleFontSize: 1rem;
-$calendarSelectionBtnFontSize: .85rem;
+$calendarSelectionBtnFontSize: 1rem;
 
 
 
 
-		// border 
+
+
+
+
+
+
+//--------------------------    border   ------------------------------   
+
 $headerBottomBorder: 3px solid hsla(236, 100%, 40%,1);
 
 $tableThickBorder: 2px solid rgb(230,230,230) !important;
 $tableSlimBorder: 1px solid rgb(230,230,230) !important;
+
+$newsListItemBorder: 3px solid $newsTitleBg;
+
+
+
+
+
+
+
+
+		// radius
+
+$cardRadius: 6px;
+
+$btnRadius: 4px !important;
+$btnSubtleRadius: 3px !important;
+$btnSubtlestRadius: 2px !important;
+
+
+
+
+
 
 
 
@@ -117,9 +314,18 @@ $tableSlimBorder: 1px solid rgb(230,230,230) !important;
 
 
 
-		// radius
 
 
-$btnRadius: 4px !important;
-$btnSubtleRadius: 3px !important;
-$btnSubtlestRadius: 2px !important;
+
+$letterSpacingExtra: .05em;
+$letterSpacingMed: .04em;
+$letterSpacingReg: .03em;
+
+
+$lineHeightExtra: 1.4em;
+$lineHeightMed: 1.25em;
+$lineHeightReg: 1.1em;
+$lineHeightSmall: 1em;
+
+
+

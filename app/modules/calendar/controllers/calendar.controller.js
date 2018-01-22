@@ -27,11 +27,11 @@ console.log('-- calendar.controller.js loaded');
 			self.yearIndex = object.yearIndex;
 			self.monthIndex = object.monthIndex;
 
-			self.defaultActiveYearIndex = object.yearIndex;
+			
 			self.defaultActiveMonthIndex  = object.monthIndex;
 			self.defaultActiveDateIndex  = object.controller.currentDate-1;
 			
-			var s = this;
+			var s = self;
 			s.$body = $('body');
 
 				// year swiper
@@ -77,9 +77,10 @@ console.log('-- calendar.controller.js loaded');
 			o.allMonthsSelected = scopeOptions.allMonthsSelected;
 			o.defaultMonthSelected = scopeOptions.defaultMonthSelected; // current month is selected by default
 			o.noMonthSelected = scopeOptions.noMonthSelected;
+			o.allDatesSelected = scopeOptions.allDatesSelected;
 			
 			// settings for  rendering dates for a month selcted
-			o.allDatesSelected = false;
+			
 			o.defaultDateSelected = !o.allDatesSelected;
 
 			// other preferences (for admin)
@@ -121,7 +122,7 @@ console.log('-- calendar.controller.js loaded');
 			   and alsp these methods only creates an instance doesn't initializes them  */
 			
 			// create new date swiper
-			self.createDateSwiperInstance(); // we call it multiple times as month changes and we destroy and recall this mehtod
+			self.createDateSwiperInstance(); // we call it multiple times as month changes (we destroy and recall this mehtod)
 
 			// create new year swiper instance
 			self.createYearSwiperInstance();
@@ -134,7 +135,6 @@ console.log('-- calendar.controller.js loaded');
 		sliderInfo: function(){
 			var self = this;
 			var ctrl = self.object.controller;
-
 
 			// vars for year swiper
 			var yearSwiper = self.yearSwiper;
@@ -192,7 +192,7 @@ console.log('-- calendar.controller.js loaded');
 							tap: function (e) {
 								var swiper = this;
 								// call event handler
-								self.events.dateChange.call(self,e,swiper);
+								self.events.dateTap.call(self,e,swiper);
 							}
 						}
 				    });
@@ -236,7 +236,7 @@ console.log('-- calendar.controller.js loaded');
 						tap: function (e) {
 							var swiper = this;
 							// call event handler
-							self.events.monthChange.call(self,e,swiper);
+							self.events.monthTap.call(self,e,swiper);
 						}
 					}
 			    });
@@ -267,7 +267,7 @@ console.log('-- calendar.controller.js loaded');
 					slideChangeTransitionEnd:function(){
 						var swiper = this;
 						// call event handler
-						self.events.yearChange.call(self,swiper);
+						self.events.yearSwipe.call(self,swiper);
 					}
 				}
 
@@ -291,12 +291,13 @@ console.log('-- calendar.controller.js loaded');
 					// params: index, speed, callback
 					swiper.slideTo(0,0); // slide to the current month's slide
 				}
-								
+
+							
 				// select all dates on month selection
 				if(o.allDatesSelected) {
-					$(window).trigger('allDatesDeleted');
-					$(window).trigger('dateToggled',obj.controller.datesInCurrentMonth);
-
+					console.log(self.datesSelectedArr);
+					$(window).trigger('dateToggled',[obj.controller.datesInCurrentMonth]);
+					console.log(self.datesSelectedArr);
 					// add selected class to all months
 					$(swiper.slides).addClass(o.selectedClasses);
 				
@@ -304,11 +305,13 @@ console.log('-- calendar.controller.js loaded');
 					$(window).trigger('allDatesDeleted');
 					
 					$(swiper.slides).removeClass(o.selectedClasses);		
-					$(swiper.slides[self.defaultActiveDateIndex]).removeClass(o.defaultClasses);
 					
 				}
+
+				// remove the default class everytime
+				$(swiper.slides[self.defaultActiveDateIndex]).removeClass(o.defaultClasses);
 					
-				// if only one month is selected and it is equal to the default month then change the dates array
+				// if only one month is selected and it is equal to the default month
 				if (self.monthsSelectedArr.length==1 && self.monthsSelectedArr[0] == self.defaultActiveMonthIndex) {
 					
 					if (o.highlightDefaultDate) {
@@ -316,16 +319,17 @@ console.log('-- calendar.controller.js loaded');
 						$(swiper.slides[self.defaultActiveDateIndex]).addClass(o.defaultClasses);
 					}
 					
+					// selections scenarios
 					if (o.defaultDateSelected && !self.dateDefaultRun) {
 						self.dateDefaultRun = true;
 						// add selected class to the current date
 						$(swiper.slides[self.defaultActiveDateIndex]).addClass(o.selectedClasses);
-						$(window).trigger('dateToggled',self.defaultActiveDateIndex + 1);	
+						$(window).trigger('dateToggled',[self.defaultActiveDateIndex + 1]);	
 					}
 
-				}else{
-					$(window).trigger('allDatesDeleted');
 				}
+
+				
 
 			},
 			monthInit: function(swiper,slideMonthTo,currentSwiperInst){
@@ -352,8 +356,7 @@ console.log('-- calendar.controller.js loaded');
 						// add selected and default class to the current month
 						$(currentMonth).addClass(o.selectedClasses);
 
-						$(window).trigger('monthToggled',slideMonthTo);
-
+						$(window).trigger('monthToggled',[slideMonthTo]);
 
 					}else if (o.allMonthsSelected) {
 						var allMonthsIndexArr = [];
@@ -366,7 +369,7 @@ console.log('-- calendar.controller.js loaded');
 							allMonthsIndexArr.push(i);
 						}
 
-						$(window).trigger('monthToggled',allMonthsIndexArr);
+						$(window).trigger('monthToggled',[allMonthsIndexArr]);
 
 					}
 				}
@@ -380,48 +383,55 @@ console.log('-- calendar.controller.js loaded');
 				// setting some variables fetched from the swiper
 				self.yearSlidesLength = swiper.slides.length;
 			},
-			dateChange: function(e,swiper){
+			dateTap: function(e,swiper){
 				var self = this;
 				var o = self.sliderOptions;
 				
-
 				var dateSelected = $(e.target).closest('.date');
 				var dateIndex = dateSelected.index() + 1;
 
 				dateSelected.toggleClass(o.selectedClasses);
 
-				$(window).trigger('dateToggled',dateIndex);
+				$(window).trigger('dateToggled',[dateIndex]);
 			
 			},
-			monthChange: function(e,swiper){
+			monthTap: function(e,swiper){
 				var self = this;
-				var o = self.sliderOptions;
+				var o, toggleMonth, monthTapped, otherMonths,monthTappedIndex;
 
-				var monthTapped = $(e.target).closest('.month');
-				var otherMonths = monthTapped.siblings('.month');
+				o = self.sliderOptions;
+
+				monthTapped = $(e.target).closest('.month');
+				otherMonths = monthTapped.siblings('.month');
 
 				monthTapped.toggleClass(o.selectedClasses);
-				var monthTappedIndex = monthTapped.index();
+				monthTappedIndex = monthTapped.index();
+
 				// if preferences are set to select only one month at a time
 				if (o.toggleMonth) {		
 					otherMonths.removeClass(o.selectedClasses);
-					$(window).trigger('allMonthsDeleted');
+					toggleMonth = true; // toggle month set to true
+					
 				}
 
-				$(window).trigger('monthToggled',monthTappedIndex);
+				$(window).trigger('monthToggled',[monthTappedIndex,toggleMonth]);
 
 			},
-			yearChange: function(swiper){
+			yearSwipe: function(swiper){
 				var self = this, o = self.sliderOptions, obj = self.object;
 				var ctrl = obj.controller, $scope = obj.$scope;
 				
-				var currentlyActiveYear = obj.year;
+				var currentlyActiveYear, defaultActiveYearIndex;
+
+				currentlyActiveYear = obj.year;
+				defaultActiveYearIndex = obj.yearIndex;
+
 				// getting the index of the active slide
 				var activeIndex = swiper.activeIndex;
 				// saving the change in the index of active slide from the index of active slide in default state
-				var changeInActiveYearIndex = activeIndex - self.defaultActiveYearIndex;
-
-				(function changeInteractionTips(){
+				var changeInActiveYearIndex = activeIndex - defaultActiveYearIndex;
+				
+				(function changeInformationText(){
 					// changing the info  on slideChangeTransitionEnd to update the values for displaying to calendar
 					if (activeIndex + 1 == self.yearSlidesLength) {
 						ctrl.prevYear = (currentlyActiveYear - 1) + changeInActiveYearIndex;
@@ -433,7 +443,7 @@ console.log('-- calendar.controller.js loaded');
 						ctrl.nextYear = (currentlyActiveYear + 1) + changeInActiveYearIndex;
 						ctrl.prevYear = (currentlyActiveYear - 1) + changeInActiveYearIndex;
 					}
-					ctrl.currentYear = [ctrl.currentYear[0] + changeInActiveYearIndex] ;
+					ctrl.currentYear = [currentlyActiveYear + changeInActiveYearIndex] ;
 
 					// apply the $scope to the view after the event ends
 					$scope.$apply();
@@ -447,84 +457,97 @@ console.log('-- calendar.controller.js loaded');
 					// storing the current year's month slides again to remove the next time
 					self.prevYrMonthSlides = self.monthSwiperArr[activeIndex].slides;
 
-
-					$(window).trigger('allMonthsDeleted');
+					// on year swipe empty the dates and the months
+					$(window).trigger('monthToggled',[self.monthsSelectedArr]);
+					$(window).trigger('dateToggled',[self.datesSelectedArr]);
 
 				}else{
 					self.yearSwipedOnce = true;
-				}		
+				}	
+
+
 			}
 			
 		},
 		customEvents: {
-			monthToggled: function(e,monthIndex){
+			monthToggled: function(e,monthIndex,toggleMonth){
 				var self = this;
 				var obj = self.object;
 				var ctrl = self.object.controller;
 				var $scope = self.$scope;
 				var o = self.sliderOptions;
 
-				// add or remove months depending if it exists already or not
-				self.manipulateMonthsSelected(monthIndex);
-
-				// console.log('self.monthsSelectedArr');
-				// console.log(self.monthsSelectedArr);
-
-				// set the current month to the array
-				ctrl.currentMonth = self.monthsSelectedArr;
-
-				// check the different states when month is more than or less than or equal to 1
-				self.countMonthsSelected();
-
-
-				// if multiple or 0 months are selected then dont render dates
-				if (o.multipleMonthsSelected || o.noMonthSelected) {
-					// console.log('add class ' + o.dontRenderDatesType);
-					self.$dateSwiperContainer.addClass(o.dontRenderDatesType);
-
-					alert('add text ' + o.dontRenderDatesMessage);
-				}else{
-
-					self.$dateSwiperContainer.removeClass('disappear disabled');
-					// console.log('single month selected');
-
-					// dates in current month. Use as: pass the year , month to get all the dates in the month
-					ctrl.datesInCurrentMonth = calendar.getDatesInMonth(ctrl.currentYear[0],ctrl.currentMonth[0]);
-					
-
-					if (!self.monthChangedOnce) {
-
-						self.monthChangedOnce = true;
-						self.slideDateTo = ctrl.currentDate - 1;
-
-						self.dateSwiper.init();
-						
-					}else{
-
-						if (ctrl.currentMonth[0] == obj.monthIndex) {
-							self.slideDateTo = ctrl.currentDate - 1;
-						}else{
-							self.slideDateTo = -1;
-						}
-						
-						/* alternative of update: destroy the swiper*/
-						self.dateSwiper.destroy();
-						self.dateSwiper  = {};
-						self.createDateSwiperInstance();
-
-						setTimeout(function(){
-							self.dateSwiper.init();
-						},50);
-
-					}	
-
-					
+				if(_.isArray(monthIndex) && !monthIndex.length){
+					return;
 				}
 
+				if (monthIndex != -1 && monthIndex != undefined) {
 
-				/* set the selection when everything is done inside monthToggle*/
-				if (monthIndex != -1) {
-					self.setDatesSelection();
+					// add or remove months depending if it exists already or not
+					self.manipulateMonthsSelected(monthIndex,toggleMonth);
+
+					// set the current month to the array
+					ctrl.currentMonth = self.monthsSelectedArr;
+
+					// check the different states when month is more than or less than or equal to 1
+					// and change the options accordingly
+					self.countMonthsSelected();
+
+					// clear all dates in every type of month toggle
+					$(window).trigger('allDatesDeleted');
+
+					// if multiple or 0 months are selected then dont render dates
+					if (o.multipleMonthsSelected || o.noMonthSelected) {
+						// console.log('add class ' + o.dontRenderDatesType);
+						self.$dateSwiperContainer.addClass(o.dontRenderDatesType);
+						self.$dateSwiperContainer.find('.message').text(o.dontRenderDatesMessage);
+
+						/* set the selection when everything is done inside monthToggle -- no or mutliple months selected */
+						self.setDatesSelection();
+
+					}else{
+						
+						self.$dateSwiperContainer.removeClass('disappear disabled');
+
+						// dates in current month. Use as: pass the year , month to get all the dates in the month
+						ctrl.datesInCurrentMonth = calendar.getDatesInMonth(ctrl.currentYear[0],ctrl.currentMonth[0]);
+
+						if (!self.monthChangedOnce) {
+
+							self.monthChangedOnce = true;
+
+							self.slideDateTo = ctrl.currentDate - 1;
+
+							self.dateSwiper.init();
+
+							/* set the selection when everything is done inside monthToggle -- first date init*/
+							self.setDatesSelection();
+
+						}else{
+
+							if (ctrl.currentMonth[0] == obj.monthIndex) {
+								self.slideDateTo = ctrl.currentDate - 1;
+							}else{
+								self.slideDateTo = -1;
+							}
+							
+							/* alternative of update: destroy the swiper*/
+							self.dateSwiper.destroy();
+							self.dateSwiper = {};
+							self.createDateSwiperInstance();
+
+							setTimeout(function(){
+								self.dateSwiper.init();
+								/* set the selection when everything is done inside monthToggle -- following date inits*/
+								self.setDatesSelection();
+							},50);
+
+						}/* else for: (!self.monthChangedOnce) */
+					}/* else for: (o.multipleMonthsSelected || o.noMonthSelected) */
+
+
+					
+					
 				}
 					
 			},
@@ -535,29 +558,32 @@ console.log('-- calendar.controller.js loaded');
 				var $scope = self.$scope;
 				var o = self.sliderOptions;
 
+				if(_.isArray(dateIndex) && !dateIndex.length){
+					return;
+				}
+
 				// add or remove dates depending if it exists already or not
 				self.manipulateDatesSelected(dateIndex);
 
-				if (dateIndex > 0) {
-					// console.log('from dateToggled');	
+				if (dateIndex > 0) { // dateIndex can be 0 or -1 when controls are clicked
+					
 					self.setDatesSelection();					
 					
 				}
 
 			},
-			allMonthsDeleted: function(){
+			allMonthsDeleted: function(e){
 				var self = this;
-
+				
 				self.monthsSelectedArr = [];
-				self.setDatesSelection();
 				// console.log('all months cleared' );
 				// console.log(self.monthsSelectedArr);
+
 			},
 			allDatesDeleted: function(){
 				var self = this;
 
 				self.datesSelectedArr = [];
-				self.setDatesSelection();
 				// console.log('all dates cleared' );
 				// console.log(self.datesSelectedArr);
 			}
@@ -603,7 +629,7 @@ console.log('-- calendar.controller.js loaded');
 
 			
 			function updateSelection(){
-				calendarCtrl.setSelection({
+				ctrl.setSelection({
 					years: ctrl.currentYear,
 					months: setMonthsArr,
 					dates: setDatesArr
@@ -611,14 +637,20 @@ console.log('-- calendar.controller.js loaded');
 			}
 
 		},
-		manipulateMonthsSelected: function(monthIndex){
+		manipulateMonthsSelected: function(monthIndex,toggleMonth){
 			var self = this;
+
+			if (monthIndex == undefined) {	return;}// if undefined is passed then return 
+
+			// console.log('self.monthsSelectedArr before manipulation');
+			// console.log(self.monthsSelectedArr);
 
 			if ( !(_.isArray(monthIndex)) ) {
 				if (!(monthIndex == -1)) {
 					addRemFromMonthsSelectedArr(monthIndex);
 				}		
 			}else{
+				if(!monthIndex.length){ return;}
 				_.forEach(monthIndex,function(element,i){
 
 					if (!(monthIndex == -1)) {
@@ -628,18 +660,30 @@ console.log('-- calendar.controller.js loaded');
 				});
 			}
 
+			// console.log('self.monthsSelectedArr after manipulation');
+			// console.log(self.monthsSelectedArr);
+
+
 			function addRemFromMonthsSelectedArr(monthIndex){
 				var indexOfItem = _.indexOf(self.monthsSelectedArr, monthIndex);
 				
 				if(indexOfItem < 0){
 					// console.log('monthIndex added');
 					// console.log(monthIndex);
+					if (toggleMonth) {
+						$(window).trigger('allMonthsDeleted');
+					}
 					self.monthsSelectedArr.push(monthIndex);
 					
 				}else{
 					// console.log('monthIndex removed');
 					// console.log(monthIndex);
 					self.monthsSelectedArr.splice(indexOfItem,1);
+
+					// if (toggleMonth) {
+					// 	self.monthsSelectedArr = [];
+					// }
+
 				}
 			}
 		},
@@ -651,9 +695,9 @@ console.log('-- calendar.controller.js loaded');
 					addRemFromDatesSelectedArr(dateIndex);
 				}		
 			}else{
+				if (!dateIndex.length) {return;}
 				_.forEach(dateIndex,function(elem,i){
-
-					if (dateIndex > 0) {
+					if (elem > 0) {
 						addRemFromDatesSelectedArr(elem);
 					}
 
@@ -680,12 +724,17 @@ console.log('-- calendar.controller.js loaded');
 			var obj = self.object;
 			var o = self.sliderOptions;
 
+			
+			// console.log('length of months');
+			// console.log(self.monthsSelectedArr.length);
+
 			if (self.monthsSelectedArr.length > 1) {
 				o.multipleMonthsSelected = true;
 				o.dontRenderDatesType = 'disabled';
 				o.dontRenderDatesMessage = 'all dates from the months have been selected'
 
 			}else if(self.monthsSelectedArr.length < 1){
+				// alert('less');
 				o.noMonthSelected = true;
 				o.dontRenderDatesType = 'disappear';
 				o.dontRenderDatesMessage = 'please select a month to proceed';
@@ -693,6 +742,23 @@ console.log('-- calendar.controller.js loaded');
 				// if= when exactly one month is selected
 				o.multipleMonthsSelected = false;
 				o.noMonthSelected = false;
+			}
+
+			// console.log('ooooooooooooooo -------- Count');
+			// console.log(o.noMonthSelected);
+		},
+		toggleAllDatesSelected: function(){
+			var self  = calendarSliders;
+			var obj = self.object;
+			var o = self.sliderOptions;
+			var ctrl = obj.controller;
+
+			if (o.allDatesSelected) {
+				alert('all dates true');
+					// $(window).trigger('dateToggled',[self.datesSelectedArr]);
+
+			}else{
+				alert('all dates false');
 			}
 		}
 
@@ -745,35 +811,35 @@ console.log('-- calendar.controller.js loaded');
 
 		// calendarCtrl obj
 	var calendarCtrl = {
-		init: function(ctrl,$scope,_DateSelection){
+		init: function($scope,_DateSelection){
 			// mapping self, ctrl and $scope to the controller instance
 			var self = this;
-			self.ctrl = ctrl;
 			self.$scope = $scope;
 			self._DateSelection = _DateSelection;
+			
 			// initialize calendar obj
 			calendar.init();
 				// declaring/defining properties
 
 			// declaring the vars for years, months and dates
-			ctrl.years = [];
-			ctrl.months = [];
+			self.years = [];
+			self.months = [];
 			// ctrl.dates = [];
 
 			// getting the current year, month and date
-			ctrl.defaultDates = calendar.defaultDate();
-			ctrl.currentYear = [ctrl.defaultDates.year];
-			ctrl.currentMonth = [ctrl.defaultDates.month];
-			ctrl.currentDate = ctrl.defaultDates.date;
+			self.defaultDates = calendar.defaultDate();
+			self.currentYear = [self.defaultDates.year];
+			self.currentMonth = [self.defaultDates.month];
+			self.currentDate = self.defaultDates.date;
 
 			// dates in current month. Use as: pass the year , month to get all the dates in the month
-			ctrl.datesInCurrentMonth = calendar.getDatesInMonth(ctrl.currentYear[0],ctrl.currentMonth[0]);
+			self.datesInCurrentMonth = calendar.getDatesInMonth(self.currentYear[0],self.currentMonth[0]);
 					
 			// setting the years, months and date
 			for (var i = 0 ; i < calendar.generateNumberOfYears; i++) {
-				ctrl.years.push(calendar.startingYear + i); // setting the years from the startingYear
+				self.years.push(calendar.startingYear + i); // setting the years from the startingYear
 			}
-			ctrl.months = ['jan','feb','march','april','may','jun',
+			self.months = ['jan','feb','march','april','may','jun',
 			'jul','aug','sep','oct','nov','dec']; // hardcoded months
 			
 			self.initCalendarSliders();
@@ -785,21 +851,20 @@ console.log('-- calendar.controller.js loaded');
 		},
 		initCalendarSliders: function(){
 			var self = this;
-			var ctrl = self.ctrl;
 			var $scope = self.$scope;
 
 			// loop over the years array (which contains all the years)
-			ctrl.years.forEach(function(year,i){
+			self.years.forEach(function(year,i){
 
 				// check when it matches to the current year	
-				if (year == ctrl.currentYear[0]) {
+				if (year == self.currentYear[0]) {
 					var yearIndex = i;
 
 					// loop over the months array (which contains all the months)
-					ctrl.months.forEach(function(month,i){	
+					self.months.forEach(function(month,i){	
 
 						// check when it matches to the current month's index
-						if (i == ctrl.currentMonth[0]) {
+						if (i == self.currentMonth[0]) {
 							var monthIndex = i;
 	
 							// angular's provided document ready function
@@ -810,7 +875,7 @@ console.log('-- calendar.controller.js loaded');
 									yearIndex: yearIndex,
 									month: month,
 									monthIndex: monthIndex,
-									controller: ctrl,
+									controller: self,
 									$scope: $scope
 								}); 
 
@@ -826,11 +891,14 @@ console.log('-- calendar.controller.js loaded');
 			var self = this;
 			var _DateSelection = self._DateSelection;
 			// var o = self.sliderOptions;
+			console.log('dates setting to: ');
+			console.log(obj);
 
 			// copy the passed object
 			var _selection = $.extend({},obj);
 			
 			// return;
+
 			_DateSelection.set(_selection);	
 			$(window).trigger('dateSelected'); // publish event to let every subscriber know
 
@@ -842,8 +910,8 @@ console.log('-- calendar.controller.js loaded');
 
 		// calendarController func
 	function calendarController($scope,_DateSelection){
-		var ctrl = this;
-		calendarCtrl.init(ctrl,$scope,_DateSelection);
+		var self = $.extend(this,calendarCtrl);
+		self.init($scope,_DateSelection);
 	}
 	
 	

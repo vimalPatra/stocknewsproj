@@ -1,3 +1,65 @@
+<section class="right col s12 l8">
+	  <section class="card card--calendar container--events">
+	      <div class="wrapper--card">
+	          
+	          <div class="card__content">
+	          	<div class="card__sub__module card__sub__module--calendar container--calendar">
+					<calendar></calendar>
+					<div class="container--calendar__selections">
+						<div class="container--title__calendar__selections">
+							<span class="title title--calendar__selections">current selections: </span>	
+						</div>
+						<div class="calendar__selections">
+							<a id="openSelectedYearsDD" class='openCalendarSelectionsBtn dropdown-button btn' href='#' data-activates='selectedYearsDD'>years</a>
+							<!-- Dropdown Structure -->
+							<ul id='selectedYearsDD' class='dropdown-content dd__content'>
+								<li data-ng-repeat="year in ceCtrl.selectedYears">
+									{{year || ''}}
+								</li>
+							</ul>
+
+					
+							<a id="openSelectedMonthsDD" class='openCalendarSelectionsBtn dropdown-button btn' href='#' data-activates='selectedMonthsDD'>months</a>
+							<!-- Dropdown Structure -->
+							<ul id='selectedMonthsDD' class='dropdown-content dd__content'>
+								<li data-ng-repeat="month in ceCtrl.selectedMonths">
+									{{month || ''}}
+								</li>
+							</ul>	
+
+
+							<a id="openSelectedDatesDD" class='openCalendarSelectionsBtn dropdown-button btn' href='#' data-activates='selectedDatesDD'>dates</a>
+							<!-- Dropdown Structure -->
+							<ul id='selectedDatesDD' class='dropdown-content dd__content'>
+								<li data-ng-repeat="date in ceCtrl.selectedDates">
+									{{date || ''}}
+								</li>
+							</ul>			
+							
+						</div>
+					</div>
+
+				</div>
+	          </div>
+
+	      </div>
+	  </section>
+
+	  <section class="card card--events container--events">
+	      <div class="wrapper--card">
+				<!-- <h2 class="card__title">
+				Event Updates
+				</h2>  -->
+				<div class="card__content">
+					<list></list>
+				</div>
+	      </div>
+	  </section>
+</section>
+
+
+
+<!-- 
 <div class="card__module card__module--calendar__events__list">
 	
 	<div id="calendar" class="card__sub__module card__sub__module--calendar container--calendar">
@@ -9,7 +71,7 @@
 		</div>
 		<div class="calendar__selections">
 			<a id="openSelectedYearsDD" class='openCalendarSelectionsBtn dropdown-button btn' href='#' data-activates='selectedYearsDD'>years</a>
-			<!-- Dropdown Structure -->
+			Dropdown Structure
 			<ul id='selectedYearsDD' class='dropdown-content dd__content'>
 				<li data-ng-repeat="year in ceCtrl.selectedYears">
 					{{year || ''}}
@@ -18,7 +80,7 @@
 
 	
 			<a id="openSelectedMonthsDD" class='openCalendarSelectionsBtn dropdown-button btn' href='#' data-activates='selectedMonthsDD'>months</a>
-			<!-- Dropdown Structure -->
+			Dropdown Structure
 			<ul id='selectedMonthsDD' class='dropdown-content dd__content'>
 				<li data-ng-repeat="month in ceCtrl.selectedMonths">
 					{{month || ''}}
@@ -27,7 +89,7 @@
 
 
 			<a id="openSelectedDatesDD" class='openCalendarSelectionsBtn dropdown-button btn' href='#' data-activates='selectedDatesDD'>dates</a>
-			<!-- Dropdown Structure -->
+			Dropdown Structure
 			<ul id='selectedDatesDD' class='dropdown-content dd__content'>
 				<li data-ng-repeat="date in ceCtrl.selectedDates">
 					{{date || ''}}
@@ -41,3 +103,4 @@
 	</div>
 
 </div>
+ -->

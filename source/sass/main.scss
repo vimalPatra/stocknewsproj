@@ -36,17 +36,18 @@ body {
 
 body>.wrap{
 	height:100%;
+	background: $bodyBg;
 }
 
 
-				/* =header */
+	/*============================= header =============================*/
 
 
 .app__header{
 	background: $headerBg;
 	padding: $headerPadding;
 	overflow:hidden;
-	border-bottom: $headerBottomBorder;
+	// border-bottom: $headerBottomBorder;
 
 	// @extend .z-depth-4;
 	@extend .z-depth-1;
@@ -62,7 +63,7 @@ body>.wrap{
 
 
 
-				/* =logo */
+	/*============================= logo =============================*/
 
 
 .logo{
@@ -73,12 +74,11 @@ body>.wrap{
 
 
 
-				/* =list--header__nav
+	/*========================== list--header__nav ====================
 				  (applied on the ul inside nav tag in the app's header) */
 .list--header__nav{
 	height:100%;
 	overflow:hidden;
-	// background:red;
 
 	a {
 		color: $headerNavTextColor;
@@ -87,6 +87,8 @@ body>.wrap{
 		overflow:hidden;
 		padding: .8em 1.2em;
 		text-align: center;
+		font-family: $primaryFont;
+		font-weight: 400;
 		
 		.icon{
 			font-size: 1.3rem;
@@ -109,7 +111,7 @@ body>.wrap{
 }
 
 
-				/* =side__nav */
+	/*============================= side__nav ============================== */
 
 .app__header .list--side__nav{
 	padding: 3rem 0;
@@ -138,6 +140,8 @@ body>.wrap{
 	a{
 		@extend .clearfix;
 		@extend .text__shadow--subtle;
+
+		
 		display: block;
 		color: $rightSideNavTextColor;
 		line-height: 1.3em;
@@ -170,7 +174,10 @@ body>.wrap{
 			font-size: 1.6rem;
 		}
 		.text{
+			@extend .lowercase;
+			@extend .small__caps;
 			
+			font-size: 1rem;
 			padding-left: 1.5rem;
 		}
 		.name{
@@ -243,15 +250,7 @@ body>.wrap{
 
 
 
-						/* =card--events*/
-
-
-
-.card--events{
-	// opacity:0;
-}
-
-
+	
 
 
 
@@ -259,10 +258,10 @@ body>.wrap{
 		/*  =states  */
 
 body.rightSideMenuOpen{
-	overflow:hidden;
+	// overflow:hidden;
 
 	.list--side__nav--right{
-		transform:translate3d(0%, 0 ,0);
+		transform: translate3d(0%, 0 ,0);
 	}
 	.overlay--big{
 		display: block;

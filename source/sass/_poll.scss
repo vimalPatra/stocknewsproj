@@ -4,9 +4,15 @@
 		padding: 0;
 		text-shadow: none;
 	}
+	.card__title{
+		position: relative;
+		z-index: 3;
+	}
 }
 
 .poll__box{
+	// font-family: $newsBoxFont;
+
 	background: rgb(255,255,255);
 	position: relative;
 	z-index: 1;
@@ -37,37 +43,35 @@
 		margin:10px auto;
   
 		background:
-		linear-gradient(0deg, rgba(0,0,0,.8), rgba(0,0,0,.8)),
-		linear-gradient(0deg, rgba(0,0,0,.7), rgba(0,0,0,.7)),
-		linear-gradient(0deg, rgba(0,0,0,.5), rgba(0,0,0,.5)),
-		linear-gradient(0deg, rgba(0,0,0,.8), rgba(0,0,0,.8)),
-		linear-gradient(0deg, rgba(0,0,0,.7), rgba(0,0,0,.7)),
-		linear-gradient(0deg, rgba(0,0,0,.5), rgba(0,0,0,.5)),
-		linear-gradient(0deg, rgba(0,0,0,1), rgba(0,0,0,1)),
-		linear-gradient(0deg, rgba(0,0,0,.9), rgba(0,0,0,.9)),
-		linear-gradient(0deg, rgba(0,0,0,.6), rgba(0,0,0,.6)),
-		linear-gradient(0deg, rgba(0,0,0,1), rgba(0,0,0,1)),
-		linear-gradient(0deg, rgba(0,0,0,.9), rgba(0,0,0,.9)),
-		linear-gradient(0deg, rgba(0,0,0,.6), rgba(0,0,0,.6)),
-		linear-gradient(0deg, rgba(0,0,0,1), rgba(0,0,0,1)),
-		linear-gradient(0deg, rgba(0,0,0,1), rgba(0,0,0,1)),
-		linear-gradient(0deg, rgba(0,0,0,.6), rgba(0,0,0,.6)),
-		linear-gradient(0deg, rgba(0,0,0,1), rgba(0,0,0,1)),
-		linear-gradient(0deg, rgba(0,0,0,1), rgba(0,0,0,1)),
-		linear-gradient(0deg, rgba(0,0,0,.6), rgba(0,0,0,.6)),
-		linear-gradient(0deg, rgba(0,0,0,.9), rgba(0,0,0,.9)),
-		linear-gradient(0deg, rgba(0,0,0,.7), rgba(0,0,0,.7)),
-		linear-gradient(0deg, rgba(0,0,0,1), rgba(0,0,0,1)),
-		linear-gradient(0deg, rgba(0,0,0,.9), rgba(0,0,0,.9)),
-		linear-gradient(0deg, rgba(0,0,0,.7), rgba(0,0,0,.7)),
-		linear-gradient(0deg, rgba(0,0,0,.5), rgba(0,0,0,.5)),
-		linear-gradient(0deg, rgba(0,0,0,1), rgba(0,0,0,1)),
-		linear-gradient(0deg, rgba(0,0,0,.95), rgba(0,0,0,.95)),
-		linear-gradient(0deg, rgba(0,0,0,.5), rgba(0,0,0,.5)),
-		linear-gradient(0deg, rgba(0,0,0,1), rgba(0,0,0,1)),
-		linear-gradient(0deg, rgba(0,0,0,.95), rgba(0,0,0,.95));
-
-
+			linear-gradient(0deg, rgba(0,0,0,.8), rgba(0,0,0,.8)),
+			linear-gradient(0deg, rgba(0,0,0,.7), rgba(0,0,0,.7)),
+			linear-gradient(0deg, rgba(0,0,0,.5), rgba(0,0,0,.5)),
+			linear-gradient(0deg, rgba(0,0,0,.8), rgba(0,0,0,.8)),
+			linear-gradient(0deg, rgba(0,0,0,.7), rgba(0,0,0,.7)),
+			linear-gradient(0deg, rgba(0,0,0,.5), rgba(0,0,0,.5)),
+			linear-gradient(0deg, rgba(0,0,0,1), rgba(0,0,0,1)),
+			linear-gradient(0deg, rgba(0,0,0,.9), rgba(0,0,0,.9)),
+			linear-gradient(0deg, rgba(0,0,0,.6), rgba(0,0,0,.6)),
+			linear-gradient(0deg, rgba(0,0,0,1), rgba(0,0,0,1)),
+			linear-gradient(0deg, rgba(0,0,0,.9), rgba(0,0,0,.9)),
+			linear-gradient(0deg, rgba(0,0,0,.6), rgba(0,0,0,.6)),
+			linear-gradient(0deg, rgba(0,0,0,1), rgba(0,0,0,1)),
+			linear-gradient(0deg, rgba(0,0,0,1), rgba(0,0,0,1)),
+			linear-gradient(0deg, rgba(0,0,0,.6), rgba(0,0,0,.6)),
+			linear-gradient(0deg, rgba(0,0,0,1), rgba(0,0,0,1)),
+			linear-gradient(0deg, rgba(0,0,0,1), rgba(0,0,0,1)),
+			linear-gradient(0deg, rgba(0,0,0,.6), rgba(0,0,0,.6)),
+			linear-gradient(0deg, rgba(0,0,0,.9), rgba(0,0,0,.9)),
+			linear-gradient(0deg, rgba(0,0,0,.7), rgba(0,0,0,.7)),
+			linear-gradient(0deg, rgba(0,0,0,1), rgba(0,0,0,1)),
+			linear-gradient(0deg, rgba(0,0,0,.9), rgba(0,0,0,.9)),
+			linear-gradient(0deg, rgba(0,0,0,.7), rgba(0,0,0,.7)),
+			linear-gradient(0deg, rgba(0,0,0,.5), rgba(0,0,0,.5)),
+			linear-gradient(0deg, rgba(0,0,0,1), rgba(0,0,0,1)),
+			linear-gradient(0deg, rgba(0,0,0,.95), rgba(0,0,0,.95)),
+			linear-gradient(0deg, rgba(0,0,0,.5), rgba(0,0,0,.5)),
+			linear-gradient(0deg, rgba(0,0,0,1), rgba(0,0,0,1)),
+			linear-gradient(0deg, rgba(0,0,0,.95), rgba(0,0,0,.95));
 		background-repeat:no-repeat;
 		background-position:560px 0, 
 		                    540px 0, 
@@ -98,7 +102,6 @@
 		                     40px 0,
 		                     20px 0,
 		                        0 0;
-
 		background-size:20px 70%,
 		              20px 40%,
 		              20px 45%,
@@ -138,12 +141,22 @@
 .poll__question{
 	@extend .capitalize;
 	@extend .text__center;
+	// @extend .small__caps;
+
 	
-	font-size: 1.2rem;
-	padding: .4em .5em;
+	font-size: 1.3rem;
+	padding: .7em .5em .4em;
 	margin:0;
-	font-family: "Nunito","Roboto",sans-serif;
-	font-weight: 400;
+	font-weight: 500;
+	color: $pollBoxTextColor;
+	text-shadow: -3px 2px 2px rgba(60,60,60,.06),
+	             -4px 3px 3px rgba(60,60,60,.04),
+	             -5px 4px 3px rgba(60,60,60,.02),
+	             -6px 5px 3px rgba(60,60,60,.02),
+	             -7px 6px 4px rgba(60,60,60,.02),
+	             -6px 7px 4px rgba(60,60,60,.02)
+	             ;
+
 }
 .container--poll__options{
 	padding:.3em 1.4em; 
@@ -157,13 +170,14 @@
 		font-weight: 400;
 		font-size: 1rem;
 		letter-spacing: .03em;
-		color: rgb(50,50,50);
+		color: $pollBoxTextColor;
 
 		&:before,
 		&:after{
 			top:.05rem;
 			width: .9rem;
 			height: .9rem;
+			border-color: lighten($pollBoxTextColor,20%);
 		}
 	}
 

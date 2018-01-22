@@ -1,0 +1,71 @@
+.card--footer{
+	background: rgb(240,240,240);
+
+	.card__content{
+		// padding: 0;
+		padding: 1rem ;
+	}
+
+
+}
+
+.title--footer{
+	@extend .capitalize;
+
+	text-transform: capitalize;
+	margin: .4rem 0 .1rem;
+	color: rgb(70,70,70);
+	font-size: 1rem;
+	text-shadow:none;
+}
+.desc--footer{
+	@extend .uppercase;
+	@extend .small__caps;
+
+	color: rgb(100,100,100);
+	font-size: .8rem;
+	letter-spacing: $letterSpacingExtra;
+	
+	text-shadow:none;
+	margin: .0rem  0;
+
+}
+.content--footer{
+	// padding-left:1em;
+}
+
+.footer__nav{
+	margin-top: 1.3rem;
+
+	a{
+		color:rgb(100,100,100);
+		text-shadow: none;
+		// padding: 1rem ;
+		.icon,
+		.text{
+			text-align: center;
+			display: block;
+		}
+		.text{
+
+		}
+	}
+}
+
+.footer__copyright{
+	@extend .lowercase;
+	@extend .small__caps;
+	
+	font-size: 1rem;
+
+	color: rgb(100,100,100);
+	// border-color:rgb(51,65,255);
+
+	// border-right:5px solid rgb(51,65,255);
+	border:none;
+	padding-right: 1.5rem;
+	border-left:0;
+	padding-left: .2rem;
+
+	margin: .2rem 0;
+}

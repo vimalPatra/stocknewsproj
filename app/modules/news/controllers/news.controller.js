@@ -10,7 +10,7 @@ console.log('-- news.controller.js loaded');
 
 	angular
 	.module('newsModule')
-	.controller('newsCtrl',['_Pagination',newsController]);
+	.controller('newsCtrl',['_Pagination','$http',newsController]);
 
 
 					// extra required code below
@@ -19,29 +19,70 @@ console.log('-- news.controller.js loaded');
 
 		// listCtrl obj
 	var newsCtrl = {
-		init: function(ctrl){
+		init: function($http){
 			var self = this;
-			self.ctrl = ctrl;
 
-			// alert('running');			
+			// making args avail throughout the object
+			self.$http = $http;
 			
+			// set defaults
+			self.pageNumber = 1;
+			self.dividePagesBy = 2;
+			self.newsArray = [];
+
+			// get the news data
+			self.getData();
+			
+		},
+		getData: function(){
+			var self = this;
+			var $http = self.$http;
+
+			// set the news params object which is wrapped in json to be sent with the POST method
+			var newsParams = {};
+			newsParams.rowspp = self.dividePagesBy;
+			newsParams.pageno = self.pageNumber;
+
+
+			var dataSend = JSON.stringify(newsParams);
+			
+			$http({
+                method: "POST",
+                url: "controller/admin/php/services/newsPagination.php",
+                // dataType: 'json',
+                data: dataSend,
+                // headers: { "Content-Type": "application/json" }
+            }).then(function(response){
+       			var dataReceived = response.data;
+       			// console.log('============response.data from newsPagination.php');
+       			// console.log(dataReceived);
+       			self.newsArray = dataReceived;
+
+            });
+            // /milan
+
+		},
+		changeNewsPage: function(number){
+			var self = this;
+			
+			self.pageNumber = number;
+			self.getData();
+
 		}
+
 		
 	};
 
 
 		// listController func
-	function newsController(_Pagination){
-		var ctrl = this;
-		newsCtrl.init(ctrl,_Pagination);
+	function newsController(_Pagination,$http){
+		var self = $.extend(this,newsCtrl);
+		self.init($http);
 
-		ctrl.pageNumber = 1;
-		ctrl.dividePagesBy = 2;
+		
+		// console.log(self.eventsArray);
 
-		var responseNewsArray = [];
-		// console.log(ctrl.eventsArray);
-
-		for(var i=0; i < 13; i++){
+		/*for(var i=0; i < 13; i++){
 
 			if (i % 2) {
 				responseNewsArray.push({
@@ -82,11 +123,12 @@ console.log('-- news.controller.js loaded');
 				return this.date + ' / ' + this.month + ' / ' + this.year;
 			};
 
-		}
+		}*/
+
 
 		// use as: param 1 = full array, param 2 = items per page, param 3 = page number you want to display
-		ctrl.newsArray = _Pagination.paginate(responseNewsArray,ctrl.dividePagesBy,ctrl.pageNumber);
-		ctrl.pageCount = _Pagination.countPages(responseNewsArray,ctrl.dividePagesBy);
+		// ctrl.newsArray = _Pagination.paginate(responseNewsArray,ctrl.dividePagesBy,ctrl.pageNumber);
+		// ctrl.pageCount = _Pagination.countPages(responseNewsArray,ctrl.dividePagesBy);
 
 		// alert(ctrl.pageCount);
 

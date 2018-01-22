@@ -1,8 +1,38 @@
 
 				/* =list__toolbar */
 
+.card--events{
+	overflow: visible;
+
+	&:hover{
+		box-shadow: none;
+	}
+	
+	// .list__toolbar{
+	// 	@include transition__3;
+	// }
+
+	// &:hover .list__toolbar{
+	// 	// box-shadow: 0 8px 17px 0 rgba(0, 0, 0, .2), 0 6px 20px 0 rgba(0, 0, 0, .19);
+	// }
+
+
+	// &:hover .list{
+	// 	@extend .hoverable;
+	// }
+
+	.card__title{
+		box-shadow: none;
+	}
+}
+
+
 .list__toolbar{
-	background: rgb(255,255,255);
+	@extend .z-depth-1;
+	
+	// background: rgb(255,255,255);
+	background:  $listToolbarBg;
+
 	padding: 1em .1em;
 
 	[class^="wrapper"]{
@@ -10,45 +40,48 @@
 	}
 }
 
-.filter__sort__selects{
-	
 
-	// border: 2px solid red !important;
-	color: rgb(0,0,0);
+.filter__sort__selects{
+
 	font-family: $primaryFont;
 
 	.caret{
 		color: inherit !important;
 		z-index:  50 !important;
 	}
+
 	.select-dropdown{
-		@extend .lowercase;
 		@extend .text__center;
-		@include transition__2;
+		@extend .capitalize;
+
 		@include z-depth-1;
 
-
-		font-family: inherit;
-		letter-spacing: .03em;
 		
-		color: rgb(30,30,30);
+		background: $listToolBg !important;
 		border-bottom: none !important;
 		border: 1px solid rgb(240,240,240) !important;
-		background: white !important;
+		border-radius: $btnSubtleRadius;
+		
 		margin: 0 !important;
 		padding: 0 !important;
+		
 		// display: block !important;
 		min-height: auto !important;
 		height: auto !important;
+		color: $listToolTextColor;
 		font-size: .85rem !important;
+		font-family: inherit;
+		letter-spacing: .03em;
 		line-height: 1.7rem !important;
-		border-radius: $btnSubtleRadius;
-		
 
-		background: rgb(253,253,253) !important;
+
+		&.active{
+			background: $listToolActiveBg !important;
+		}
+
 		// width: auto !important;
 		&:hover{
-			@include cardPopout1;
+			// @include cardPopout1;
 		}
 		li{
 			text-shadow: none;
@@ -59,6 +92,7 @@
 			border-bottom: 1.5px solid rgb(230,230,230);
 			span{
 				@extend .text__center;
+				@extend .capitalize;
 
 				display: block;
 				color: initial !important;
@@ -70,49 +104,30 @@
 			&:last-child{
 				border-bottom: none;
 			}
-			&.disabled{
+			/* &.disabled{
 				border-bottom: 1.5px solid rgb(245,245,245);
 				span{
 					color: rgb(150,150,150) !important;
+					display: none;
 
 				}
-			}
+			} */
 		}
 
 	}
 
 	& + label{
 		@include filterLabels;
+		color: $listHeaderTextColor;
 	}
 }
 
-
+/* 
 .container--filter__sort__selects{
 	label{
 		cursor: pointer;
 		pointer-events: auto;
 
-		span{
-			display: inline-block;
-			vertical-align: middle;
-			position: relative;
-		}
-
-		i{
-			@include absolute;
-			font-size: 1.35rem;
-			left: 100%;
-			&.up{
-				transform: translateY(-20%);
-				opacity: 1;
-			}
-			&.down{
-				transform: translateY(20%);
-				opacity: .4;
-			}
-
-
-		}
 	}
 	&.reverse{
 		label i.up{
@@ -123,7 +138,8 @@
 		}
 		
 	}
-}
+} */
+
 
 				/* =tool--range */
 
@@ -131,8 +147,8 @@
 	.noUi-handle,
 	.noUi-tooltip,
 	.noUi-connect{
-		background: hsl(236,100%,69%) !important;
-		background-color: hsl(236,100%,69%) !important;
+		background: $listInfoBg !important;
+		background-color: $listInfoBg !important;
 	}
 
 	label{
@@ -190,8 +206,9 @@
 			@extend .capitalize;
 			font-family: $primaryFont;
 			font-size: .85rem;
-			color: rgb(30,30,30);
-
+			color: $listToolTextColor;
+			background: $listToolBg;
+			
 			height: 100%;
 			margin:0;
 			padding: 0 .4em;
@@ -257,31 +274,22 @@
 
 
 
-.list__footer{
-	@extend .text__center;
-	@extend .uppercase;
-
-	text-shadow:none;
-	border:none;
-	font-size:.85rem;
-	font-weight:600;
-	color: rgb(190,190,190);
-	margin: 0;
-	padding: 1rem 0 ;
-
-
-}
 				/* =list */
 
 .list{
-	@extend .z-depth-2;
-	border-radius: 5px;
+	@extend .hoverable;
+	@extend .z-depth-1;
+
+	background: $listBg;
+
+	border-radius: $cardRadius;
 	display:block !important;
 	// box-shadow: 0 -2px 5px rgba(0,0,0,/.15);
-	margin: 4rem auto 0;
-	width: calc(100% - 2rem);
-	padding: 0 1rem;
+	margin: 5rem auto 0;
+	width: 100%;
+	// padding: 0 1rem;
 	position: relative;
+	
 
 	.row{
 		margin-bottom: 0 !important;
@@ -302,7 +310,7 @@
 	}
 
 	.list__rows{
-		
+		padding: 0 1rem;
 	}
 	.list__row{
 		border-bottom: $tableSlimBorder;
@@ -323,21 +331,25 @@
 		border-radius: $btnSubtleRadius;
 		bottom: calc(100% + 1.5rem);
 		top:auto;
-		height: 2.5rem;
+		height: 2.2rem;
+		line-height: 2.2rem;
 		font-size: 1rem;
 		text-transform: capitalize;
-		background: hsl(243,90%,37%);
-		background: linear-gradient(-45deg,
-			          hsl(243,90%,57%),
-			          hsl(236,100%,69%)
-			        );
-		color: hsl(243,90%,97%);
-		padding: .2em 1em;
+		// background: hsl(243,90%,37%);
+		background: $listInfoBg;
+		color: $listInfoTextColor;
+		padding: 0 1rem;
+		cursor: pointer;
 
 	}
 	.list__headers{
 		// background: rgb(52,71,253);
 		height: $listHeaderHeight;
+		padding: 0 1rem;
+		color: $listHeaderTextColor;
+		background: $listHeaderBg;
+		border-radius: $cardRadius $cardRadius 0 0;
+
 		// border-bottom: $tableThickBorder;
 	}
 }
@@ -357,8 +369,55 @@
 		line-height: $listHeaderHeight;
 		letter-spacing: .08em;
 		font-weight: 600;
-		color: rgb(125,125,125);
+		
 		// border-right: $tableThickBorder;
+
+
+		span{
+			display: inline-block;
+			vertical-align: middle;
+			position: relative;
+			cursor: pointer;
+		}
+
+		i{
+			@include absolute;
+			display: inline-block;
+			font-size: 1.35rem;
+			left: 100%;
+			height: 100%;
+			top:50%;
+			&.up{
+				transform: translateY(-40%);
+				opacity: .4;
+			}
+			&.down{
+				transform: translateY(-20%);
+				opacity: .4;
+			}
+		}
+		&.active {
+			i{
+				&.reverse{
+					&.up{
+						opacity: .4;
+					}
+					&.down{
+						opacity: 1;
+						color: $listSortIconColor;
+					}
+				}
+
+				&.down{
+					opacity: .4;
+				}
+				&.up{
+					opacity: 1;
+					color: $listSortIconColor;
+				}
+
+			}
+		}
 	}
 	&:first-child .list__header{
 		// border-right: $tableThickBorder;
@@ -391,6 +450,7 @@
 
 .date__for__events{
 	@extend .text__center;
+	@extend .uppercase;
 	@extend .text__shadow--very__subtle;
 
 	// text-shadow: -2px 2px 4px hsl(243,90%,75%);	
@@ -398,24 +458,30 @@
 	height: 63rem; // 1000px
 	padding: 2em 0 !important;
 	border-right: $tableThickBorder;
+	font-family: $newsBoxFont;
 
-	span{
+	.dateBadge{
 		@extend .inline__block;
 		@extend .z-depth-1;
 
 		position: relative;
 		left: -.5rem;
 
-		background: linear-gradient(-45deg,
-			          hsl(243,90%,57%),
-			          hsl(236,100%,69%)
-			        );
-		padding: .35rem .4rem;
+		background: $listInfoBg;
+		// background: $color6DarkS;
+		padding: .25rem .4rem;
 		border-radius: $btnSubtleRadius;
-		color: rgb(255, 255, 255);
-		font-size: .9rem;
+		color: $listInfoTextColor;
+		font-size: .8rem;
 		font-weight: 400;
 		overflow: visible;
+
+		.month{
+			background:none;
+			letter-spacing: $letterSpacingExtra;
+			font-family: $primaryFont;
+
+		}
 
 		&:before,
 		&:after{
@@ -465,9 +531,10 @@
 			}
 		}
 		.event__detail{
-			@include capitalize;
+			@extend .capitalize;
 			@extend .text__shadow--very__subtle;
 			
+			letter-spacing: $letterSpacingMed;
 			color: rgb(51, 51, 51);
 			font-size: .85rem;
 			text-shadow: none;
@@ -476,7 +543,11 @@
 			line-height: calc(#{$heightOfListOfEvents} / 3);
 			height: 100%;
 			border-right: $tableSlimBorder;
-
+			&.event__stock{
+				@extend .uppercase;
+				font-size: .8rem;
+				letter-spacing: $letterSpacingExtra;
+			}
 			&:last-child{
 				border-right:none !important;
 			}
@@ -487,25 +558,31 @@
 		@include absolute;
 		left: 50%;
 		top: auto;
-		bottom: -.2rem;
+		bottom: -.1rem;
 		transform: translateX(-50%);
+		font-family: $newsBoxFont;
 
 		height: 2rem;
+		// background:red;
 		text-align: center;
 		margin: 0;
 		// background: transparent;
 
 		.button{
 			display: inline-block;
+			vertical-align: middle;
 			height: auto;
 			margin: .2em;
 
 			border-radius:4px;
-			font-size: 1rem;
-			line-height: 1.4rem;
+			font-size: .8rem;
+			line-height: 1.2rem;
+			// padding-top: 0.1rem;
+			padding-bottom: 0.1rem;
 
 			i{
 				font-size: 1.5rem;
+				line-height: 1em;
 			}
 
 			&:not(.active){
@@ -517,11 +594,13 @@
 				pointer-events:none;
 			}
 			&.active{
-				color: rgb(255,255,255);
+				font-size: .9rem;
+				color: $listInfoTextColor;
 				background:  linear-gradient(-45deg,
 			          hsl(243,90%,57%),
 			          hsl(236,100%,69%)
 			        );
+				background: $listInfoBg;
 			}
 
 			
@@ -530,6 +609,24 @@
 
 	}
 }
+
+
+.list__footer{
+	@extend .text__center;
+	@extend .uppercase;
+
+	text-shadow:none;
+	border:none;
+	font-size:.85rem;
+	font-weight:600;
+	color: rgb(190,190,190);
+	margin: 0;
+	padding: 1rem 0 ;
+
+
+}
+
+
 
 
 	/* generating 10 column grid for columns inside .list__of__events */

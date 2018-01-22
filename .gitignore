@@ -39,6 +39,7 @@ build/
 dist/
 maps/
 extras/
+controller/
 
 # Packages #
 ############

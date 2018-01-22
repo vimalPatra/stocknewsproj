@@ -5,53 +5,72 @@
 	}
 }
 
+
 .container--news__list{
-	background: rgb(240,240,240);
+	background: $newsListContBg;
 }
 
 .news__list{
+	font-family: $newsBoxFont;
+
 	margin: 0;
 	text-shadow: none;
+	padding: .2rem 0;
+	
 
 	.news__list__item{
-		padding: 1em 0;
-		border-bottom: 3px solid rgb(221,221,221);
+		padding: .6rem 0;
+		border-bottom: $newsListItemBorder;
 
 		&:last-child{
 			border:none;
 		}
+		a{
+			display: block;
+		}
 
 		.title{
 			@extend .uppercase;
-			margin: .2em auto;
 			width: 90%;
 			border-radius: 4px;
-			padding: 10px;
+			background: $newsTitleBg;
+			margin: 0 auto .2em;
+			padding: 0.3125rem 0.625rem;
 		
-			background: rgb(221,221,221);
-			font-family: "Nunito","Roboto" ;
-			font-weight: 900;
 			
+
 			font-size: .9rem;
+			font-weight: 900;
+			letter-spacing: .05em;
+			color: $newsTitleTextColor;
+			
 		}
 
 		.desc{
 			@extend .capitalize;
 
 			width: 90%;
-			margin: .2em auto;
+			margin: 0 auto;
 			padding: 5px 10px;
 			font-size: .8rem;
+			letter-spacing: .05em;
+			color: $newsDescTextColor;
 		}
 
 		.date__added{
-			@extend .text__center;
+			@extend .text__right;
+			@extend .uppercase;
 			
-			margin:0;
 			position: relative;
 			border:none;
+			margin:0;
+			padding: 0 .6rem;
+
+			font-size: .8rem;
+			letter-spacing: .08em;
+			color: $newsDateTextColor;
 			
-			&:after,
+			/* &:after,
 			&:before{
 				@include pseudo;
 				left: 20%;
@@ -62,14 +81,14 @@
 			}
 			&:before{
 				border-top: 1px solid rgb(181,181,181);
-			}
+			} */
 		}
 
 	}
 
 	.pagination{
 		@extend .text__center;
-		padding: .3em 0;
+		padding: .1em 0;
 
 		.button{
 			@extend .inline__block;

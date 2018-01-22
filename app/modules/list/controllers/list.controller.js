@@ -319,42 +319,6 @@ console.log('-- list.controller.js loaded');
 	
 		self.init($scope,$filter,_Pagination);
 
-
-		
-
-
-		/*for(var i=0; i < 13; i++){
-
-			var eventsArrayIndex = i;
-			ctrl.eventsArray.push({
-				date: String(1 + (i * 2)) + ' / jun / 2017',
-				month: 'jan',
-				year: 2017,
-				list: []
-			});
-			
-
-			for(var j=0; j < 10; j++){
-				if (j % 2) {
-					ctrl.eventsArray[eventsArrayIndex].list.push({
-						rank: 1,
-						stock: 'vodafone',
-						eventTitle: 'launching zoooo',
-						trending: false
-					});
-				}else{
-					ctrl.eventsArray[eventsArrayIndex].list.push({
-						rank: 12,
-						stock: 'airtel',
-						eventTitle: 'launching rocket',
-						trending: true
-					});
-				}
-				
-			}
-
-		}*/
-
 	}
 	
 	

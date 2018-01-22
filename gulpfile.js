@@ -436,7 +436,7 @@ function swallowError (error) {
 		gulp.watch(['./source/sass/**/*.scss'], ['sass']);
 		gulp.watch(['./source/css/libs/**/*.scss'], ['cssLibs']);
 		gulp.watch(['./source/css/*.css'], ['css:watch']);
-		gulp.watch(['./app/components/**/php/*.php'],['php:watch']);
+		gulp.watch(['!./app/**/*.view.php','./app/components/**/*.php'],['php:watch']);
 
 		// gulp.watch(['./app/**/*.js','./source/js/**/*.js'],['js:watch']);
 	    // gulp.watch("*.html").on('change', browserSync.reload);
