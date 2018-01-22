@@ -11,6 +11,9 @@
     "angular-route": "^1.6.7",
     "i": "^0.3.6",
     "jquery": "^3.2.1",
+    "lodash": "^4.17.4",
+    "lodash.debounce": "^4.0.8",
+    "lodash.throttle": "^4.1.1",
     "materialize-css": "^0.100.2",
     "normalize.css": "^7.0.0",
     "swiper": "^4.0.7"

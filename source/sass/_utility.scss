@@ -1,0 +1,174 @@
+
+/* ==========================================================================
+   Utilites
+   ========================================================================== */
+
+							/* =padding */
+.pad--main__content{
+	padding: $mainPadding;
+}
+
+							/* =text */
+.text--paragraph{
+	font-family: $primaryFont;
+	font-weight: 800;
+}
+.text--logo{
+	font-family: $logoFont;
+    color: $logoTextColor;
+    font-size: 2.5rem;
+    text-transform: uppercase;
+}
+.text--nav__link{
+    font-family: $primaryFont;
+    // color: $logoTextColor;
+    // font-size: 2.5rem;
+    text-transform: uppercase;
+}
+
+.text--heading{
+	
+}
+	// card title 
+.text--card__title{
+    text-transform: capitalize;
+    font-family: $primaryFont;
+    font-size: $cardTitleFontSize;
+    line-height: 1.5em;
+    letter-spacing: .03em;
+}
+.text--card__content{
+    text-transform: lowercase;
+    font-family: $primaryFont;
+    font-size: 1rem;
+
+    letter-spacing: .01em;
+
+    &:first-letter{
+        text-transform: uppercase;
+    }
+}
+
+
+
+								/* =text-shadow */
+.text__shadow--title{
+    text-shadow: 1px 1px 2px rgba(0,0,0,.2),
+                 2px 2px 2px rgba(0,0,0,.2),
+                 3px 3px 2px rgba(0,0,0,.2),
+                 4px 4px 2px rgba(0,0,0,.2),
+                 5px 5px 2px rgba(0,0,0,.15),
+                 6px 6px 2px rgba(0,0,0,.15)
+
+    ;
+}
+.text__shadow--content{
+    text-shadow: 1px 1px 2px rgba(0,0,0,.1),
+                 0px 2px 2px rgba(0,0,0,.05),
+                 0px 3px 2px rgba(0,0,0,.05)
+
+    ;
+}
+
+.text__shadow--mini__text{
+	text-shadow: 
+				 // 1px 1px 2px rgba(0,0,0,.15),
+				 -1px -1px 1px rgba(0,0,0,.15),
+                 // 2px 2px 2px rgba(0,0,0,.1),
+                 -2px -2px 1px rgba(0,0,0,.1),
+                 // 3px 3px 2px rgba(0,0,0,.05),
+                 -2.5px -2.5px 1px rgba(0,0,0,.05)
+
+    ;
+}
+
+.text__shadow--very__subtle{
+	text-shadow: 1px 1px 2px rgba(0,0,0,.2);
+}
+
+.text__shadow--subtle{
+	text-shadow: 1px 2px 2px rgba(0,0,0,.2);
+}
+	
+
+	/* =card  */
+
+.card--blue{
+	@include blueShadows;
+}
+
+.card{
+	// @extend .z-depth-2;
+	@extend .hoverable;
+	@include transition__3;
+
+	box-shadow:none;
+	border-radius: $cardRadius;
+	opacity: 1;
+
+	
+	// card shadow:::
+	/* box-shadow: 0 2px 2px 0 rgba(0, 0, 0, .14),
+	 			0 1px 5px 0 rgba(0, 0, 0, .12),
+	 			0 3px 1px -2px rgba(0, 0, 0, .2); */
+
+	overflow:hidden;
+	// padding: .1em .5em;
+	background: rgba(255,255,255,.05);
+	
+}
+
+.card__title{
+	@extend .text--card__title;
+	@extend .text__shadow--title;
+
+	overflow:hidden;
+	border-radius: $cardRadius $cardRadius 0 0;
+	font-variant:small-caps;
+	// margin: .3em .1em;
+	padding: 0em .1em;
+	margin:0;
+	position:relative;
+	text-align:center;
+	text-transform:lowercase;
+	z-index:1;
+	background: $cardTitleBg;
+	color: #fff;
+	box-shadow: 0 0px 15px -1px rgba(59,197,220,1);
+
+	/* &:after{
+		@include pseudo;
+		border-bottom: 2px solid hsla(236, 100%, 35%,1);
+		z-index: -1;
+		background: $cardTitleBg;
+	} */
+}
+
+
+.card__content{
+	@extend .text--card__content;
+
+	background: transparent;
+	padding:1em 2em;
+}
+
+.card--events .card__content,
+.card--calendar .card__content{
+	padding:0;
+}
+
+
+
+/**************
+*******   =temp
+**************/
+.blue{
+    background: blue; 
+
+}
+.red{
+    background: red;
+}
+.green{
+    background: green;
+}

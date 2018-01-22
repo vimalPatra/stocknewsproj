@@ -1,25 +1,45 @@
-<div data-ng-show="poll.data.question" class="poll__box">
-	<h4 class="poll__question">{{poll.data.question}}</h4>
+<div class="container--poll__box">
+	<div data-ng-show="poll.showQA == 'q'" data-ng-show="poll.qData.question" class="poll__box">
+		<h4 class="poll__question">{{poll.qData.question}}</h4>
 
-	<form action="">
-		<div class="poll__options">
-			<div data-ng-repeat="option in poll.data.options">	
-
-				<input class="with-gap" type="radio" name="pollOption" id="pollOption{{$index}}">
-				
-				<label for="pollOption{{$index}}">
-					{{option}}
-				</label>
+		<form  data-ng-submit="poll.submitPollAnswer()">
+			<div class="container--poll__options">
+				<div class="poll__option "data-ng-repeat="option in poll.qData.options">	
+					<input value="{{$index + 1}}" data-ng-model="poll.answer" name="poll.qData.question" class="with-gap" type="radio" name="pollOption" id="pollOption{{$index}}">
+					
+					<label for="pollOption{{$index}}">
+						{{option}}
+					</label>
+				</div>
 			</div>
-		</div>
-	</form>
-	<blockquote>
-		{{poll.data.message || 'give your opinions to help the masses'}}
-	</blockquote>
-	<a class="btn waves-effect submit__poll__answer btn--submit__poll__answer">
-		submit answer
-	</a>
-	<a class="btn waves-effect see__poll__results btn--see__poll__results">
-		see results
-	</a>
+		
+			<blockquote class="poll__message col s6 offset-s6">
+				{{poll.qData.message || 'share your  opinions'}}
+			</blockquote>
+
+			<div class="container--poll__buttons">
+				<button type="submit" class="btn waves-effect submit__poll__answer btn--submit__poll__answer">
+					vote
+				</button>
+
+				<a data-ng-click="poll.getPollResults()" class="btn waves-effect see__poll__results btn--see__poll__results">
+					see results
+				</a>
+			</div>
+
+		</form>
+	</div>
+
+	<div data-ng-show="poll.showQA == 'a'" data-ng-show="poll.data.question" class="poll__box">
+		<ul class="poll__answer__List">
+			<li class="container--poll__answer" data-ng-repeat="answer in poll.aData.answers track by $index">
+				<p class="poll__answer">{{answer}}</p>
+			</li>
+		</ul>
+
+
+		<a data-ng-click="poll.togglePollView()" class="btn waves-effect see__poll__results btn--see__poll__results">
+			go back to question
+		</a>
+	</div>
 </div>
